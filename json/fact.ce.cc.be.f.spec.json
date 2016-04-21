@@ -1,0 +1,135 @@
+
+{
+
+    # Det här objektet innehåller en uppskattning om hur ofta ett basic block i
+    # funktionen kommer att exekveras. Förmodligen behöver ni inte bry er i
+    # detta.
+	"bb-exec-freqs" :
+	[
+		[ "entry", 16384 ],
+		[ "for.cond", 524288 ],
+		[ "for.body", 507904 ],
+		[ "for.end", 16384 ],
+		[ "for.inc", 507904 ],
+		[ "bb0", 524288 ],
+		[ "bb1", 524288 ]
+	],
+
+    # Specificerar vilken nod i grafen som representerar argument till
+    # funktionen.
+	"inputs" : [ 0 ],
+
+    # Namnet på funktionen.
+	"name" : "fact",
+
+    # En 'op-struct' innehåller två saker:
+    #    - en graf, och
+    #    - en lista på bivillkor.
+    # I det här fallet så finns det inga bivillkor (därav den tomma listan), men
+    # det kan finnas i andra funktioner.
+	"op-struct" :
+	{
+        # Här är bivillkoren, om några såna hade funnits för den här funktionen.
+		"constraints" : [],
+
+        # Specificerar vilken nod i funktionen som representerar det block dit
+        # man börjar exekveringen.
+		"entry-block-node" : 16,
+
+        # Här kommer själva grafen.
+		"graph" :
+		{
+
+            # En lista av kanter.
+			"edges" :
+			[
+
+				[
+					0,      # Interna ID:et av noden där kanten börjar (source).
+					26,     # Interna ID:et av noden där kanten slutar (target).
+
+					{
+						"etype" : "data",  # Vad är det för typ av kant?
+                                           # Möjliga värden är:
+                                           #    - "data", för dataflöde.
+                                           #    - "stat", för state-flöde. Ni
+                                           #      kan behandla dessa kanter som
+                                           #      dataflöde.
+                                           #    - "ctrl", för kontrollflöde.
+                                           #    - "def", för restriktioner på
+                                           #      vart viss data måste
+                                           #      produceras. Ni kan strunta i
+                                           #      såna här kanter.
+
+						"in-nr" : 0,       # In-nummer på kanten. Ni kan
+                                           # strunta i detta.
+
+						"out-nr" : 0       # Ut-nummer på kanten. Ni kan
+                                           # strunta i detta också.
+					}
+				],
+
+				... # Har tagit bort resten av kanterna från denna fil.
+			],
+
+            # Här kommer noderna.
+			"nodes" :
+			[
+
+				[
+					0,          # Nodens (interna) ID. Det är detta ID nu ska
+                                # bry er om.
+
+					{
+						"id" : 0,       # Nodens externa ID. Ni kan anta att
+                                        # detta ID alltid är samma som det
+                                        # interna ID:et och därför strunta i
+                                        # detta värde.
+
+						"type" :        # Nodens typ.
+						{
+							"ntype" : "data",   # Vad är det för typ av nod?
+                                                # Möjliga värden är:
+                                                #    - "data", för noder som
+                                                #      representerar data.
+                                                #    - "stat", för noder som
+                                                #      "states". Ni kan behandla
+                                                #      dessa som om de vore
+                                                #      datanoder.
+                                                #    - "comp", för noder som
+                                                #      representerar
+                                                #      beräkningar och andra
+                                                #      operationer som
+                                                #      involverar data.
+                                                #    - "copy", för noder som
+                                                #      representerar kopiering
+                                                #      av data. Ni kan behandla
+                                                #      dessa som om de vore
+                                                #      beräkningsnoder.
+                                                #    - "ctrl", för noder som
+                                                #      representerar
+                                                #      operationer som berör
+                                                #      kontrollflöde (som t.ex.
+                                                #      branch).
+                                                #    - "lab", för noder som
+                                                #      representerar etiketter
+                                                #      ("labels") till basic
+                                                #      blocks.
+
+                            # Fälten som följer beror på vad det är för typ av
+                            # nod, så ni kan strunta i övriga fält så länge.
+                            # I det här fallet då noden är en datanod så har den
+                            # också en datatyp (i det här fallet en integer som
+                            # är 32 bitar stor) och ett ursprung som kommer från
+                            # variablen "n" i funktionen.
+							"dtype" : "i32",
+							"origin" : "%n"
+						}
+					}
+				],
+
+				... # Har tagit bort resten av noderna från denna fil.
+			]
+		}
+	}
+}
