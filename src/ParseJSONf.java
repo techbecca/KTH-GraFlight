@@ -9,7 +9,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ParseJSON {
+public class ParseJSONf {
     public static void main(String[] args) throws FileNotFoundException {
         //Läser in en specifik JSON-fil och sparar i en File-klass
         //I framtiden borde file ta en inparameter istället för hårdkodad path
