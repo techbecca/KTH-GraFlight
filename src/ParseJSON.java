@@ -18,7 +18,9 @@ public class ParseJSON {
             jsonString += scan.nextLine();
         }
         JSONObject jObj = new JSONObject(jsonString);
-        System.out.println(jObj.get("inputs"));
+        JSONObject graph = jObj.getJSONObject("op-struct").getJSONObject("graph");
+        JSONArray edges = graph.getJSONArray("edges");
+        System.out.println(edges.getJSONArray(0));
     }
 
 }
