@@ -1,2 +1,4 @@
 *.geany
 *.class
+*.iml
+**/.idea
