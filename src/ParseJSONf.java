@@ -10,7 +10,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ParseJSONf {
-    public static void main(String[] args) throws FileNotFoundException {
+
+    //Den här koden är bara här i testningssyfte
+    public static void main(String args[]) throws FileNotFoundException {
+        parse();
+    }
+
+    public static RawGraphDataF parse() throws FileNotFoundException {
         //Läser in en specifik JSON-fil och sparar i en File-klass
         //I framtiden borde file ta en inparameter istället för hårdkodad path
         File file = new File("json/fact.ce.cc.be.f.json");
@@ -25,7 +31,13 @@ public class ParseJSONf {
         JSONObject graph = jsonObject.getJSONObject("op-struct").getJSONObject("graph");
         JSONArray edges = graph.getJSONArray("edges");
         JSONArray nodes = graph.getJSONArray("nodes");
-        System.out.println(nodes);
+
+        JSONArray inputArray = jsonObject.getJSONArray("inputs");
+        int[] inputs = new int[inputArray.length()];
+        for(int i = 0; i < inputArray.length(); i++){
+            inputs[i] = inputArray.getInt(i);
+        }
+        String functionName = jsonObject.getString("name");
 
         //Omvandlar från JSON-formatet till Edge-klassen
         ArrayList<Edge> edgeList = new ArrayList<>();
@@ -37,11 +49,6 @@ public class ParseJSONf {
             edgeList.add(new Edge(source, target, etype));
         }
 
-        //Kontroll-kod för att se att kanterna blir rätt
-        for(Edge e : edgeList){
-            //System.out.println(e);
-        }
-
         ArrayList<Node> nodeList = new ArrayList<>();
         for(int i = 0; i < nodes.length(); i++){
             JSONArray jsonNode = nodes.getJSONArray(i);
@@ -50,10 +57,8 @@ public class ParseJSONf {
             nodeList.add(new Node(id,ntype));
         }
 
-        //Kontroll-kod för att se att noderna blir rätt
-        for(Node e : nodeList){
-            //System.out.println(e);
-        }
+        return new RawGraphDataF(functionName, inputs, nodeList, edgeList);
+
     }
 
 }
