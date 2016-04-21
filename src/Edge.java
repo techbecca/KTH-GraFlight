@@ -16,6 +16,10 @@ public class Edge {
     public int getTarget(){
         return target;
     }
+    public String getEtype(){
+        return etype;
+    }
+
     public String toString(){
         return "{source: " + Integer.toString(source) + " target: " + Integer.toString(target) + " etype: " + etype;
     }

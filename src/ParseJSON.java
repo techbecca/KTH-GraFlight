@@ -24,6 +24,8 @@ public class ParseJSON {
         JSONObject jsonObject = new JSONObject(jsonString);
         JSONObject graph = jsonObject.getJSONObject("op-struct").getJSONObject("graph");
         JSONArray edges = graph.getJSONArray("edges");
+        JSONArray nodes = graph.getJSONArray("nodes");
+        System.out.println(nodes);
 
         //Omvandlar från JSON-formatet till Edge-klassen
         ArrayList<Edge> edgeList = new ArrayList<>();
@@ -35,8 +37,22 @@ public class ParseJSON {
             edgeList.add(new Edge(source, target, etype));
         }
 
+        //Kontroll-kod för att se att kanterna blir rätt
         for(Edge e : edgeList){
-            System.out.println(e);
+            //System.out.println(e);
+        }
+
+        ArrayList<Node> nodeList = new ArrayList<>();
+        for(int i = 0; i < nodes.length(); i++){
+            JSONArray jsonNode = nodes.getJSONArray(i);
+            int id = jsonNode.getInt(0);
+            String ntype = jsonNode.getJSONObject(1).getJSONObject("type").getString("ntype");
+            nodeList.add(new Node(id,ntype));
+        }
+
+        //Kontroll-kod för att se att noderna blir rätt
+        for(Node e : nodeList){
+            //System.out.println(e);
         }
     }
 
