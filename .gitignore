@@ -6,6 +6,7 @@ local-values.conf
 target
 *~
 bin
+**/nbproject
 *.idea
 *.eml
 .project
@@ -14,3 +15,6 @@ bin
 /target
 .springBeans
 nb-configuration.xml
+build.xml
+*.mf
+
