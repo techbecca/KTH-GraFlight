@@ -1,6 +1,7 @@
 /**
- * Created by Aiman on 21/04/16.
- * Modified by Christian on 22/04/16.
+ * Created by Aiman on 2016-04-21.
+ * Modified by Christian on 2016-04-22.
+ * Modified by Jacob on 2016-04-22.
  */
 import org.json.*;
 import org.graphstream.graph.implementations.*;
@@ -14,47 +15,44 @@ import java.util.Scanner;
 
 public class ParseJSONf {
 
-    //Den här koden är bara här i testningssyfte
     public static void main(String args[]) throws FileNotFoundException {
-        Graph g = parse("json/fact.ce.cc.be.f.json");
+        Graph g = parse("json/fact.ce.cc.be.f.json");					// Driver function
 		g.display();
     }
 
     public static Graph parse(String path) throws FileNotFoundException {
-        //Läser in en specifik JSON-fil och sparar i en File-klass
-        //I framtiden borde file ta en inparameter istället för hårdkodad path
-        File file = new File(path);
-        FileReader fileRead = new FileReader(file);
+		
+        FileReader fileRead = new FileReader(path);						// Reads from a .json file @ path
         Scanner scan = new Scanner(fileRead);
-        //Läser in JSON-filen till en enda lång sträng
-        String jsonString = "";
-        while(scan.hasNext()){
+
+        String jsonString = "";											// Concat lines from the .json file
+        while(scan.hasNext()) {
             jsonString += scan.nextLine();
         }
 
-        JSONObject jsonObject = new JSONObject(jsonString);
+        JSONObject jsonObject = new JSONObject(jsonString);				// Creates a handy object from the String variable
         JSONObject graph = jsonObject.getJSONObject("op-struct").getJSONObject("graph");
         JSONArray edges = graph.getJSONArray("edges");
         JSONArray nodes = graph.getJSONArray("nodes");
 
-        JSONArray inputArray = jsonObject.getJSONArray("inputs");
+        JSONArray inputArray = jsonObject.getJSONArray("inputs");		// get the inputs of the compiled function
         int[] inputs = new int[inputArray.length()];
-        for(int i = 0; i < inputArray.length(); i++){
+        for(int i = 0; i < inputArray.length(); i++) {
             inputs[i] = inputArray.getInt(i);
         }
-        String functionName = jsonObject.getString("name");
+        
+        String functionName = jsonObject.getString("name");				// get the name of the compiled function
 
-        //Omvandlar från JSON-formatet till GraphStream-graf
-        Graph gsgraph = new SingleGraph(functionName);
+        Graph gsgraph = new SingleGraph(functionName);					// Creates the graph "functionName"
 		
-        for(int i = 0; i < nodes.length(); i++){
+        for(int i = 0; i < nodes.length(); i++) {						// Iterates throughthe node array and adds them to the graph
             JSONArray jsonNode = nodes.getJSONArray(i);
             String id = String.valueOf( jsonNode.getInt(0) );
             String ntype = jsonNode.getJSONObject(1).getJSONObject("type").getString("ntype");
             gsgraph.addNode(id).setAttribute("ntype", ntype);
         }
 
-		for(int i = 0; i < edges.length(); i++){
+		for(int i = 0; i < edges.length(); i++) {						// Iterates throughthe edge array and adds them to the graph
             JSONArray jsonEdge = edges.getJSONArray(i);
             String source = String.valueOf( jsonEdge.getInt(0) );
             String target = String.valueOf( jsonEdge.getInt(1) );
@@ -62,8 +60,7 @@ public class ParseJSONf {
 			String name = source + "-" + target;
             gsgraph.addEdge(name, source, target).setAttribute("etype", etype);
         }
+        
         return gsgraph;
-
     }
-
 }
