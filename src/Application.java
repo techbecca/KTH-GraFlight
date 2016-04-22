@@ -4,9 +4,6 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-/**
- * Created by Aiman on 22/04/16.
- */
 public class Application {
     public static void main(String args[]) throws FileNotFoundException {
 
