@@ -9,15 +9,10 @@ import java.util.Scanner;
 
 public class ParseJSONf {
     public static Graph parse(File file) throws FileNotFoundException {
-
-        Scanner scan = new Scanner(file);								// Reads from a .json file @ path
-
-        StringBuilder sb = new StringBuilder();							// Concat lines from the .json file
-        while(scan.hasNext()) {
-            sb.append(scan.nextLine());
-        }
-
-        JSONObject jsonObject = new JSONObject(sb.toString());			// Creates a handy object from the String
+		
+		String json = new Scanner(file).useDelimiter("\\A").next();		// Read an entire json file
+        
+        JSONObject jsonObject = new JSONObject(json);					// Creates a handy object from the String
         JSONObject graph = jsonObject.getJSONObject("op-struct").getJSONObject("graph");
         JSONArray edges = graph.getJSONArray("edges");
         JSONArray nodes = graph.getJSONArray("nodes");
