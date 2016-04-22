@@ -1,6 +1,3 @@
-package testing;
-
-
 public class NodeToNode {
 
 	final private int GraphNode;
