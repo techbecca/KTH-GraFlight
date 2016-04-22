@@ -16,13 +16,13 @@ import java.util.Scanner;
 public class ParseJSONf {
 
     public static void main(String args[]) throws FileNotFoundException {
-        Graph g = parse("json/fact.ce.cc.be.f.json");					// Driver function
-		g.display();
+        //Graph g = parse("json/fact.ce.cc.be.f.json");					// Driver function
+		//g.display();
     }
 
-    public static Graph parse(String path) throws FileNotFoundException {
+    public static Graph parse(File file) throws FileNotFoundException {
 		
-        FileReader fileRead = new FileReader(path);						// Reads from a .json file @ path
+        FileReader fileRead = new FileReader(file);						// Reads from a .json file @ path
         Scanner scan = new Scanner(fileRead);
 
         String jsonString = "";											// Concat lines from the .json file
