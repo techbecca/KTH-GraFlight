@@ -25,25 +25,27 @@ public class ParseJSONf {
         FileReader fileRead = new FileReader(file);						// Reads from a .json file @ path
         Scanner scan = new Scanner(fileRead);
 
-        String jsonString = "";											// Concat lines from the .json file
+        StringBuilder sb = new StringBuilder();							// Concat lines from the .json file
         while(scan.hasNext()) {
-            jsonString += scan.nextLine();
+            sb.append(scan.nextLine());
         }
 
-        JSONObject jsonObject = new JSONObject(jsonString);				// Creates a handy object from the String variable
+        JSONObject jsonObject = new JSONObject(sb.toString());				// Creates a handy object from the String
         JSONObject graph = jsonObject.getJSONObject("op-struct").getJSONObject("graph");
         JSONArray edges = graph.getJSONArray("edges");
         JSONArray nodes = graph.getJSONArray("nodes");
-
         JSONArray inputArray = jsonObject.getJSONArray("inputs");		// get the inputs of the compiled function
-        int[] inputs = new int[inputArray.length()];
+        
+        String functionName = jsonObject.getString("name");				// get the name of the compiled function
+		
+		Graph gsgraph = new SingleGraph(functionName);					// Creates the graph "functionName"
+
+		int[] inputs = new int[inputArray.length()];
         for(int i = 0; i < inputArray.length(); i++) {
             inputs[i] = inputArray.getInt(i);
         }
         
-        String functionName = jsonObject.getString("name");				// get the name of the compiled function
-
-        Graph gsgraph = new SingleGraph(functionName);					// Creates the graph "functionName"
+		gsgraph.setAttribute("inputs", inputs);
 		
         for(int i = 0; i < nodes.length(); i++) {						// Iterates throughthe node array and adds them to the graph
             JSONArray jsonNode = nodes.getJSONArray(i);
