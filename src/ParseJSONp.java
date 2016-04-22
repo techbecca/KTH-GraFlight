@@ -1,5 +1,3 @@
-package testing;
-
 /**
  * Created by Mathilda on 2016-04-21.
  * Modified by Mathilda on 2016-04-22.
