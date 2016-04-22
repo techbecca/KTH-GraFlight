@@ -1,7 +1,10 @@
 /**
  * Created by Aiman on 21/04/16.
+ * Modified by Christian on 22/04/16.
  */
 import org.json.*;
+import org.graphstream.graph.implementations.*;
+import org.graphstream.graph.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,10 +16,11 @@ public class ParseJSONf {
 
     //Den här koden är bara här i testningssyfte
     public static void main(String args[]) throws FileNotFoundException {
-        parse();
+        Graph g = parse();
+		g.display();
     }
 
-    public static RawGraphDataF parse() throws FileNotFoundException {
+    public static Graph parse() throws FileNotFoundException {
         //Läser in en specifik JSON-fil och sparar i en File-klass
         //I framtiden borde file ta en inparameter istället för hårdkodad path
         File file = new File("json/fact.ce.cc.be.f.json");
@@ -39,25 +43,25 @@ public class ParseJSONf {
         }
         String functionName = jsonObject.getString("name");
 
-        //Omvandlar från JSON-formatet till Edge-klassen
-        ArrayList<Edge> edgeList = new ArrayList<>();
-        for(int i = 0; i < edges.length(); i++){
-            JSONArray jsonEdge = edges.getJSONArray(i);
-            int source = jsonEdge.getInt(0);
-            int target = jsonEdge.getInt(1);
-            String etype = jsonEdge.getJSONObject(2).getString("etype");
-            edgeList.add(new Edge(source, target, etype));
-        }
-
-        ArrayList<Node> nodeList = new ArrayList<>();
+        //Omvandlar från JSON-formatet till GraphStream-graf
+        Graph gsgraph = new SingleGraph(functionName);
+		
         for(int i = 0; i < nodes.length(); i++){
             JSONArray jsonNode = nodes.getJSONArray(i);
-            int id = jsonNode.getInt(0);
+            String id = String.valueOf( jsonNode.getInt(0) );
             String ntype = jsonNode.getJSONObject(1).getJSONObject("type").getString("ntype");
-            nodeList.add(new Node(id,ntype));
+            gsgraph.addNode(id).setAttribute("ntype", ntype);
         }
 
-        return new RawGraphDataF(functionName, inputs, nodeList, edgeList);
+		for(int i = 0; i < edges.length(); i++){
+            JSONArray jsonEdge = edges.getJSONArray(i);
+            String source = String.valueOf( jsonEdge.getInt(0) );
+            String target = String.valueOf( jsonEdge.getInt(1) );
+            String etype = jsonEdge.getJSONObject(2).getString("etype");
+			String name = source + "-" + target;
+            gsgraph.addEdge(name, source, target).setAttribute("etype", etype);
+        }
+        return gsgraph;
 
     }
 
