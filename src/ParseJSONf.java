@@ -15,11 +15,6 @@ import java.util.Scanner;
 
 public class ParseJSONf {
 
-    public static void main(String args[]) throws FileNotFoundException {
-        //Graph g = parse("json/fact.ce.cc.be.f.json");					// Driver function
-		//g.display();
-    }
-
     public static Graph parse(File file) throws FileNotFoundException {
 		
         FileReader fileRead = new FileReader(file);						// Reads from a .json file @ path
