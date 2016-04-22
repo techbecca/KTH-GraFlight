@@ -12,7 +12,7 @@ public class Match {
 	final private ArrayList<NodeToNode> NodeToNodeList;
 	//final private int MatchId;
 
-	public Match(ArrayList<NodeToNode> NodeToNodeList, /*int MatchId*/) {
+	public Match(ArrayList<NodeToNode> NodeToNodeList/*, int MatchId*/) {
 
 		this.NodeToNodeList = NodeToNodeList;
 	//	this.MatchId = MatchId;
