@@ -1,47 +1,38 @@
 package testing;
 
+/**
+ * Created by Mathilda on 2016-04-21.
+ * Modified by Mathilda on 2016-04-22.
+ */
 import org.json.*;
-import java.io.File;
+//import org.graphstream.graph.implementations.*;
+//import org.graphstream.graph.*;
+//import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 public class ParseJSONp {
 
-	public static void main(String[] args) throws FileNotFoundException {
 
-		parse();
+	public static RawGraphDataP parsep(String path) throws FileNotFoundException {
 
-	}
-
-
-
-	public static RawGraphDataP parse() throws FileNotFoundException {
-
-
-		/****So far the file is identical to ParseJSONf********/
-		File file = new File("fact.ce.cc.be.p.json");
-		FileReader fileRead = new FileReader(file);
+		FileReader fileRead = new FileReader(path);						// Reads from a .json file @ path
 		Scanner scan = new Scanner(fileRead);
-		String jsonString = "";
-		while(scan.hasNext()){
+
+		String jsonString = "";											// Concat lines from the .json file
+		while(scan.hasNext()) {
 			jsonString += scan.nextLine();
 		}
-		JSONObject jObj = new JSONObject(jsonString);
 
+		JSONObject jObj = new JSONObject(jsonString);				// Creates a handy object from the String variable
 
-		/****So far the file is identical to ParseJSONf********/
 
 
 		/****Now things get a bit different********************/
 
-
-
 		JSONArray Pattern = jObj.getJSONArray("match-data");
-
-
 
 		for(int x = 0; x < Pattern.length(); x++){
 
@@ -65,24 +56,17 @@ public class ParseJSONp {
 				int GraphNode = NodeToNodeMatches.getJSONArray(y).getInt(0);
 				int PatternNode = NodeToNodeMatches.getJSONArray(y).getInt(1);
 
-
-				System.out.println(GraphNode);
-				System.out.println(PatternNode);
-
-
 			}
 
 		}
 
 
-		//Omvandlar från JSON-formatet till Match- respektive NodeToNode-klassen
-		//observera att en pattern är en lista av matches,
-		//och en match är en lista av NodeToNodes	       
+		//Change from JSON-format to Match and NodeToNode class respectively
+		//observe that a pattern is a list of matches,
+		//and A match is a list of NodeToNodes
 
 		ArrayList<Match> matchList = new ArrayList<>();
 		ArrayList<NodeToNode> NodeToNodeList = new ArrayList<>();
-
-
 
 
 		for(int i = 0; i < Pattern.length(); i++){
@@ -107,6 +91,8 @@ public class ParseJSONp {
 
 		return new RawGraphDataP(matchList);
 
+
 	}
 
 }
+
