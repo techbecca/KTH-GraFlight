@@ -11,7 +11,7 @@ public class Application {
         g.display();
 
     }
-    public static File chooseFFile(String[] a){
+    public static File chooseFFile(String[] a) {
         File file = null;
         if(a.length > 0){                                               // If there is a cml-argument it will run with that
             file = new File(a[0]);
@@ -24,15 +24,15 @@ public class Application {
                 System.out.println("You failed to choose a file, n00b..."); // This is for those who fail to choose a file
             }
         }
-        if(file == null){                                               // If no file is selected the program will shut down
+        if(file == null) {                                               // If no file is selected the program will shut down
             System.exit(0);
         }
         return file;
     }
 
-    public static File choosePFile(String[] a){                         // Currently unused function that does the same as the one above but with the pattern-JSON-files
+    public static File choosePFile(String[] a) {                         // Currently unused function that does the same as the one above but with the pattern-JSON-files
         File file = null;
-        if(a.length > 1){
+        if(a.length > 1) {
             file = new File(a[1]);
         }else{
             final JFileChooser fc = new JFileChooser();
