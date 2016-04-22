@@ -5,7 +5,7 @@
 import org.json.*;
 //import org.graphstream.graph.implementations.*;
 //import org.graphstream.graph.*;
-//import java.io.File;
+//import java.io.File;	
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -45,8 +45,6 @@ public class ParseJSONp {
 
 
 			for(int y = 0; y < NodeToNodeMatches.length(); y++){
-
-
 				//				this is what a NodeToNodeMatch can look like:
 				//					[5,8]	
 
