@@ -25,12 +25,12 @@ public class ParseJSONf {
         FileReader fileRead = new FileReader(file);						// Reads from a .json file @ path
         Scanner scan = new Scanner(fileRead);
 
-        String jsonString = "";											// Concat lines from the .json file
+        StringBuilder sb = new StringBuilder();							// Concat lines from the .json file
         while(scan.hasNext()) {
-            jsonString += scan.nextLine();
+            sb.append(scan.nextLine());
         }
 
-        JSONObject jsonObject = new JSONObject(jsonString);				// Creates a handy object from the String variable
+        JSONObject jsonObject = new JSONObject(sb.toString());				// Creates a handy object from the String
         JSONObject graph = jsonObject.getJSONObject("op-struct").getJSONObject("graph");
         JSONArray edges = graph.getJSONArray("edges");
         JSONArray nodes = graph.getJSONArray("nodes");
