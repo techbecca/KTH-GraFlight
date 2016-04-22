@@ -13,13 +13,13 @@ public class ParseJSONf {
 
     //Den här koden är bara här i testningssyfte
     public static void main(String args[]) throws FileNotFoundException {
-        parse();
+        parse("json/fact.ce.cc.be.f.json");
     }
 
-    public static RawGraphDataF parse() throws FileNotFoundException {
+    public static RawGraphDataF parse(String path) throws FileNotFoundException {
         //Läser in en specifik JSON-fil och sparar i en File-klass
         //I framtiden borde file ta en inparameter istället för hårdkodad path
-        File file = new File("json/fact.ce.cc.be.f.json");
+        File file = new File(path);
         FileReader fileRead = new FileReader(file);
         Scanner scan = new Scanner(fileRead);
         //Läser in JSON-filen till en enda lång sträng
@@ -27,6 +27,7 @@ public class ParseJSONf {
         while(scan.hasNext()){
             jsonString += scan.nextLine();
         }
+
         JSONObject jsonObject = new JSONObject(jsonString);
         JSONObject graph = jsonObject.getJSONObject("op-struct").getJSONObject("graph");
         JSONArray edges = graph.getJSONArray("edges");
