@@ -1,36 +1,23 @@
-/**
- * Created by Aiman on 2016-04-21.
- * Modified by Christian on 2016-04-22.
- * Modified by Jacob on 2016-04-22.
- */
 import org.json.*;
 import org.graphstream.graph.implementations.*;
 import org.graphstream.graph.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ParseJSONf {
-
-    public static void main(String args[]) throws FileNotFoundException {
-        //Graph g = parse("json/fact.ce.cc.be.f.json");					// Driver function
-		//g.display();
-    }
-
     public static Graph parse(File file) throws FileNotFoundException {
-		
-        FileReader fileRead = new FileReader(file);						// Reads from a .json file @ path
-        Scanner scan = new Scanner(fileRead);
+
+        Scanner scan = new Scanner(file);								// Reads from a .json file @ path
 
         StringBuilder sb = new StringBuilder();							// Concat lines from the .json file
         while(scan.hasNext()) {
             sb.append(scan.nextLine());
         }
 
-        JSONObject jsonObject = new JSONObject(sb.toString());				// Creates a handy object from the String
+        JSONObject jsonObject = new JSONObject(sb.toString());			// Creates a handy object from the String
         JSONObject graph = jsonObject.getJSONObject("op-struct").getJSONObject("graph");
         JSONArray edges = graph.getJSONArray("edges");
         JSONArray nodes = graph.getJSONArray("nodes");
