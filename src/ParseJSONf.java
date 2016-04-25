@@ -10,17 +10,23 @@ import java.util.Scanner;
 public class ParseJSONf {
     public static Graph parse(File file) throws FileNotFoundException {
 		
-		String json = new Scanner(file).useDelimiter("\\A").next();		// Read an entire json file
+    	// Read an entire json file
+		String json = new Scanner(file).useDelimiter("\\A").next();		
         
-        JSONObject jsonObject = new JSONObject(json);					// Creates a handy object from the String
+		// Creates a handy object from the String
+        JSONObject jsonObject = new JSONObject(json);					
         JSONObject graph = jsonObject.getJSONObject("op-struct").getJSONObject("graph");
         JSONArray edges = graph.getJSONArray("edges");
         JSONArray nodes = graph.getJSONArray("nodes");
-        JSONArray inputArray = jsonObject.getJSONArray("inputs");		// get the inputs of the compiled function
         
-        String functionName = jsonObject.getString("name");				// get the name of the compiled function
+        // get the inputs of the compiled function
+        JSONArray inputArray = jsonObject.getJSONArray("inputs");		
+        
+        // get the name of the compiled function
+        String functionName = jsonObject.getString("name");				
 		
-		Graph gsgraph = new SingleGraph(functionName);					// Creates the graph "functionName"
+        // Creates the graph "functionName"
+		Graph gsgraph = new SingleGraph(functionName);					
 
 		int[] inputs = new int[inputArray.length()];
         for(int i = 0; i < inputArray.length(); i++) {
@@ -29,7 +35,8 @@ public class ParseJSONf {
         
 		gsgraph.setAttribute("inputs", inputs);
 		
-        for(int i = 0; i < nodes.length(); i++) {						// Iterates throughthe node array and adds them to the graph
+		// Iterates throughthe node array and adds them to the graph
+        for(int i = 0; i < nodes.length(); i++) {						
             JSONArray jsonNode = nodes.getJSONArray(i);
             String id = String.valueOf( jsonNode.getInt(0) );
             String ntype = jsonNode.getJSONObject(1).getJSONObject("type").getString("ntype");
@@ -37,8 +44,9 @@ public class ParseJSONf {
 			node.setAttribute("ntype", ntype);
 			node.setAttribute("ui.label", id);
         }
-
-		for(int i = 0; i < edges.length(); i++) {						// Iterates throughthe edge array and adds them to the graph
+        
+        // Iterates throughthe edge array and adds them to the graph
+		for(int i = 0; i < edges.length(); i++) {						
             JSONArray jsonEdge = edges.getJSONArray(i);
             String source = String.valueOf( jsonEdge.getInt(0) );
             String target = String.valueOf( jsonEdge.getInt(1) );
