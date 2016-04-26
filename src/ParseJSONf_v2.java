@@ -5,13 +5,13 @@
  * Modified by Mathilda on 2016-04-25.
  */
 
-//another version of parsejsonf, where a new attribute called layers is added
-//so matches/patterns can be added to the nodes
+/*
+ * new version of parsejsonf, where a new attribute called layers is added
+ */
 
 import org.json.*;
 import org.graphstream.graph.implementations.*;
 import org.graphstream.graph.*;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -21,11 +21,13 @@ import java.util.Scanner;
 
 public class ParseJSONf {
 
+	private static Scanner scan;
+
 	public static Graph parse(File file) throws FileNotFoundException {
 
 		// Reads from a .json file @ path
 		FileReader fileRead = new FileReader(file);						
-		Scanner scan = new Scanner(fileRead);
+		scan = new Scanner(fileRead);
 
 		// Concat lines from the .json file
 		String jsonString = "";											
