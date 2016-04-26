@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ParseJSONf {
+
     public static Graph parse(File file) throws FileNotFoundException {
 		
     	// Read an entire json file
