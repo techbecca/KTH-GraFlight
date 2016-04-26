@@ -7,7 +7,8 @@ import java.io.FileNotFoundException;
 public class Application {
     public static void main(String args[]) throws FileNotFoundException {
     	
-        Graph g = ParseJSONf.parse(chooseFFile(args));				
+        Graph g = ParseJSONf.parse(chooseFFile(args));
+        g.addAttribute("ui.stylesheet", "url('./style/style.css')");
         g.display();
 
     }
@@ -15,9 +16,9 @@ public class Application {
         File file = null;
         
      // If there is a cml-argument it will run with that
-        if(a.length > 0){                                               
+        if(a.length > 0){
             file = new File(a[0]);
-        }else{           
+        }else{
         	// If argument list is empty it will let you choose a file with JFileChooser
             final JFileChooser fc = new JFileChooser();
             int returnVal = fc.showOpenDialog(null);

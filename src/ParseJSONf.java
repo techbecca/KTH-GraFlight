@@ -39,10 +39,15 @@ public class ParseJSONf {
         for(int i = 0; i < nodes.length(); i++) {						
             JSONArray jsonNode = nodes.getJSONArray(i);
             String id = String.valueOf( jsonNode.getInt(0) );
-            String ntype = jsonNode.getJSONObject(1).getJSONObject("type").getString("ntype");
+            JSONObject type = jsonNode.getJSONObject(1).getJSONObject("type");
+            String ntype = type.getString("ntype");
             Node node = gsgraph.addNode(id);
-			node.setAttribute("ntype", ntype);
+			node.setAttribute("ui.class", ntype);
+            if(type.has("dtype")){
+                node.setAttribute("ui.class", ntype + ", " + type.getString("dtype"));
+            }
 			node.setAttribute("ui.label", id);
+            System.out.println(node.getAttribute("ui.class").toString());
         }
         
         // Iterates throughthe edge array and adds them to the graph
