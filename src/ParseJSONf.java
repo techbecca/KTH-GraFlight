@@ -36,31 +36,40 @@ public class ParseJSONf {
         
 		gsgraph.setAttribute("inputs", inputs);
 		
-		// Iterates throughthe node array and adds them to the graph
+		// Iterates through the node array and adds them to the graph
         for(int i = 0; i < nodes.length(); i++) {						
             JSONArray jsonNode = nodes.getJSONArray(i);
             String id = String.valueOf( jsonNode.getInt(0) );
             JSONObject type = jsonNode.getJSONObject(1).getJSONObject("type");
             String ntype = type.getString("ntype");
             Node node = gsgraph.addNode(id);
-			
-			ArrayList<Integer> layers = new ArrayList<>();
-			
-			//            adds an attribute called numberOfLayers
+            // Adds an attribute called numberOfLayers
+            ArrayList<Integer> layers = new ArrayList<>();
+            
 			node.setAttribute("layers", layers);
-			
+            // Adds classes to the node depending on what the nodetype is
 			node.setAttribute("ui.class", ntype);
+            //node.setAttribute("xy", i*10, i*5);
             if(type.has("dtype")){
-                node.setAttribute("ui.class", ntype + ", " + type.getString("dtype"));
+                node.addAttribute("ui.class", node.getAttribute("ui.class") + ", " + type.getString("dtype"));
             }
-			node.setAttribute("ui.label", id);
-            System.out.println(node.getAttribute("ui.class").toString());
+            // The entry node is special and gets its own class
+            if(type.has("block-name")){
+                if(type.getString("block-name").equals("entry")){
+                    node.addAttribute("ui.class", node.getAttribute("ui.class") + ", " + "entry");
+                    node.setAttribute("ui.label", "Entry");
+                    //node.setAttribute("x", 10);
+                    //System.out.println(node.getAttributeKeySet());
+                }
+            }
+			//node.setAttribute("ui.label", id);
+            //System.out.println(node.getAttribute("ui.class").toString());
         }
         
         // Iterates throughthe edge array and adds them to the graph
 		for(int i = 0; i < edges.length(); i++) {						
             JSONArray jsonEdge = edges.getJSONArray(i);
-            String source = String.valueOf( jsonEdge.getInt(0) );
+            String source = String.valueOf( jsonEdge.getInt(0));
             String target = String.valueOf( jsonEdge.getInt(1) );
             String etype = jsonEdge.getJSONObject(2).getString("etype");
 			String name = source + "-" + target;
