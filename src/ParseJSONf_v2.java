@@ -1,10 +1,3 @@
-/**
- * Created by Aiman on 2016-04-21.
- * Modified by Christian on 2016-04-22.
- * Modified by Jacob on 2016-04-22.
- * Modified by Mathilda on 2016-04-25.
- */
-
 /*
  * new version of parsejsonf, where a new attribute called layers is added
  */
