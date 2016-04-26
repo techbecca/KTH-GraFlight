@@ -1,15 +1,24 @@
+CP		= "lib/*;src"
+NAME	= App
 sources = $(wildcard src/*.java)
 classes = $(sources:.java=.class)
 
-all: $(classes)
+all : $(classes)
+
+j : CP = "lib/*:src"
+j : all
 
 %.class : %.java
-	javac -cp "lib/*;src" $<
+	javac -cp $(CP) $<
 	
 clean :
 	rm -f src/*.class
-	rm -f App.jar
+	rm -f $(NAME).jar
 	
-jar : all
-	jar cvfme App.jar manifest Application -C src .
-	java -jar App.jar
+jar : $(NAME).jar
+
+$(NAME).jar : all
+	jar cvfme $(NAME).jar manifest Application -C src .
+
+run : $(NAME).jar
+	java -jar $(NAME).jar

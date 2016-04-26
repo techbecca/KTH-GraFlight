@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ParseJSONf {
+
     public static Graph parse(File file) throws FileNotFoundException {
 		
     	// Read an entire json file
@@ -42,6 +43,10 @@ public class ParseJSONf {
             JSONObject type = jsonNode.getJSONObject(1).getJSONObject("type");
             String ntype = type.getString("ntype");
             Node node = gsgraph.addNode(id);
+            // Adds an attribute called numberOfLayers
+            ArrayList<Integer> layers = new ArrayList<>();
+            
+			node.setAttribute("layers", layers);
             // Adds classes to the node depending on what the nodetype is
 			node.setAttribute("ui.class", ntype);
             //node.setAttribute("xy", i*10, i*5);
@@ -64,7 +69,7 @@ public class ParseJSONf {
         // Iterates throughthe edge array and adds them to the graph
 		for(int i = 0; i < edges.length(); i++) {						
             JSONArray jsonEdge = edges.getJSONArray(i);
-            String source = String.valueOf( jsonEdge.getInt(0) );
+            String source = String.valueOf( jsonEdge.getInt(0));
             String target = String.valueOf( jsonEdge.getInt(1) );
             String etype = jsonEdge.getJSONObject(2).getString("etype");
 			String name = source + "-" + target;
