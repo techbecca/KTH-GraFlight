@@ -1,4 +1,6 @@
 import org.graphstream.graph.Graph;
+import org.graphstream.ui.view.Viewer;
+import org.graphstream.ui.j2dviewer.J2DGraphRenderer;
 
 import javax.swing.*;
 import java.io.File;
@@ -12,10 +14,13 @@ import java.io.FileNotFoundException;
 public class Application {
     public static void main(String args[]) throws FileNotFoundException {
     	
-        Graph g = ParseJSONf.parse(chooseFFile(args));
+		// Use the advanced renderer.
+		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+		
+		Graph g = ParseJSONf.parse(chooseFFile(args));
         g.addAttribute("ui.stylesheet", "url('./style/style.css')");
         g.display();
-
+		
     }
     /**
      * This method opens a window to choose JSON files
