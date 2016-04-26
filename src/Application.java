@@ -4,6 +4,11 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+/**
+ * This class is a driver class for parseJSONf
+ * @author Aiman Josefsson
+ * @since 2016-04-26
+ */
 public class Application {
     public static void main(String args[]) throws FileNotFoundException {
     	
@@ -12,6 +17,11 @@ public class Application {
         g.display();
 
     }
+    /**
+     * This method opens a window to choose JSON files
+     * @param a 
+     * @return returns the chosen file 
+     */
     public static File chooseFFile(String[] a) {
         File file = null;
         
@@ -35,7 +45,11 @@ public class Application {
         }
         return file;
     }
-    // Currently unused function that does the same as the one above but with the pattern-JSON-files
+    /**
+     * Currently unused method that does the same as the one above but with the pattern-JSON-files
+     * @param a
+     * @return returns the chosen file
+     */
     public static File choosePFile(String[] a) {
         File file = null;
         if(a.length > 1) {

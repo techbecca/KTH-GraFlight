@@ -36,11 +36,15 @@ import java.util.Scanner;
 import org.graphstream.graph.Graph;
 import org.json.*;
 
-
+/**
+ * This class parses the pattern JSON file, includes the matches and the node-to-node matches and includes them in the 
+ * "Match" and "NodeToNode" classes.
+ * @author Mathilda Strandberg von Schantz
+ * @since 2016-04-26
+ */
 public class ParseJSONp {
 
 	private static Scanner scan;
-
 
 	public static void main(String[] args) throws FileNotFoundException {
 
@@ -48,9 +52,16 @@ public class ParseJSONp {
 		parsep(Application.chooseFFile(args), Graph);
 
 		//Graph.display();
-
 	}
 
+	/**
+	 * This method parses the pattern JSON file, includes the matches and the node-to-node matches and includes them in the 
+	 * "Match" and "NodeToNode" classes.
+	 * @param file This is the JSON file to be parsed 
+	 * @param graph This is the graph to be displayed. 
+	 * @return The graph
+	 * @throws FileNotFoundException
+	 */
 	public static Graph parsep(File file, Graph graph) throws FileNotFoundException {
 
 		// Reads from a .json file @ path
@@ -63,7 +74,6 @@ public class ParseJSONp {
 			jsonString += scan.nextLine();
 		}
 
-
 		JSONObject jObj = new JSONObject(jsonString);				
 		//		JSONObject graph = jsonObject.getJSONObject("op-struct").getJSONObject("graph");
 
@@ -75,7 +85,6 @@ public class ParseJSONp {
 
 		ArrayList<Match> matchList = new ArrayList<>();
 		ArrayList<NodeToNode> NodeToNodeList = new ArrayList<>();
-
 
 		for(int i = 0; i < Pattern.length(); i++){
 
@@ -95,14 +104,10 @@ public class ParseJSONp {
 				//				adds matchId to the attribute of the node
 				graph.getNode(String.valueOf(GraphNode)).setAttribute("layers", matchids);;
 
-
 				NodeToNodeList.add(new NodeToNode(GraphNode, PatternNode));	
-
 			}
-
-
+			
 			matchList.add(new Match(NodeToNodeList, MatchId));
-
 		}
 
 		return graph;
