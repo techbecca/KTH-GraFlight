@@ -43,6 +43,12 @@ public class ParseJSONf {
             JSONObject type = jsonNode.getJSONObject(1).getJSONObject("type");
             String ntype = type.getString("ntype");
             Node node = gsgraph.addNode(id);
+			
+			ArrayList<Integer> layers = new ArrayList<>();
+			
+			//            adds an attribute called numberOfLayers
+			node.setAttribute("layers", layers);
+			
 			node.setAttribute("ui.class", ntype);
             if(type.has("dtype")){
                 node.setAttribute("ui.class", ntype + ", " + type.getString("dtype"));
