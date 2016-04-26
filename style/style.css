@@ -1,3 +1,7 @@
+node{
+	shape: diamond;
+}
+
 node.data{
 	fill-color: green;
 	shape: box;
@@ -25,4 +29,8 @@ node.copy{
 
 node.i32{
 	size: 25px, 25px;
+}
+
+node.entry{
+	size: 50px, 50px;
 }
