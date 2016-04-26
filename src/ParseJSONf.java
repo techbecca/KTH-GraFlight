@@ -84,7 +84,7 @@ public class ParseJSONf {
             String target = String.valueOf( jsonEdge.getInt(1) );
             String etype = jsonEdge.getJSONObject(2).getString("etype");
 			String name = source + "-" + target;
-            gsgraph.addEdge(name, source, target).setAttribute("etype", etype);
+            gsgraph.addEdge(name, source, target, true).setAttribute("etype", etype);
         }
         
         return gsgraph;

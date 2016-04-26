@@ -2,6 +2,10 @@ node{
 	shape: diamond;
 }
 
+edge{
+	arrow-shape: arrow;
+}
+
 node.data{
 	fill-color: green;
 	shape: box;
