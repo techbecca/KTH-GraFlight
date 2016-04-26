@@ -4,8 +4,21 @@ node{
 
 edge{
 	arrow-shape: arrow;
+	arrow-size: 6px;
 }
 
+edge.data{
+	size: 1px;
+}
+
+edge.def{
+	size: 1px;
+	fill-color: gray;
+}
+
+edge.ctrl{
+	size: 3px;
+}
 node.data{
 	fill-color: green;
 	shape: box;
