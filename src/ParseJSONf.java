@@ -7,8 +7,19 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This class parses a JSON file
+ * @author Aiman Josefsson
+ * @since 2016-04-26
+ */
 public class ParseJSONf {
 
+	/**
+	 * This method takes a JSON file with nodes and edges and parses them into Java objects which in turn are made into a graph. 
+	 * @param file This is a JSON file
+	 * @return Returns a graph 
+	 * @throws FileNotFoundException
+	 */
     public static Graph parse(File file) throws FileNotFoundException {
 		
     	// Read an entire json file
@@ -66,7 +77,7 @@ public class ParseJSONf {
             //System.out.println(node.getAttribute("ui.class").toString());
         }
         
-        // Iterates throughthe edge array and adds them to the graph
+        // Iterates through the edge array and adds them to the graph
 		for(int i = 0; i < edges.length(); i++) {						
             JSONArray jsonEdge = edges.getJSONArray(i);
             String source = String.valueOf( jsonEdge.getInt(0));
