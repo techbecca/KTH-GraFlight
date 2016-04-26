@@ -1,11 +1,15 @@
-VPATH	= src
-sources = $(wildcard *.java)
+sources = $(wildcard src/*.java)
 classes = $(sources:.java=.class)
 
 all: $(classes)
 
-clean :
-	rm -f *.class
-
 %.class : %.java
-	javac $<
+	javac -cp "lib/*;src" $<
+	
+clean :
+	rm -f src/*.class
+	rm -f App.jar
+	
+jar : all
+	jar cvfme App.jar manifest Application -C src .
+	java -jar App.jar
