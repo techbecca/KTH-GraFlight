@@ -1,0 +1,28 @@
+node.data{
+	fill-color: green;
+	shape: box;
+}
+
+node.phi{
+	fill-color: orange;
+}
+
+node.comp{
+	fill-color: purple;
+}
+
+node.lab{
+	fill-color: blue;
+}
+
+node.ctrl{
+	fill-color: gray;
+}
+
+node.copy{
+	fill-color: red;
+}
+
+node.i32{
+	size: 25px, 25px;
+}
