@@ -34,7 +34,7 @@ public class ParseJSONf {
 
         // get the name of the compiled function
         String functionName = jsonObject.getString("name");
-        RawGraphDataF rawGraphDataF = new RawGraphDataF(functionName);
+        //RawGraphDataF rawGraphDataF = new RawGraphDataF(functionName);
 		
         // Creates the graph "functionName"
 		Graph gsgraph = new SingleGraph(functionName);
@@ -45,7 +45,7 @@ public class ParseJSONf {
         for(int i = 0; i < inputArray.length(); i++) {
             inputs[i] = inputArray.getInt(i);
         }
-        rawGraphDataF.setInputs(inputs);
+        //rawGraphDataF.setInputs(inputs);
 
         // Gets the constraints of the function
         ArrayList<String> constraints =  new ArrayList<>();
@@ -53,15 +53,16 @@ public class ParseJSONf {
         for (int i = 0; i <constraintsArray.length(); i++) {
             constraints.add(constraintsArray.getString(i));
         }
-        rawGraphDataF.setConstraints(constraints);
+        //rawGraphDataF.setConstraints(constraints);
 
         // Get entry-block-node of the function
         int entryBlockNode = jsonObject.getJSONObject("op-struct").getInt("entry-block-node");
-        rawGraphDataF.setEntryBlockNode(entryBlockNode);
+        //rawGraphDataF.setEntryBlockNode(entryBlockNode);
 
 
-        // Remove! (when possible)
 		gsgraph.setAttribute("inputs", inputs);
+        gsgraph.setAttribute("contraints", constraints);
+        gsgraph.setAttribute("entry-block-node", entryBlockNode);
 
 		// Iterates through the node array and adds them to the graph
         for(int i = 0; i < nodes.length(); i++) {
@@ -71,16 +72,17 @@ public class ParseJSONf {
             String id = String.valueOf( jsonNode.getInt(0) );
             JSONObject type = jsonNode.getJSONObject(1).getJSONObject("type");
             Node node = gsgraph.addNode(id);
-            for(String s : type.keySet()){
+            for(String s : type.keySet()) {
                 node.setAttribute(s, type.getString(s));
             }
 
-            Grapher.convert(node);
+            // This will actually be removed later, but it works this way
+            Grapher.convertNode(node);
 
         }
         
         // Iterates through the edge array and adds them to the graph
-		for(int i = 0; i < edges.length(); i++) {						
+		for(int i = 0; i < edges.length(); i++) {
             JSONArray jsonEdge = edges.getJSONArray(i);
             String source = String.valueOf( jsonEdge.getInt(0));
             String target = String.valueOf(jsonEdge.getInt(1));
@@ -89,7 +91,9 @@ public class ParseJSONf {
 			String name = source + "-" + target;
             Edge edge = gsgraph.addEdge(name, source, target, true);
 			edge.setAttribute("etype", etype);
-			edge.addAttribute("ui.class", edge.getAttribute("ui.class") + ", " + etype);
+
+            // This will actually be removed later, but it works this way
+            Grapher.convertEdge(edge);
 			
         }
         

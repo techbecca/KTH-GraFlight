@@ -1,6 +1,6 @@
 import org.graphstream.graph.Graph;
 import org.graphstream.ui.view.Viewer;
-//import org.graphstream.ui.j2dviewer.J2DGraphRenderer;
+import org.graphstream.ui.j2dviewer.J2DGraphRenderer;
 
 import javax.swing.*;
 import java.io.File;

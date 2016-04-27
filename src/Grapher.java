@@ -1,10 +1,11 @@
+import org.graphstream.graph.Edge;
 import org.graphstream.graph.Node;
 
 /**
  * Created by Aiman on 27/04/16.
  */
 public class Grapher {
-    public static void convert(Node node){
+    public static void convertNode(Node node){
         StringBuilder sb = new StringBuilder();
 
         // Builds string to add to ui.class
@@ -38,7 +39,9 @@ public class Grapher {
 
         // Add string to ui.class of the node
         node.addAttribute("ui.class", sb.toString());
-
-
+    }
+    public static void convertEdge(Edge edge){
+        String etype = edge.getAttribute("etype");
+        edge.addAttribute("ui.class", etype);
     }
 }
