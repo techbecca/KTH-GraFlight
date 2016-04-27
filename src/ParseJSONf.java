@@ -31,28 +31,50 @@ public class ParseJSONf {
         JSONArray edges = graph.getJSONArray("edges");
         JSONArray nodes = graph.getJSONArray("nodes");
         
-        // get the inputs of the compiled function
-        JSONArray inputArray = jsonObject.getJSONArray("inputs");		
-        
+
         // get the name of the compiled function
-        String functionName = jsonObject.getString("name");				
+        String functionName = jsonObject.getString("name");
+        RawGraphDataF rawGraphDataF = new RawGraphDataF(functionName);
 		
         // Creates the graph "functionName"
-		Graph gsgraph = new SingleGraph(functionName);					
+		Graph gsgraph = new SingleGraph(functionName);
 
-		int[] inputs = new int[inputArray.length()];
+        // get the inputs of the compiled function
+        JSONArray inputArray = jsonObject.getJSONArray("inputs");
+        int[] inputs = new int[inputArray.length()];
         for(int i = 0; i < inputArray.length(); i++) {
             inputs[i] = inputArray.getInt(i);
         }
-        
+        rawGraphDataF.setInputs(inputs);
+
+        // Gets the constraints of the function
+        ArrayList<String> constraints =  new ArrayList<>();
+        JSONArray constraintsArray = jsonObject.getJSONObject("op-struct").getJSONArray("constraints");
+        for (int i = 0; i <constraintsArray.length(); i++) {
+            constraints.add(constraintsArray.getString(i));
+        }
+        rawGraphDataF.setConstraints(constraints);
+
+        // Get entry-block-node of the function
+        int entryBlockNode = jsonObject.getJSONObject("op-struct").getInt("entry-block-node");
+        rawGraphDataF.setEntryBlockNode(entryBlockNode);
+
+
+        // Remove! (when possible)
 		gsgraph.setAttribute("inputs", inputs);
-		
+
 		// Iterates through the node array and adds them to the graph
-        for(int i = 0; i < nodes.length(); i++) {						
+        for(int i = 0; i < nodes.length(); i++) {
             JSONArray jsonNode = nodes.getJSONArray(i);
+
+            //rawGraphDataF.addNode(jsonNode.getJSONObject);
             String id = String.valueOf( jsonNode.getInt(0) );
             JSONObject type = jsonNode.getJSONObject(1).getJSONObject("type");
             String ntype = type.getString("ntype");
+            //Node node2 = new Node();
+
+
+
             Node node = gsgraph.addNode(id);
             // Adds an attribute called numberOfLayers
             ArrayList<Integer> layers = new ArrayList<>();
