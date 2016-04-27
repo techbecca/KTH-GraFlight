@@ -22,6 +22,22 @@ public class Match {
 
 	}
 
+	public int getPatternId() {
+		return PatternId;
+	}
+
+	public int getInstructionId() {
+		return InstructionId;
+	}
+
+	public int[] getGraphNodes() {
+		return GraphNodes;
+	}
+	
+	
+	
+	
+
 
 }
 
