@@ -70,40 +70,20 @@ public class ParseJSONf {
             //rawGraphDataF.addNode(jsonNode.getJSONObject);
             String id = String.valueOf( jsonNode.getInt(0) );
             JSONObject type = jsonNode.getJSONObject(1).getJSONObject("type");
-            String ntype = type.getString("ntype");
-            //Node node2 = new Node();
-
-
-
             Node node = gsgraph.addNode(id);
-            // Adds an attribute called numberOfLayers
-            ArrayList<Integer> layers = new ArrayList<>();
-            
-			node.setAttribute("layers", layers);
-            // Adds classes to the node depending on what the nodetype is
-			node.setAttribute("ui.class", ntype);
-            //node.setAttribute("xy", i*10, i*5);
-            if(type.has("dtype")){
-                node.addAttribute("ui.class", node.getAttribute("ui.class") + ", " + type.getString("dtype"));
+            for(String s : type.keySet()){
+                node.setAttribute(s, type.getString(s));
             }
-            // The entry node is special and gets its own class
-            if(type.has("block-name")){
-                if(type.getString("block-name").equals("entry")){
-                    node.addAttribute("ui.class", node.getAttribute("ui.class") + ", " + "entry");
-                    node.setAttribute("ui.label", "Entry");
-                    //node.setAttribute("x", 10);
-                    //System.out.println(node.getAttributeKeySet());
-                }
-            }
-			//node.setAttribute("ui.label", id);
-            //System.out.println(node.getAttribute("ui.class").toString());
+
+            Grapher.convert(node);
+
         }
         
         // Iterates through the edge array and adds them to the graph
 		for(int i = 0; i < edges.length(); i++) {						
             JSONArray jsonEdge = edges.getJSONArray(i);
             String source = String.valueOf( jsonEdge.getInt(0));
-            String target = String.valueOf( jsonEdge.getInt(1) );
+            String target = String.valueOf(jsonEdge.getInt(1));
             String etype = jsonEdge.getJSONObject(2).getString("etype");
 			
 			String name = source + "-" + target;
