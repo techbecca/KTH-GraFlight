@@ -1,27 +1,27 @@
-
-import java.util.ArrayList;
-
 /**
  * Saves matches between nodes. 
  * @author Mathilda Strandberg von Schantz
- * @since 2016-04-26
+ * @since 2016-04-27
  */
 public class Match {
 
-	final private ArrayList<NodeToNode> NodeToNodeList;
-	final private int MatchId;
+	final private int PatternId;
+	final private int InstructionId;
+	final private int[] GraphNodes;
 
 	/**
 	 * This is a constructor
 	 * @param NodeToNodeList List of matches between nodes in the function graph and pattern graph
 	 * @param MatchId Variable for the matchID
 	 */
-	public Match(ArrayList<NodeToNode> NodeToNodeList, int MatchId) {
+	public Match(int[] GraphNodes, 	int PatternId, int InstructionId) {
 
-		this.NodeToNodeList = NodeToNodeList;
-		this.MatchId = MatchId;
+		this.PatternId = PatternId;
+		this.InstructionId = InstructionId;
+		this.GraphNodes = GraphNodes;
 
 	}
-}
 
+
+}
 
