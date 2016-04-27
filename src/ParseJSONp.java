@@ -75,7 +75,7 @@ public class ParseJSONp {
 		}
 
 		JSONObject jObj = new JSONObject(jsonString);				
-		//		JSONObject graph = jsonObject.getJSONObject("op-struct").getJSONObject("graph");
+		//JSONObject graph = jsonObject.getJSONObject("op-struct").getJSONObject("graph");
 
 		JSONArray Pattern = jObj.getJSONArray("match-data");
 

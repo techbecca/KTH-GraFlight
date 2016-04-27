@@ -1,10 +1,18 @@
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Node;
 
+import java.awt.*;
+
 /**
- * Created by Aiman on 27/04/16.
+ * @author Aiman Josefsson & Rebecca Hellström Karlsson
+ * @version 1.0
+ * @since 27/04/16
  */
 public class Grapher {
+    /**
+     * Converts type information in a node from attributes to classes
+     * @param node
+     */
     public static void convertNode(Node node){
         StringBuilder sb = new StringBuilder();
 
@@ -43,5 +51,11 @@ public class Grapher {
     public static void convertEdge(Edge edge){
         String etype = edge.getAttribute("etype");
         edge.addAttribute("ui.class", etype);
+    }
+
+    public static Color instructionColor(int id){
+        Color col = new Color(Color.HSBtoRGB((float) id/360,(float) 0.5,(float) 0.5));
+        System.out.println(col.toString());
+        return col;
     }
 }

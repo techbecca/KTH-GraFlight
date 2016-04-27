@@ -35,7 +35,7 @@ public class ParseJSONf {
         // get the name of the compiled function
         String functionName = jsonObject.getString("name");
         //RawGraphDataF rawGraphDataF = new RawGraphDataF(functionName);
-		
+
         // Creates the graph "functionName"
 		Graph gsgraph = new SingleGraph(functionName);
 
@@ -72,6 +72,7 @@ public class ParseJSONf {
             String id = String.valueOf( jsonNode.getInt(0) );
             JSONObject type = jsonNode.getJSONObject(1).getJSONObject("type");
             Node node = gsgraph.addNode(id);
+            node.setAttribute("ui.label", id);
             for(String s : type.keySet()) {
                 node.setAttribute(s, type.getString(s));
             }
