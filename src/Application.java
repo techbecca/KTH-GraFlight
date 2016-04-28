@@ -1,6 +1,6 @@
 import org.graphstream.graph.Graph;
-import org.graphstream.ui.view.Viewer;
-import org.graphstream.ui.j2dviewer.J2DGraphRenderer;
+import org.jgrapht.DirectedGraph;
+import org.jgrapht.graph.DefaultEdge;
 
 import javax.swing.*;
 import java.io.File;
@@ -16,14 +16,21 @@ public class Application {
     public static void main(String args[]) throws FileNotFoundException {
 
 
-
 		// Use the advanced renderer.
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+				
+		File file = chooseFFile(args);
 		
-		Graph g = ParseJSONf.parse(chooseFFile(args));
+		Graph g = ParseJSONf.parse(file);
         ArrayList<Match> matches = ParseJSONp.parsep(choosePFile(args));
         g.addAttribute("ui.stylesheet", "url('." + File.separator + "style" + File.separator + "style.css')");
         Grapher.paintPatterns(matches, g);
+        
+//      adds positioning later
+        DirectedGraph<String, DefaultEdge> Dg = JGraph.jgraph(file);
+        double[][] positions = LayGraph.onMe(Dg);        
+        Grapher.positioning(positions, g);     
+        
         g.display();
 		
     }
