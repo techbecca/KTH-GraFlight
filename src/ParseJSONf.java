@@ -107,7 +107,7 @@ public class ParseJSONf {
             String etype = jsonEdge.getJSONObject(2).getString("etype");
 			
 			String name = source + "-" + target;
-            Edge edge = gsgraph.addEdge(name, source, target, true);
+            Edge edge = gsgraph.addEdge(name, source, target);
 			edge.setAttribute("etype", etype);
 			edge.addAttribute("ui.class", edge.getAttribute("ui.class") + ", " + etype);
 			
