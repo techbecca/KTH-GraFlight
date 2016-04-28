@@ -24,6 +24,20 @@ public class Grapher {
             }
         }
     }
+	
+		public static Graph positioning(double[][] positions, Graph g){
+
+		//		iterates through the rows in the positions double-array
+		for(int x = 0; x < positions.length; x++){
+
+			g.getNode(x).addAttribute("x", positions[x][0]);
+			g.getNode(x).addAttribute("y", positions[x][1]);
+
+		}
+
+		return g;			
+
+	}
 
     /**
      * Converts type information in a node from attributes to classes
