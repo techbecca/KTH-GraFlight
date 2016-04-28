@@ -9,7 +9,7 @@ j : CP = "lib/*:src"
 j : all
 
 %.class : %.java
-	javac -cp $(CP) $<
+	javac -cp $(CP) -proc:none $<
 	
 clean :
 	rm -f src/*.class
