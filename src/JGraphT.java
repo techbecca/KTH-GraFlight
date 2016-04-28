@@ -1,7 +1,9 @@
+import java.awt.Dimension;
 import java.io.File;
 import java.util.Map;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 import org.jgraph.JGraph;
 import org.jgrapht.DirectedGraph;
@@ -29,10 +31,7 @@ public class JGraphT {
 			json = new File("fact.ce.cc.be.f.json");
 			
 			// Get the JSON file parsed and inserted into the JUNG graph
-			g = parse.get(json,g);
-			
-			// Debug printout
-			System.out.println(g.vertexSet());
+			g = ParseJGraph.get(json,g);
 		
 		   // create a visualization using JGraph, via the adapter
 		   JGraph jgraph = new JGraph( new JGraphModelAdapter( g ) );
