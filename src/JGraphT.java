@@ -38,11 +38,14 @@ public class JGraphT {
 		   jgraph.doLayout();
 
 		   JFrame frame = new JFrame();
-		   frame.getContentPane().add(jgraph);
 		   frame.setTitle("JGraphT Adapter to JGraph Demo");
 		   frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		   frame.pack();
 		   frame.setVisible(true);
+
+			// Added vertical scrollbar
+		   JScrollPane sp = new JScrollPane(jgraph, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	       frame.getContentPane().add(sp);
 
 		   final  JGraphHierarchicalLayout hir = new JGraphHierarchicalLayout();
 		   final JGraphFacade graphFacade = new JGraphFacade(jgraph);
