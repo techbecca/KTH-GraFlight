@@ -2,6 +2,7 @@
 *.class
 *.iml
 **/.idea
+**/.metadata
 local-values.conf
 target
 *~
