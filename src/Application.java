@@ -5,6 +5,7 @@ import org.graphstream.ui.j2dviewer.J2DGraphRenderer;
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 /**
  * This class is a driver class for parseJSONf
@@ -14,11 +15,15 @@ import java.io.FileNotFoundException;
 public class Application {
     public static void main(String args[]) throws FileNotFoundException {
 
+
+
 		// Use the advanced renderer.
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 		
 		Graph g = ParseJSONf.parse(chooseFFile(args));
-        g.addAttribute("ui.stylesheet", "url('./style/style.css')");
+        ArrayList<Match> matches = ParseJSONp.parsep(choosePFile(args));
+        g.addAttribute("ui.stylesheet", "url('." + File.separator + "style" + File.separator + "style.css')");
+        Grapher.paintPatterns(matches, g);
         g.display();
 		
     }

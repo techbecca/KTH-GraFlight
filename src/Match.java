@@ -33,10 +33,6 @@ public class Match {
 	public int[] getGraphNodes() {
 		return GraphNodes;
 	}
-	
-	
-	
-	
 
 
 }

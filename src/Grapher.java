@@ -1,7 +1,9 @@
 import org.graphstream.graph.Edge;
+import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * @author Aiman Josefsson & Rebecca Hellström Karlsson
@@ -9,6 +11,20 @@ import java.awt.*;
  * @since 27/04/16
  */
 public class Grapher {
+
+    public static void paintPatterns(ArrayList<Match> matches, Graph g){
+        for(Match match : matches){
+            int[] nodes = match.getGraphNodes();
+            for(int i = 0; i < nodes.length; i++){
+                Node n = g.getNode(String.valueOf(nodes[i]));
+                n.setAttribute("ui.class", n.getAttribute("ui.class") + ", " + "instruction" + match.getInstructionId());
+                Color col = instructionColor(match.getInstructionId());
+                n.setAttribute("ui.style", "size: 15px, 15px;");
+                n.setAttribute("ui.style", "stroke-color: rgb(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() + ");");
+            }
+        }
+    }
+
     /**
      * Converts type information in a node from attributes to classes
      * @param node
@@ -55,7 +71,7 @@ public class Grapher {
 
     public static Color instructionColor(int id){
         Color col = new Color(Color.HSBtoRGB((float) id/360,(float) 0.5,(float) 0.5));
-        System.out.println(col.toString());
+        //System.out.println(col.toString());
         return col;
     }
 }
