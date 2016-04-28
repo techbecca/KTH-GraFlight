@@ -13,6 +13,14 @@ import org.jgrapht.graph.DefaultEdge;
 
 import com.jgraph.layout.JGraphFacade;
 import com.jgraph.layout.hierarchical.JGraphHierarchicalLayout;
+import com.jgraph.layout.JGraphLayout;
+import com.jgraph.layout.tree.JGraphTreeLayout;
+import com.jgraph.layout.tree.JGraphAbstractTreeLayout;
+import com.jgraph.layout.tree.JGraphRadialTreeLayout;
+import com.jgraph.layout.tree.JGraphCompactTreeLayout;
+import com.jgraph.layout.tree.JGraphMoenLayout;
+import com.jgraph.layout.tree.OrganizationalChart;
+import com.jgraph.layout.organic.JGraphFastOrganicLayout;
 
 /**
  * This class visualizes a JSON file into a graph
@@ -32,26 +40,57 @@ public class JGraphT {
 
 			// Get the JSON file parsed and inserted into the JUNG graph
 			g = ParseJGraph.get(json,g);
+/*
+		   final  JGraphHierarchicalLayout hir = new JGraphHierarchicalLayout();
+		   hir.setInterRankCellSpacing(10.0);
+		   hir.setParallelEdgeSpacing(2.0);
+		   hir.setInterHierarchySpacing(10.0);
+		   hir.setFineTuning(true);
+		   hir.setDeterministic(true);
+*/
+		   final JGraphCompactTreeLayout hir = new JGraphCompactTreeLayout();
+		   //final JGraphRadialTreeLayout hir = new JGraphRadialTreeLayout();
+		   hir.setLevelDistance(10.0);
+		   hir.setNodeDistance(10);
+		   hir.setTreeDistance(80);
+		   hir.setRouteTreeEdges(false);
+		   hir.setPositionMultipleTrees(true);
+		   hir.setOrientation(1);
+		   System.out.println("lvl "+hir.getLevelDistance());
+		   System.out.println("node "+hir.getNodeDistance());
+		   System.out.println("tree "+hir.getTreeDistance());
+		   System.out.println("route "+hir.getRouteTreeEdges());
+		   System.out.println("multi "+hir.isPositionMultipleTrees());
+
 
 		   // create a visualization using JGraph, via the adapter
 		   JGraph jgraph = new JGraph( new JGraphModelAdapter( g ) );
 		   jgraph.doLayout();
 
-		   JFrame frame = new JFrame();
+		   final JGraphFacade graphFacade = new JGraphFacade(jgraph);
+		   hir.run(graphFacade);
+
+		   double[][] locations = graphFacade.getLocations(graphFacade.getVertices().toArray());
+
+		   for(int c = 0; c < locations.length; c++) {
+			   System.out.print(locations[c][0]+" ");
+			   System.out.println(locations[c][1]);
+		   }
+
+		   final Map nestedMap = graphFacade.createNestedMap(true, true);
+		   jgraph.getGraphLayoutCache().edit(nestedMap);
+
+			JFrame frame = new JFrame();
+
+			// Added vertical scrollbar
+		   JScrollPane sp = new JScrollPane(jgraph, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	       frame.getContentPane().add(sp);
+
+
 		   frame.setTitle("JGraphT Adapter to JGraph Demo");
 		   frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		   frame.pack();
 		   frame.setVisible(true);
-
-			// Added vertical scrollbar
-		   JScrollPane sp = new JScrollPane(jgraph, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-	       frame.getContentPane().add(sp);
-
-		   final  JGraphHierarchicalLayout hir = new JGraphHierarchicalLayout();
-		   final JGraphFacade graphFacade = new JGraphFacade(jgraph);
-		   hir.run(graphFacade);
-		   final Map nestedMap = graphFacade.createNestedMap(true, true);
-		   jgraph.getGraphLayoutCache().edit(nestedMap);
 
 	}
 }
