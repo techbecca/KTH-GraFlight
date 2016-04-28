@@ -18,7 +18,7 @@ public class Application {
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 		
 		Graph g = ParseJSONf.parse(chooseFFile(args));
-        g.addAttribute("ui.stylesheet", "url('./style/style.css')");
+        g.addAttribute("ui.stylesheet", "url('/style/style.css')");
         g.display();
 		
     }
