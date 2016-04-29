@@ -29,16 +29,11 @@ public class Application {
         g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
         Grapher.paintPatterns(matches, g);
 
-        // Adds positioning
-        DirectedGraph<String, DefaultEdge> Dg = new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
-        Dg = ParseJSONf.fromGStoJG(g, Dg);
-
-        //DirectedGraph<String, DefaultEdge> Dg = JGraph.jgraph(file);
-        double[][] positions = LayGraph.onMe(Dg);
-        Grapher.positioning(positions, g);
-
+        // Add positioning
+        Grapher.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)), g);
         Grapher.xyxize(g);
 
+        // Display without default layout (false)
 		g.display(false);
 
 	}

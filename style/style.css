@@ -2,19 +2,23 @@ edge{
 	arrow-shape: arrow;
 	arrow-size: 6px;
 }
-
 edge.data{
 	size: 1px;
 }
-
 edge.def{
 	size: 1px;
 	fill-color: gray;
 }
-
 edge.ctrl{
 	size: 3px;
 }
+
+node{
+	size: 20px, 20px;
+	stroke-mode: plain;
+	stroke-width: 2px;
+}
+
 node.data{
 	fill-color: green;
 	shape: box;
@@ -26,10 +30,12 @@ node.phi{
 
 node.comp{
 	fill-color: purple;
+	text-color: white;
 }
 
 node.lab{
 	fill-color: blue;
+	text-color: white;
 }
 
 node.ctrl{
@@ -46,4 +52,8 @@ node.i32{
 
 node.entry{
 	size: 50px, 50px;
+}
+
+node{
+	fill-color: white;
 }
