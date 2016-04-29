@@ -74,6 +74,9 @@ public class ParseJSONf {
             Node node = gsgraph.addNode(id);
             node.setAttribute("ui.label", id);
             for(String s : type.keySet()) {
+            	if (type.get(s).equals(null)){
+            		continue;
+            		}
                 node.setAttribute(s, type.getString(s));
             }
 
