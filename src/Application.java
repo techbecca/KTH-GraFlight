@@ -15,17 +15,17 @@ import java.util.ArrayList;
 public class Application {
     static String filePathP;
     public static void main(String args[]) throws FileNotFoundException {
-		// Use the advanced renderer.
+		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 				
 		File file = chooseFFile(args);
 		
 		Graph g = ParseJSONf.parse(file);
         ArrayList<Match> matches = ParseJSONp.parsep(choosePFile(args));
-        g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style2.css')");
+        g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
         Grapher.paintPatterns(matches, g);
         
-//      adds positioning later
+        // Adds positioning later
         DirectedGraph<String, DefaultEdge> Dg = JGraph.jgraph(file);
         double[][] positions = LayGraph.onMe(Dg);        
         Grapher.positioning(positions, g);     

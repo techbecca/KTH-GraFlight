@@ -1,3 +1,4 @@
+import org.jgrapht.DirectedGraph;
 import org.json.*;
 import org.graphstream.graph.implementations.*;
 import org.graphstream.graph.*;
@@ -99,5 +100,38 @@ public class ParseJSONf {
         }
         
         return gsgraph;
+    }
+
+    public static DirectedGraph fromGStoJG(File file, DirectedGraph graph) throws FileNotFoundException {
+
+
+        // Read an entire json file
+        String json = new Scanner(file).useDelimiter("\\A").next();
+
+        // Creates a handy object from the String
+        JSONObject jsonObject = new JSONObject(json);
+        JSONObject graph1 = jsonObject.getJSONObject("op-struct").getJSONObject("graph");
+        JSONArray edges = graph1.getJSONArray("edges");
+        JSONArray nodes = graph1.getJSONArray("nodes");
+
+        // Iterates through the node array and adds them to the graph
+        for (int i = 0; i < nodes.length(); i++) {
+            JSONArray jsonNode = nodes.getJSONArray(i);
+            String id = String.valueOf(jsonNode.getInt(0));
+            graph.addVertex(id);
+        }
+
+        // Iterates through the edge array and adds them to the graph
+        for (int i = 0; i < edges.length(); i++) {
+            JSONArray jsonEdge = edges.getJSONArray(i);
+            String source = String.valueOf(jsonEdge.getInt(0));
+            String target = String.valueOf(jsonEdge.getInt(1));
+            String etype = jsonEdge.getJSONObject(2).getString("etype");
+            String name = source + "-" + target;
+            // Create a pair from the adjacent nodes
+            graph.addEdge(source, target);
+        }
+
+        return graph;
     }
 }
