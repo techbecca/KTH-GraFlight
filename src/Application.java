@@ -22,7 +22,7 @@ public class Application {
 		
 		Graph g = ParseJSONf.parse(file);
         ArrayList<Match> matches = ParseJSONp.parsep(choosePFile(args));
-        g.addAttribute("ui.stylesheet", "url('." + File.separator + "style" + File.separator + "style2.css')");
+        g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style2.css')");
         Grapher.paintPatterns(matches, g);
         
 //      adds positioning later
