@@ -102,14 +102,24 @@ public class ParseJSONf {
         return gsgraph;
     }
 
+    /**
+     * This method takes a Graphstream graph and copies the nodes and edges from that graph into a directed jgraph,
+     * which will be used for positioning.
+     * @param gsgraph is the Graphstream graph with nodes and edges
+     * @param graph is an empty DirectedGraph (from the JGraph library)
+     * @return a directed graph in the JGraph format
+     * @throws FileNotFoundException
+     */
     public static DirectedGraph fromGStoJG(Graph gsgraph, DirectedGraph graph) throws FileNotFoundException {
 
+        // Copies the nodes over to the directed graph
         for(Node n : gsgraph.getNodeSet()){
             graph.addVertex(n.getId());
         }
 
+        // Copies the edges over to the directed graph
         for(Edge e : gsgraph.getEdgeSet()){
-            graph.addEdge(e.getSourceNode(), e.getTargetNode());
+            graph.addEdge(e.getSourceNode().toString(), e.getTargetNode().toString());
         }
 
         return graph;

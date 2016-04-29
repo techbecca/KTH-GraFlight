@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.graph.DefaultDirectedGraph;
@@ -17,7 +18,7 @@ public class JGraph {
 	 * @param file A proper JSON file
 	 * @return graph
 	 */
-	public static DirectedGraph jgraph (File file){
+	public static DirectedGraph jgraph (File file) throws FileNotFoundException {
 
 		// Create a JGraph graph
 		DirectedGraph<String, DefaultEdge> g = new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
@@ -28,7 +29,7 @@ public class JGraph {
 
 
 		// Get the JSON file parsed and inserted into the JGraph
-		g = ParseJSONf.fromGStoJG(ParseJSONf.parse(file),g);
+		g = ParseJSONf.fromGStoJG(ParseJSONf.parse(file), g);
 
 		return g;
 
