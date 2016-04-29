@@ -9,6 +9,8 @@ import org.jgrapht.graph.DefaultEdge;
 import org.jgraph.JGraph;
 import com.jgraph.layout.JGraphFacade;
 import com.jgraph.layout.tree.JGraphCompactTreeLayout;
+import com.jgraph.layout.tree.JGraphRadialTreeLayout;
+import com.jgraph.layout.hierarchical.JGraphHierarchicalLayout;
 
 /**
  * This class formats a Directed JGraph as a compact tree.
@@ -26,13 +28,27 @@ public class LayGraph {
     public static double[][] onMe(DirectedGraph<String, DefaultEdge> g) {
 
         // Create and configure the layout
-        final JGraphCompactTreeLayout hir = new JGraphCompactTreeLayout();
-        hir.setLevelDistance(10.0);
-        hir.setNodeDistance(10);
-        hir.setTreeDistance(80);
-        hir.setRouteTreeEdges(false);
-        hir.setPositionMultipleTrees(true);
-        hir.setOrientation(1);
+		final JGraphCompactTreeLayout hir = new JGraphCompactTreeLayout();
+		hir.setLevelDistance(10.0);
+		hir.setNodeDistance(10);
+		hir.setTreeDistance(80);
+		hir.setRouteTreeEdges(false);
+		hir.setPositionMultipleTrees(true);
+		hir.setOrientation(1);
+
+		/*JGraphHierarchicalLayout hir = new JGraphHierarchicalLayout();
+		hir.setLayoutFromSinks(true);
+		hir.setFineTuning(true);
+		hir.setInterRankCellSpacing(5.0);
+		hir.setIntraCellSpacing(80.0);*/
+
+		/*JGraphRadialTreeLayout hir = new JGraphRadialTreeLayout();
+		hir.setAutoRadius(true);
+		hir.setMaxradiusx(40.0);
+		hir.setMaxradiusy(40.0);
+		hir.setMinradiusy(20.0);
+		hir.setMinradiusy(20.0);
+		hir.setAngleOffset(0.5);*/
 
         // create a visualization using JGraph, via the adapter
         JGraph jgraph = new JGraph(new JGraphModelAdapter(g));
@@ -48,7 +64,7 @@ public class LayGraph {
         return graphFacade.getLocations(graphFacade.getVertices().toArray());
     }
 
-    public static void main(String[] args) throws FileNotFoundException { //Is this just for testing, or otherwise?
+    public static void main(String[] args) throws FileNotFoundException {
 
         // Create a JGraph graph
         DirectedGraph<String, DefaultEdge> g = new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);

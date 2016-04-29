@@ -17,8 +17,8 @@ public class Application {
 
     static String filePathP;
     public static void main(String args[]) throws FileNotFoundException {
-		// Use the advanced renderer
 
+		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
 		File file = chooseFFile(args);
@@ -28,12 +28,13 @@ public class Application {
         ArrayList<Match> matches = ParseJSONp.parsep(choosePFile());
         g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
         Grapher.paintPatterns(matches, g);
-        
+
         // Adds positioning
         DirectedGraph<String, DefaultEdge> Dg = new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
         Dg = ParseJSONf.fromGStoJG(g, Dg);
+
         //DirectedGraph<String, DefaultEdge> Dg = JGraph.jgraph(file);
-        double[][] positions = LayGraph.onMe(Dg);        
+        double[][] positions = LayGraph.onMe(Dg);
         Grapher.positioning(positions, g);
 
         Grapher.xyxize(g);
@@ -43,8 +44,8 @@ public class Application {
 	}
 	/**
 	 * This method opens a window to choose JSON files
-	 * @param a 
-	 * @return returns the chosen file 
+	 * @param a
+	 * @return returns the chosen file
 	 */
 	public static File chooseFFile(String[] a) {
 		File file = null;
@@ -55,7 +56,8 @@ public class Application {
             String[] slicedPath = a[0].split("");
             slicedPath[slicedPath.length-6]="p";
             filePathP = String.join("", slicedPath);
-		}else{
+		}
+		else{
 			// If argument list is empty it will let you choose a file with JFileChooser
 			final JFileChooser fc = new JFileChooser();
 			int returnVal = fc.showOpenDialog(null);
@@ -64,7 +66,8 @@ public class Application {
                 String[] slicedPath = file.getPath().split("");
                 slicedPath[slicedPath.length-6]="p";
                 filePathP = String.join("", slicedPath);
-			}else{
+			}
+			else{
 				// This is for those who fail to choose a file
 				System.out.println("You failed to choose a file, n00b...");
 			}
@@ -81,7 +84,6 @@ public class Application {
 	 */
 	public static File choosePFile() {
 		File file = new File(filePathP);
-
 		return file;
 	}
 }
