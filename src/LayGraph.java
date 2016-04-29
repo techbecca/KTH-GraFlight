@@ -74,7 +74,7 @@ public class LayGraph {
         json = new File(args[0]);
 
         // Get the JSON file parsed and inserted into the JUNG graph
-        g = ParseJSONf.fromGStoJG(ParseJSONf.parse(json), g);
+        g = ParseJSONf.fromGStoJG(ParseJSONf.parse(json));
 
         double[][] coor = onMe(g);
 

@@ -1,4 +1,6 @@
 import org.jgrapht.DirectedGraph;
+import org.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.graph.DefaultEdge;
 import org.json.*;
 import org.graphstream.graph.implementations.*;
 import org.graphstream.graph.*;
@@ -106,25 +108,24 @@ public class ParseJSONf {
     }
 
     /**
-     * This method takes a Graphstream graph and copies the nodes and edges from that graph into a directed jgraph,
+     * This method takes a Graphstream graph and copies the nodes and edges from that graph into a directed JGraph,
      * which will be used for positioning.
      * @param gsgraph is the Graphstream graph with nodes and edges
-     * @param graph is an empty DirectedGraph (from the JGraph library)
-     * @return a directed graph in the JGraph format
+     * @return a directed graph in the JGraph format: DirectedGraph<String, DefaultEdge>
      * @throws FileNotFoundException
      */
-    public static DirectedGraph fromGStoJG(Graph gsgraph, DirectedGraph graph) throws FileNotFoundException {
-
+    public static DirectedGraph fromGStoJG(Graph gsgraph) throws FileNotFoundException {
+        DirectedGraph<String, DefaultEdge> directedGraph = new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
         // Copies the nodes over to the directed graph
         for(Node n : gsgraph.getNodeSet()){
-            graph.addVertex(n.getId());
+            directedGraph.addVertex(n.getId());
         }
 
         // Copies the edges over to the directed graph
         for(Edge e : gsgraph.getEdgeSet()){
-            graph.addEdge(e.getSourceNode().toString(), e.getTargetNode().toString());
+            directedGraph.addEdge(e.getSourceNode().toString(), e.getTargetNode().toString());
         }
 
-        return graph;
+        return directedGraph;
     }
 }
