@@ -28,7 +28,7 @@ public class JGraph {
 
 
 		// Get the JSON file parsed and inserted into the JGraph
-		g = ParseJGraph.get(file,g);
+		g = ParseJSONf.fromGStoJG(ParseJSONf.parse(file),g);
 
 		return g;
 

@@ -45,7 +45,7 @@ public class LayGraph {
 		   return graphFacade.getLocations(graphFacade.getVertices().toArray());
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) { //Is this just for testing, or otherwise?
 
 			// Create a JGraph graph
 			DirectedGraph<String, DefaultEdge> g = new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
@@ -55,7 +55,7 @@ public class LayGraph {
 			json = new File(args[0]);
 
 			// Get the JSON file parsed and inserted into the JUNG graph
-			g = ParseJGraph.get(json,g);
+			g = ParseJSONf.fromGStoJG(ParseJSONf.parse(json),g);
 
 			double[][] coor = onMe(g);
 
