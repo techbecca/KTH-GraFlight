@@ -4,9 +4,19 @@ import org.jgrapht.DirectedGraph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
+
+/**
+ * Creates a DirectedGraph from a JSON file, with the aid of ParseJGraph.
+ * @author Mathilda Strandberg von Schantz
+ * @since 2016-04-28
+ */
 public class JGraph {
 
-
+	/**
+	 * This method exists solely to create a DirectedGraph for LayGraph to use.
+	 * @param file A proper JSON file
+	 * @return graph
+	 */
 	public static DirectedGraph jgraph (File file){
 
 		// Create a JGraph graph
