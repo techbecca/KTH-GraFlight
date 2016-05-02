@@ -42,13 +42,13 @@ public class ParseJSONf {
         // Creates the graph "functionName"
 		Graph gsgraph = new SingleGraph(functionName);
 
-        // get the inputs of the compiled function
+        // Get the inputs of the compiled function
         JSONArray inputArray = jsonObject.getJSONArray("inputs");
         int[] inputs = new int[inputArray.length()];
         for(int i = 0; i < inputArray.length(); i++) {
             inputs[i] = inputArray.getInt(i);
         }
-        //rawGraphDataF.setInputs(inputs);
+
 
         // Gets the constraints of the function
         ArrayList<String> constraints =  new ArrayList<>();
@@ -56,22 +56,24 @@ public class ParseJSONf {
         for (int i = 0; i <constraintsArray.length(); i++) {
             constraints.add(constraintsArray.getString(i));
         }
-        //rawGraphDataF.setConstraints(constraints);
+
 
         // Get entry-block-node of the function
         int entryBlockNode = jsonObject.getJSONObject("op-struct").getInt("entry-block-node");
-        //rawGraphDataF.setEntryBlockNode(entryBlockNode);
 
 
+        // Sets attributes for the previously gotten information
 		gsgraph.setAttribute("inputs", inputs);
         gsgraph.setAttribute("contraints", constraints);
         gsgraph.setAttribute("entry-block-node", entryBlockNode);
+        LayGraph.onMe(ParseJSONf.fromGStoJG(gsgraph));
+
+
 
 		// Iterates through the node array and adds them to the graph
         for(int i = 0; i < nodes.length(); i++) {
             JSONArray jsonNode = nodes.getJSONArray(i);
 
-            //rawGraphDataF.addNode(jsonNode.getJSONObject);
             String id = String.valueOf( jsonNode.getInt(0) );
             JSONObject type = jsonNode.getJSONObject(1).getJSONObject("type");
             Node node = gsgraph.addNode(id);
@@ -91,7 +93,7 @@ public class ParseJSONf {
         // Iterates through the edge array and adds them to the graph
 		for(int i = 0; i < edges.length(); i++) {
             JSONArray jsonEdge = edges.getJSONArray(i);
-            String source = String.valueOf( jsonEdge.getInt(0));
+            String source = String.valueOf(jsonEdge.getInt(0));
             String target = String.valueOf(jsonEdge.getInt(1));
             String etype = jsonEdge.getJSONObject(2).getString("etype");
 			
@@ -127,5 +129,23 @@ public class ParseJSONf {
         }
 
         return directedGraph;
+    }
+
+    public static void main(String[] args) throws FileNotFoundException{
+
+        // Look for a JSON file from the argument
+        File json = null;
+        json = new File(args[0]);
+
+
+        Graph gsgraph = parse(json);
+
+
+        //System.out.println(String.valueOf(gsgraph.getAttribute("inputs")));
+        //System.out.println(String.valueOf(gsgraph.getAttribute("constraints")));
+        int lol = gsgraph.getAttribute("entry-block-node");
+        String lol2 = String.valueOf(lol);
+        System.out.println(lol2);
+
     }
 }
