@@ -128,4 +128,8 @@ public class ParseJSONf {
 
         return directedGraph;
     }
+
+    public static void main (String[] args) throws FileNotFoundException {
+
+    }
 }
