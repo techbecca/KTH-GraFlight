@@ -1,9 +1,13 @@
 import org.graphstream.graph.Graph;
-import org.jgrapht.DirectedGraph;
-import org.jgrapht.graph.DefaultDirectedGraph;
-import org.jgrapht.graph.DefaultEdge;
+import org.graphstream.graph.Node;
+import org.graphstream.graph.implementations.MultiGraph;
+import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.ui.swingViewer.*;
+import org.graphstream.ui.view.*;
+
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -17,7 +21,30 @@ public class Application {
 
     static String filePathP;
     public static void main(String args[]) throws FileNotFoundException {
+        // Testing new rendering options
+        /*
+        Graph grr = new SingleGraph("embedded");
 
+        Node A = grr.addNode("A"); A.setAttribute("xy", 10, 10);
+        Node B = grr.addNode("B"); B.setAttribute("xy", 10,20);
+        Node C = grr.addNode("C"); C.setAttribute("xy", 10,0);
+
+        grr.addEdge("AB", "A", "B");
+        grr.addEdge("BC", "C", "B");
+
+        Viewer viewer = new Viewer(grr, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+
+        View view = viewer.addDefaultView(false);
+
+        JFrame frame = new JFrame();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
+        frame.setSize(screenSize);
+
+        frame.setVisible(true);
+
+        frame.add((Component) view);
+/*/
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
@@ -34,8 +61,20 @@ public class Application {
         Grapher.xyxize(g);
 
         // Display without default layout (false)
-		g.display(false);
+		//g.display(false);
+        Viewer viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
 
+        View view = viewer.addDefaultView(false);
+
+        JFrame frame = new JFrame();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
+        frame.setSize(screenSize);
+
+        frame.setVisible(true);
+
+        frame.add((Component) view);
+//*/
 	}
 	/**
 	 * This method opens a window to choose JSON files
