@@ -5,6 +5,11 @@ import org.graphstream.graph.Node;
 import java.awt.Color;
 import java.util.ArrayList;
 
+/**
+ *Our very own special-purpose SingleGraph subclass.
+ *@version 1.0
+ *@since 2016-05-04
+ */
 class Graphiel extends SingleGraph
 {
 	public Graphiel(String id)
@@ -19,7 +24,6 @@ class Graphiel extends SingleGraph
 				Node n = getNode(String.valueOf(nodes[i]));
 				n.setAttribute("ui.class", n.getAttribute("ui.class") + ", " + "instruction" + match.getInstructionId());
 				Color col = instructionColor(match.getInstructionId());
-				n.setAttribute("ui.style", "size: 15px, 15px;");
 				n.setAttribute("ui.style", "stroke-color: rgb(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() + ");");
 			}
 		}
@@ -27,7 +31,7 @@ class Graphiel extends SingleGraph
 	
 	public void positioning(double[][] positions){
 
-		//		iterates through the rows in the positions double-array
+		//	iterates through the rows in the positions double-array
 		for(int x = 0; x < positions.length; x++){
 
 			getNode(x).addAttribute("x", positions[x][0]);
