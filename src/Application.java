@@ -68,7 +68,8 @@ public class Application {
         Viewer viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         View view = viewer.addDefaultView(false);
 
-        JFrame frame = new JFrame();
+
+        JFrame frame = new JFrame("GraFlight");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
         frame.setSize(screenSize);
