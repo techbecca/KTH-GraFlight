@@ -192,4 +192,21 @@ public class Grapher {
 		//System.out.println(col.toString());
 		return col;
 	}
+	
+	
+
+     /**
+      *Generates a multiline string of information about a given function graph. 
+      *@param graph A ParseJSONf-generated graph
+      *@return infostring
+      */
+	public static String infoString(Graph graph)
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("  Name: ").append(graph.toString()).append('\n');
+		sb.append("# Nodes: ").append(graph.getNodeCount()).append('\n');
+		sb.append("# Edges: ").append(graph.getEdgeCount()).append('\n');
+		
+		return sb.toString();
+	}
 }
