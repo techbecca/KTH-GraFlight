@@ -1,8 +1,6 @@
 import org.graphstream.graph.Graph;
-import org.jgrapht.DirectedGraph;
-import org.jgrapht.graph.DefaultDirectedGraph;
-import org.jgrapht.graph.DefaultEdge;
-
+import org.graphstream.ui.view.Viewer;
+import org.graphstream.ui.view.View;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
