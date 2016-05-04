@@ -1,9 +1,7 @@
 import org.graphstream.graph.Graph;
-import org.graphstream.graph.Node;
-import org.graphstream.graph.implementations.MultiGraph;
-import org.graphstream.graph.implementations.SingleGraph;
-import org.graphstream.ui.swingViewer.*;
-import org.graphstream.ui.view.*;
+import org.jgrapht.DirectedGraph;
+import org.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.graph.DefaultEdge;
 
 
 import javax.imageio.ImageIO;
@@ -47,21 +45,23 @@ public class Application {
         frame.setVisible(true);
 
         frame.add((Component) view);
-/*/
+		*/
+
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
 		File file = chooseFFile(args);
 
-		Graph g = ParseJSONf.parse(file);
+		Graphiel g = ParseJSONf.parse(file);
 
-        ArrayList<Match> matches = ParseJSONp.parsep(choosePFile());
-        g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
-        Grapher.paintPatterns(matches, g);
+		ArrayList<Match> matches = ParseJSONp.parsep(choosePFile());
+			g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
+			
+		g.paintPatterns(matches);
 
         // Add positioning
-        Grapher.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)), g);
-        Grapher.xyxize(g);
+        g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
+        g.xyxize();
 
         // Display without default layout (false)
         //Viewer viewer = g.display(false);
@@ -84,10 +84,12 @@ public class Application {
         frame.setIconImage(img);
         frame.setVisible(true);
         frame.add((Component) view);
-//*/
+	
+
 		
-		System.out.println( Grapher.infoString(g) );
+		System.out.println( g.toString() );
 	}
+
 	/**
 	 * This method opens a window to choose JSON files
 	 * @param a
