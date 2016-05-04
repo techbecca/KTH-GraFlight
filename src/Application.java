@@ -23,20 +23,22 @@ public class Application {
 
 		File file = chooseFFile(args);
 
-		Graph g = ParseJSONf.parse(file);
+		Graphiel g = ParseJSONf.parse(file);
 
         ArrayList<Match> matches = ParseJSONp.parsep(choosePFile());
         g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
-        Grapher.paintPatterns(matches, g);
+        
+		g.paintPatterns(matches);
 
         // Add positioning
-        Grapher.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)), g);
-        Grapher.xyxize(g);
+        g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
+        g.xyxize();
 
         // Display without default layout (false)
-		g.display(false);
 		
-		System.out.println( Grapher.infoString(g) );
+		g.display(true);
+		
+		System.out.println( g.toString() );
 	}
 	/**
 	 * This method opens a window to choose JSON files
