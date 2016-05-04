@@ -1,5 +1,3 @@
-package graphing;
-
 import static org.junit.Assert.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -44,10 +42,6 @@ public class ParseJSONfTest {
 		
 		
 	}
-	
-	
-	
-	
 	
 	/**
 	 * This method generates a graph representation to make it easier for us
