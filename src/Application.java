@@ -64,10 +64,8 @@ public class Application {
         Grapher.xyxize(g);
 
         // Display without default layout (false)
-        Viewer viewer = g.display(false);
-
-        //Viewer viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-
+        //Viewer viewer = g.display(false);
+        Viewer viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         View view = viewer.addDefaultView(false);
 
         JFrame frame = new JFrame();
@@ -81,13 +79,13 @@ public class Application {
             img = ImageIO.read(new File("teamlogo\\icon_32.png"));
         } catch (IOException e) {
         }
+
         frame.setIconImage(img);
-
-
         frame.setVisible(true);
-
         frame.add((Component) view);
 //*/
+		
+		System.out.println( Grapher.infoString(g) );
 	}
 	/**
 	 * This method opens a window to choose JSON files
