@@ -2,6 +2,7 @@ import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.ui.geom.Point3;
 import org.graphstream.ui.swingViewer.*;
 import org.graphstream.ui.view.*;
 
@@ -9,6 +10,7 @@ import org.graphstream.ui.view.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,7 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * This class is a driver class for parseJSONf
+ * This is the main application class for GraFlight
  * @author Aiman Josefsson
  * @since 2016-04-28
  */
@@ -24,30 +26,7 @@ public class Application {
 
     static String filePathP;
     public static void main(String args[]) throws FileNotFoundException {
-        // Testing new rendering options
-        /*
-        Graph grr = new SingleGraph("embedded");
 
-        Node A = grr.addNode("A"); A.setAttribute("xy", 10, 10);
-        Node B = grr.addNode("B"); B.setAttribute("xy", 10,20);
-        Node C = grr.addNode("C"); C.setAttribute("xy", 10,0);
-
-        grr.addEdge("AB", "A", "B");
-        grr.addEdge("BC", "C", "B");
-
-        Viewer viewer = new Viewer(grr, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-
-        View view = viewer.addDefaultView(false);
-
-        JFrame frame = new JFrame();
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
-        frame.setSize(screenSize);
-
-        frame.setVisible(true);
-
-        frame.add((Component) view);
-/*/
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
@@ -83,9 +62,13 @@ public class Application {
         frame.setIconImage(img);
         frame.setVisible(true);
         frame.add((Component) view);
-//*/
-		
+
+
 		System.out.println( Grapher.infoString(g) );
+		frame.setFocusable(true);
+
+		view.addKeyListener(new ZoomListener(view));
+		view.addMouseMotionListener(new DragListener(view));
 	}
 	/**
 	 * This method opens a window to choose JSON files
@@ -130,5 +113,71 @@ public class Application {
 	public static File choosePFile() {
 		File file = new File(filePathP);
 		return file;
+	}
+
+	/**
+	 * This class provides a key listener for the graph window, with which you can zoom.
+	 * @author Aiman Josefsson & Rebecca Hellström Karlsson
+	 * @since 2016-05-04
+	 */
+	private static class ZoomListener implements KeyListener{
+		private View view = null;
+
+		/**
+		 * Constructor for ZoomListener
+		 * @param view the view in which to zoom
+		 */
+		public ZoomListener(View view){
+			this.view = view;
+		}
+
+		/**
+		 * Every time the keys +, - or 0 are pressed the view will be zoomed accordingly
+		 * @param e
+		 */
+		@Override
+		public void keyTyped(KeyEvent e) {
+			if(e.getKeyChar() == '+'){
+				double viewPercent = view.getCamera().getViewPercent();
+				view.getCamera().setViewPercent(viewPercent * 0.9); // Zooms in, viewPercent: 0-1 (min-max)
+			} else if(e.getKeyChar() == '-') {
+				double viewPercent = view.getCamera().getViewPercent();
+				if (viewPercent < 4) {
+					view.getCamera().setViewPercent(viewPercent / 0.9); // Zooms out
+				}
+			} else if(e.getKeyChar() == '0'){
+				view.getCamera().setViewPercent(1);
+			}
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+		}
+	}
+
+	private static class DragListener implements MouseMotionListener{
+		private View view = null;
+
+		public DragListener(View view){
+			this.view = view;
+		}
+
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			Point3 center = view.getCamera().getViewCenter();
+			//view.getCamera().getViewCenter().moveX(e.getX());
+			//view.getCamera().getViewCenter().moveY(e.getY());
+			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+			//view.getCamera().set;
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent e) {
+		}
 	}
 }
