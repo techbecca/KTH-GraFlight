@@ -28,23 +28,24 @@ public class LayGraph {
     public static double[][] onMe(DirectedGraph<String, DefaultEdge> g) {
 
         // Create and configure the layout
-        /*
+        
         final JGraphCompactTreeLayout hir = new JGraphCompactTreeLayout();
 		hir.setLevelDistance(10.0);
 		hir.setNodeDistance(10);
-		hir.setTreeDistance(80);
+		hir.setTreeDistance(40);
 		hir.setRouteTreeEdges(false);
 		hir.setPositionMultipleTrees(true);
 		hir.setOrientation(1);
-		/*/
+		
 
+		/*
 		JGraphHierarchicalLayout hir = new JGraphHierarchicalLayout();
 		hir.setLayoutFromSinks(true);
 		hir.setDeterministic(true);
 		hir.setFineTuning(false);
 		hir.setInterRankCellSpacing(5.0);
 		hir.setIntraCellSpacing(90.0);
-        //*/
+        */
 
 		/*JGraphRadialTreeLayout hir = new JGraphRadialTreeLayout();
 		hir.setAutoRadius(true);
