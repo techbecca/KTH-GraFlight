@@ -35,7 +35,8 @@ public class Application {
 
         // Display without default layout (false)
 		g.display(false);
-
+		
+		System.out.println( Grapher.infoString(g) );
 	}
 	/**
 	 * This method opens a window to choose JSON files
