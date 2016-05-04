@@ -40,9 +40,10 @@ public class LayGraph {
 
 		JGraphHierarchicalLayout hir = new JGraphHierarchicalLayout();
 		hir.setLayoutFromSinks(true);
-		hir.setFineTuning(true);
+		hir.setDeterministic(true);
+		hir.setFineTuning(false);
 		hir.setInterRankCellSpacing(5.0);
-		hir.setIntraCellSpacing(80.0);
+		hir.setIntraCellSpacing(90.0);
         //*/
 
 		/*JGraphRadialTreeLayout hir = new JGraphRadialTreeLayout();
