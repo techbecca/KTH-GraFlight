@@ -5,18 +5,12 @@ import java.util.Scanner;
 import org.json.*;
 
 /**
- * This class parses the pattern JSON file, includes the matches and the node-to-node matches and includes them in the 
- * "Match" and "NodeToNode" classes.
+ * This class parses the pattern JSON file and includes the matches
+ * from it in the "Match" class
  * @author Mathilda Strandberg von Schantz
  * @since 2016-04-27
  */
 public class ParseJSONp {
-
-	public static void main(String[] args) throws FileNotFoundException {
-
-		parsep(Application.chooseFFile(args));
-
-	}
 
 	/**
 	 * This method parses the pattern JSON file, includes the matches and includes them in the 
