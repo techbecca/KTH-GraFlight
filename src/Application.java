@@ -6,10 +6,13 @@ import org.graphstream.ui.swingViewer.*;
 import org.graphstream.ui.view.*;
 
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -70,6 +73,15 @@ public class Application {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
         frame.setSize(screenSize);
+
+        // Set JFrame Icon
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File("teamlogo\\icon.png"));
+        } catch (IOException e) {
+        }
+        frame.setIconImage(img);
+
 
         frame.setVisible(true);
 
