@@ -28,13 +28,13 @@ public class ParseJSONfTest {
 		ParseJSONf p = new ParseJSONf();
 
 		//Create a new file to use as test file
-		File f = new File("C:/Users/my/.ssh/projectX/json/testparsejsonf.json");
+		File testFile = new File("C:/Users/Charlotta/projectX/json/testparsejsonf.json");
 
-		Graph result = p.parse(f);
+		Graphiel result = p.parse(testFile);
 
 		//assertEquals compares the expected output of the function with the actual output.
 		//If these do not match, an error has occurred. 
-		assertEquals("Name: fact \n Nodes: 0, 26, \n Edges: From: 0, To: 26, ", 
+		assertEquals("  Name: fact\n# Nodes: 2\n# Edges: 1\n \n Nodes: 0, 26, \n Edges: From: 0, To: 26, ", 
 				graphRepresentation(result));
 
 
@@ -70,7 +70,7 @@ public class ParseJSONfTest {
 	 */
 	public String graphRepresentation (Graph result){
 		//Creating the string representation that is to be returned
-		String graphString = "Name: " + result.toString() + " \n Nodes: ";
+		String graphString = result.toString() + " \n Nodes: ";
 
 		//Iterate through all nodes in the graph and append their ID's to the string 
 		for (int i = 0; i < result.getNodeCount(); i++) {
