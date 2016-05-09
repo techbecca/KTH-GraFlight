@@ -9,11 +9,6 @@ public class Match {
 	final private int InstructionId;
 	final private int[] GraphNodes;
 
-	/**
-	 * This is a constructor
-	 * @param NodeToNodeList List of matches between nodes in the function graph and pattern graph
-	 * @param MatchId Variable for the matchID
-	 */
 	public Match(int[] GraphNodes, 	int PatternId, int InstructionId) {
 
 		this.PatternId = PatternId;
@@ -32,6 +27,20 @@ public class Match {
 
 	public int[] getGraphNodes() {
 		return GraphNodes;
+	}
+	
+	public String toString(){
+		
+		StringBuilder sb = new StringBuilder("[ Nodes: [");
+		
+		for (int i = 0; i < GraphNodes.length; i++) {
+			String currentGraphNode = String.valueOf(GraphNodes[i]) + ", ";
+			sb.append(currentGraphNode);
+		}
+		
+		sb.append("]" + "InstructionId: " + InstructionId + ", " + "PatternId: " + PatternId +"]");
+		
+		return sb.toString(); 
 	}
 
 

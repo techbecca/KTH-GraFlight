@@ -22,30 +22,29 @@ public class Application {
     public static void main(String args[]) throws FileNotFoundException {
 
 
-		// Use the advanced renderer
-		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+		// gets the json files: from argument or file dialog
+		File[] jsons = Filer.run(args);
 
-		File file = chooseFFile(args);
+		// create the main graph object class
+		Graphiel g = ParseJSONf.parse(jsons[0]);
 
-		Graphiel g = ParseJSONf.parse(file);
-
-		ArrayList<Match> matches = ParseJSONp.parsep(choosePFile());
-			g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
-			
-		//g.paintPatterns(matches);
+		// adds the patterns
+		ArrayList<Match> matches = ParseJSONp.parsep(jsons[1]);
+		g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
+		g.paintPatterns(matches);
 
         // Add positioning
         g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
         g.xyxize();
 
-		System.out.println(g.getNode("0").getAttribute("ui.class").toString());
+		// Use the advanced renderer
+		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         // Display without default layout (false)
-        //Viewer viewer = g.display(false);
         Viewer viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         View view = viewer.addDefaultView(false);
 
-
+		// configures the JFrame
         JFrame frame = new JFrame("GraFlight");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
@@ -54,18 +53,19 @@ public class Application {
         // Set JFrame Icon
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new File("teamlogo\\icon_32.png"));
-        } catch (IOException e) {
-        }
+            img = ImageIO.read(new File("teamlogo" + File.separatorChar+"icon_32.png"));
+		} catch (IOException e) {
+			System.out.println("Logo not found!");
+		}
 
+		// shows the window
         frame.setIconImage(img);
         frame.setVisible(true);
         frame.add((Component) view);
-	
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		
-		System.out.println( g.toString() );
-	}
+		// prints some basic statistics
+		System.out.println(g.toString());
 
 	/**
 	 * This method opens a window to choose JSON files

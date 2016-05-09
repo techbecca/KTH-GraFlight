@@ -1,5 +1,5 @@
 import org.graphstream.graph.Edge;
-import org.graphstream.graph.implementations.MultiGraph;
+import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.graph.Node;
 
 import java.awt.Color;
@@ -29,6 +29,11 @@ class Graphiel extends MultiGraph
 		}
 	}
 	
+	/**
+	* Loads position information into the graph from a double[][]
+	* where [i][0] and [i][1] are the x and y coordinates of the i:th node.
+	* @param positions The 2D double-array containing node positions.
+	*/
 	public void positioning(double[][] positions){
 
 		//	iterates through the rows in the positions double-array
@@ -40,6 +45,9 @@ class Graphiel extends MultiGraph
 		}			
 	}
 	
+	/**
+	* Flips the graph upside-down.
+	*/
 	public void xyxize(){
 		for (Node n : this)
 		{
@@ -112,12 +120,16 @@ class Graphiel extends MultiGraph
 		node.addAttribute("ui.class", sb.toString());
 	}
 	
+	/**
+	* Assigns style class to an edge based on its edge type attribute
+	* @param edge
+	*/
 	public static void convertEdge(Edge edge){
 		String etype = edge.getAttribute("etype");
 		edge.addAttribute("ui.class", etype);
 	}
 
-	public static Color instructionColor(int id){
+	private static Color instructionColor(int id){
 		Color col = new Color(Color.HSBtoRGB((float) id/360,(float) 0.5,(float) 0.5));
 		//System.out.println(col.toString());
 		return col;
