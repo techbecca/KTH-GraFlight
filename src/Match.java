@@ -9,11 +9,6 @@ public class Match {
 	final private int InstructionId;
 	final private int[] GraphNodes;
 
-	/**
-	 * This is a constructor
-	 * @param NodeToNodeList List of matches between nodes in the function graph and pattern graph
-	 * @param MatchId Variable for the matchID
-	 */
 	public Match(int[] GraphNodes, 	int PatternId, int InstructionId) {
 
 		this.PatternId = PatternId;
