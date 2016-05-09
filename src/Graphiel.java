@@ -159,8 +159,8 @@ public class Graphiel extends MultiGraph
 		edge.addAttribute("ui.class", etype);
 	}
 
-	private static Color instructionColor(int id){
-		Color col = new Color(Color.HSBtoRGB((float) id/360,(float) 0.5,(float) 0.5));
+	private static Color instructionColor(int id, int length){
+		Color col = new Color(Color.HSBtoRGB((float) id/length,(float) 0.5,(float) 0.5));
 		//System.out.println(col.toString());
 		return col;
 	}
