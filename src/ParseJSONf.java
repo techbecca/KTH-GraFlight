@@ -72,11 +72,13 @@ public class ParseJSONf {
 		// Iterates through the node array and adds them to the graph
         for(int i = 0; i < nodes.length(); i++) {
             JSONArray jsonNode = nodes.getJSONArray(i);
-
             String id = String.valueOf( jsonNode.getInt(0) );
             JSONObject type = jsonNode.getJSONObject(1).getJSONObject("type");
             Node node = gsgraph.addNode(id);
-            node.setAttribute("ui.label", id);
+            node.setAttribute("id", id);
+
+
+            // Parses JSON-keys to Java-attributes in the Node object
             for(String s : type.keySet()) {
             	if (type.get(s).equals(null)){
             		continue;
@@ -84,7 +86,7 @@ public class ParseJSONf {
                 node.setAttribute(s, type.getString(s));
             }
 
-            // This will actually be removed later, but it works this way
+            // Set graphical properties to the node
             Graphiel.convertNode(node);
 
         }

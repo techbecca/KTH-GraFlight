@@ -15,36 +15,42 @@ edge.ctrl{
 
 node{
 	size-mode: dyn-size;
-	size: 50px, 50px;
+	size: 40px, 40px;
 	stroke-mode: plain;
 	stroke-width: 2px;
 	fill-color: rgb(173, 216, 230);
+	text-style: bold-italic;
+	/*text-alignment: above;*/
+	text-background-mode: rounded-box;
+	text-background-color: rgb(173, 216, 230);
 }
 
 node.data{
-	/*fill-color: green;*/
 	shape: box;
-	size: 70px, 50px;
+	size: 60px, 40px;
+}
+
+/*node.i32{
+	size: 50px, 50px;
+	fill-color: black;
 }
 
 node.phi{
-	/*fill-color: orange;*/
 }
 
 node.comp{
-	/*fill-color: purple;*/
-	/*text-color: white;*/
-}
-
+	
+}*/
 
 node.lab{
-	/*fill-color: blue;*/
-	/*text-color: white;*/
 	shape: box;
 }
 
+node.entry{
+	size: 80px, 80px;
+}
+
 node.ctrl{
-	/*fill-color: gray;*/
 	shape: diamond;
 }
 
@@ -53,17 +59,8 @@ node.ctrlFlow{
 }
 
 node.copy{
-	/*fill-color: red;*/
-	size: 20px, 20px;
+	size: 10px, 10px;
 }
 
-node.i32{
-	size: 40px, 40px;
-}
 
-node.entry{
-	size: 60px, 60px;
-	shape: circle;
-	stroke-width: 5px;
-}
 

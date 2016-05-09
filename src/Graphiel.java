@@ -6,7 +6,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 /**
- *Our very own special-purpose SingleGraph subclass.
+ *Our very own special-purpose MultiGraph subclass.
  *@version 1.0
  *@since 2016-05-04
  */
@@ -76,19 +76,37 @@ class Graphiel extends MultiGraph
 	 */
 	public static void convertNode(Node node){
 		StringBuilder sb = new StringBuilder();
+		StringBuilder label = new StringBuilder();
 
-		// Builds string to add to ui.class
+		// Shows node ID as text on the graph
+		String id = node.getAttribute("id");
+		label.append(id + ": ");
+
+		// Continue building string depending on type
 		String ntype = node.getAttribute("ntype");
-		sb.append(ntype);
+
+
+		sb.append(", " +ntype);
+
+		if (ntype.equals("copy")){
+			label.append("cp");
+		}
+		else  if (ntype.equals("data")){
+			label.append("d");
+		}
+		else if (ntype.equals("phi")){
+			label.append("phi");
+		}
 
 
 		if(node.hasAttribute("block-name")){
 			String blockName = node.getAttribute("block-name");
 			sb.append(", " + blockName);
+			//label.append(", " + blockName);
 			// Mark the entry node
 			if(node.getAttribute("block-name").equals("entry")){
 				sb.replace(0,sb.length(), "entry");
-				node.setAttribute("ui.label", "Entry");
+				label.append("Entry");
 			}
 		}
 
@@ -96,16 +114,19 @@ class Graphiel extends MultiGraph
 		if(node.hasAttribute("dtype")){
 			String dtype = node.getAttribute("dtype");
 			sb.append(", " + dtype);
+			//label.append(", " + dtype);
 		}
 
 		if(node.hasAttribute("op")){
 			String op = node.getAttribute("op");
 			sb.append(", " + op);
+			label.append(op);
 		}
 
 		if(node.hasAttribute("origin")){
 			String origin = node.getAttribute("origin");
 			sb.append(", " + origin);
+			//label.append(", " + origin);
 		}
 
 		if(node.hasAttribute("ftype")){
@@ -113,8 +134,11 @@ class Graphiel extends MultiGraph
 			sb.append(", " + ftype);
 		}
 
-		// Add string to ui.class of the node
+		// Set graphical properties to the node
 		node.addAttribute("ui.class", sb.toString());
+
+		// Set text to be shown on the node
+		node.setAttribute("ui.label", label);
 	}
 	
 	/**
