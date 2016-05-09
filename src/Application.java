@@ -111,6 +111,8 @@ public class Application {
 				}
 			} else if(e.getKeyChar() == '0'){
 				view.getCamera().setViewPercent(1);
+				double height = -view.getCamera().getMetrics().graphHeightGU()/2;
+				view.getCamera().setViewCenter(0,height,0);
 			}
 		}
 
@@ -123,6 +125,10 @@ public class Application {
 		}
 	}
 
+	/**
+	 * Listens to the scrollwheel for zooming
+	 * @author Aiman
+	 */
 	private static class ScrollListener implements MouseWheelListener{
 		private View view = null;
 
@@ -134,6 +140,10 @@ public class Application {
 			this.view = view;
 		}
 
+		/**
+		 * The same code as in ZoomListener but with the mouse instead of + and -
+		 * @param e
+		 */
 		@Override
 		public void mouseWheelMoved(MouseWheelEvent e) {
 
@@ -150,17 +160,28 @@ public class Application {
 		}
 	}
 
+	/**
+	 * Listens to Drag-events
+	 * @author Aiman
+	 */
 	private static class DragListener implements MouseMotionListener{
 		private View view = null;
 		private double oldX = 0;
 		private double oldY = 0;
 
 
-
+		/**
+		 * Constructor
+		 * @param view
+		 */
 		public DragListener(View view){
 			this.view = view;
 		}
 
+		/**
+		 * Decides how the dragging should work
+		 * @param e
+		 */
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -169,6 +190,11 @@ public class Application {
 			//center.moveTo((screenSize.getWidth()/2 - e.getX()), -screenSize.getHeight() + e.getY());
 
 			center.moveTo(center.x + (e.getX() - oldX)/4, center.y - (e.getY() - oldY)/4);
+
+
+			/*double dx = (-e.getX() + oldX) > 0 ? 1 : -1;
+			double dy = (-e.getY() + oldY) > 0 ? 1 : -1;
+			center.move(dx, dy);*/
 
 			//center.move(- e.getX() + oldX, e.getY() - oldY);
 
