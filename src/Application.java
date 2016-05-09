@@ -69,6 +69,7 @@ public class Application {
 
 		view.addKeyListener(new ZoomListener(view));
 		view.addMouseMotionListener(new DragListener(view));
+		((Component) view).addMouseWheelListener(new ScrollListener(view));
 	}
 	/**
 	 * This method opens a window to choose JSON files
@@ -159,8 +160,39 @@ public class Application {
 		}
 	}
 
+	private static class ScrollListener implements MouseWheelListener{
+		private View view = null;
+
+		/**
+		 * Constructor for ZoomListener
+		 * @param view the view in which to zoom
+		 */
+		public ScrollListener(View view){
+			this.view = view;
+		}
+
+		@Override
+		public void mouseWheelMoved(MouseWheelEvent e) {
+
+			if(e.getWheelRotation() < 0){
+				double viewPercent = view.getCamera().getViewPercent();
+				view.getCamera().setViewPercent(viewPercent * 0.9);
+			}else if(e.getWheelRotation() > 0){
+				double viewPercent = view.getCamera().getViewPercent();
+				if (viewPercent < 4) {
+					view.getCamera().setViewPercent(viewPercent / 0.9); // Zooms out
+				}
+			}
+
+		}
+	}
+
 	private static class DragListener implements MouseMotionListener{
 		private View view = null;
+		private double oldX = 0;
+		private double oldY = 0;
+
+
 
 		public DragListener(View view){
 			this.view = view;
@@ -168,16 +200,21 @@ public class Application {
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			Point3 center = view.getCamera().getViewCenter();
-			//view.getCamera().getViewCenter().moveX(e.getX());
-			//view.getCamera().getViewCenter().moveY(e.getY());
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+			Point3 center = view.getCamera().getViewCenter();
 
-			//view.getCamera().set;
+			//center.moveTo((screenSize.getWidth()/2 - e.getX()), -screenSize.getHeight() + e.getY());
+
+			center.moveTo(center.x + (e.getX() - oldX)/4, center.y - (e.getY() - oldY)/4);
+
+			//center.move(- e.getX() + oldX, e.getY() - oldY);
+
 		}
 
 		@Override
 		public void mouseMoved(MouseEvent e) {
+			oldX = e.getX();
+			oldY = e.getY();
 		}
 	}
 }
