@@ -1,5 +1,5 @@
 import org.graphstream.graph.Edge;
-import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.graph.Node;
 
 import java.awt.Color;
