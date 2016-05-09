@@ -14,7 +14,8 @@ edge.ctrl{
 }
 
 node{
-	size: 30px, 30px;
+	size-mode: dyn-size;
+	size: 50px, 50px;
 	stroke-mode: plain;
 	stroke-width: 2px;
 	fill-color: rgb(173, 216, 230);
@@ -23,7 +24,7 @@ node{
 node.data{
 	/*fill-color: green;*/
 	shape: box;
-	size: 40px, 30px;
+	size: 70px, 50px;
 }
 
 node.phi{
@@ -57,11 +58,12 @@ node.copy{
 }
 
 node.i32{
-	size: 25px, 25px;
+	size: 40px, 40px;
 }
 
 node.entry{
 	size: 60px, 60px;
 	shape: circle;
+	stroke-width: 5px;
 }
 

@@ -56,6 +56,7 @@ public class Application {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
         frame.setSize(screenSize);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Set JFrame Icon
         BufferedImage img = null;

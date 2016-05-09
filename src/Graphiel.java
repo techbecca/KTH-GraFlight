@@ -1,6 +1,5 @@
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.implementations.MultiGraph;
-import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.graph.Node;
 
 import java.awt.Color;
@@ -79,20 +78,17 @@ class Graphiel extends MultiGraph
 		StringBuilder sb = new StringBuilder();
 
 		// Builds string to add to ui.class
-		if(node.getAttribute("ntype")!="") {
-			String ntype = node.getAttribute("ntype");
-			sb.append(ntype);
-		}
+		String ntype = node.getAttribute("ntype");
+		sb.append(ntype);
+
 
 		if(node.hasAttribute("block-name")){
 			String blockName = node.getAttribute("block-name");
-			sb.append( blockName);
-			System.out.println(sb.toString());
+			sb.append(", " + blockName);
 			// Mark the entry node
 			if(node.getAttribute("block-name").equals("entry")){
-				sb.append(", " + "entry");
+				sb.replace(0,sb.length(), "entry");
 				node.setAttribute("ui.label", "Entry");
-				System.out.println(sb.toString());
 			}
 		}
 
