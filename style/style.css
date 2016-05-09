@@ -14,46 +14,56 @@ edge.ctrl{
 }
 
 node{
-	size: 20px, 20px;
+	size-mode: dyn-size;
+	size: 50px, 50px;
 	stroke-mode: plain;
 	stroke-width: 2px;
+	fill-color: rgb(173, 216, 230);
 }
 
 node.data{
-	fill-color: green;
+	/*fill-color: green;*/
 	shape: box;
+	size: 70px, 50px;
 }
 
 node.phi{
-	fill-color: orange;
+	/*fill-color: orange;*/
 }
 
 node.comp{
-	fill-color: purple;
-	text-color: white;
+	/*fill-color: purple;*/
+	/*text-color: white;*/
 }
 
+
 node.lab{
-	fill-color: blue;
-	text-color: white;
+	/*fill-color: blue;*/
+	/*text-color: white;*/
+	shape: box;
 }
 
 node.ctrl{
-	fill-color: gray;
+	/*fill-color: gray;*/
+	shape: diamond;
+}
+
+node.ctrlFlow{
+	stroke-width: 3px;
 }
 
 node.copy{
-	fill-color: red;
+	/*fill-color: red;*/
+	size: 20px, 20px;
 }
 
 node.i32{
-	size: 25px, 25px;
+	size: 40px, 40px;
 }
 
 node.entry{
-	size: 50px, 50px;
+	size: 60px, 60px;
+	shape: circle;
+	stroke-width: 5px;
 }
 
-node{
-	fill-color: white;
-}

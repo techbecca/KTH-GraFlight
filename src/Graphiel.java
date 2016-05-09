@@ -4,7 +4,6 @@ import org.graphstream.graph.Node;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *Our very own special-purpose MultiGraph subclass.
@@ -68,7 +67,7 @@ public class Graphiel extends MultiGraph
 				n.setAttribute("ui.style", "stroke-color: rgb(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() + ");");
 			}
 		}
-	} */
+	}*/
 	
 	/**
 	* Loads position information into the graph from a double[][]
@@ -159,8 +158,8 @@ public class Graphiel extends MultiGraph
 		edge.addAttribute("ui.class", etype);
 	}
 
-	private static Color instructionColor(int id, int length){
-		Color col = new Color(Color.HSBtoRGB((float) id/length,(float) 0.7,(float) 0.7));
+	private static Color instructionColor(int id){
+		Color col = new Color(Color.HSBtoRGB((float) id/360,(float) 0.5,(float) 0.5));
 		//System.out.println(col.toString());
 		return col;
 	}
