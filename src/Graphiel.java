@@ -1,6 +1,5 @@
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.implementations.MultiGraph;
-import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.graph.Node;
 
 import java.awt.Color;
@@ -71,8 +70,23 @@ class Graphiel extends MultiGraph
 		StringBuilder sb = new StringBuilder();
 
 		// Builds string to add to ui.class
-		String ntype = node.getAttribute("ntype");
-		sb.append(ntype);
+		if(node.getAttribute("ntype")!="") {
+			String ntype = node.getAttribute("ntype");
+			sb.append(ntype);
+		}
+
+		if(node.hasAttribute("block-name")){
+			String blockName = node.getAttribute("block-name");
+			sb.append( blockName);
+			System.out.println(sb.toString());
+			// Mark the entry node
+			if(node.getAttribute("block-name").equals("entry")){
+				sb.append(", " + "entry");
+				node.setAttribute("ui.label", "Entry");
+				System.out.println(sb.toString());
+			}
+		}
+
 
 		if(node.hasAttribute("dtype")){
 			String dtype = node.getAttribute("dtype");
@@ -89,14 +103,9 @@ class Graphiel extends MultiGraph
 			sb.append(", " + origin);
 		}
 
-		if(node.hasAttribute("block-name")){
-			String blockName = node.getAttribute("block-name");
-			sb.append(", " + blockName);
-			// Mark the entry node
-			if(node.getAttribute("block-name").equals("entry")){
-				sb.append(", " + "entry");
-				node.setAttribute("ui.label", "Entry");
-			}
+		if(node.hasAttribute("ftype")){
+			String ftype = node.getAttribute("ftype");
+			sb.append(", " + ftype);
 		}
 
 		// Add string to ui.class of the node

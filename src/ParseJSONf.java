@@ -102,7 +102,15 @@ public class ParseJSONf {
 
             // This will actually be removed later, but it works this way
             Graphiel.convertEdge(edge);
-			
+
+            // Assign that nodes are part of the control flow
+            if (etype.equals("ctrl")){
+                gsgraph.getNode(source).setAttribute("ftype", "ctrlFlow");
+                gsgraph.getNode(target).setAttribute("ftype", "ctrlFlow");
+
+                Graphiel.convertNode(gsgraph.getNode(source));
+                Graphiel.convertNode(gsgraph.getNode(target));
+            }
         }
         
         return gsgraph;

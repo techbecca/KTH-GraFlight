@@ -20,30 +20,7 @@ public class Application {
 
     static String filePathP;
     public static void main(String args[]) throws FileNotFoundException {
-        // Testing new rendering options
-        /*
-        Graph grr = new SingleGraph("embedded");
 
-        Node A = grr.addNode("A"); A.setAttribute("xy", 10, 10);
-        Node B = grr.addNode("B"); B.setAttribute("xy", 10,20);
-        Node C = grr.addNode("C"); C.setAttribute("xy", 10,0);
-
-        grr.addEdge("AB", "A", "B");
-        grr.addEdge("BC", "C", "B");
-
-        Viewer viewer = new Viewer(grr, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-
-        View view = viewer.addDefaultView(false);
-
-        JFrame frame = new JFrame();
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
-        frame.setSize(screenSize);
-
-        frame.setVisible(true);
-
-        frame.add((Component) view);
-		*/
 
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
@@ -55,11 +32,13 @@ public class Application {
 		ArrayList<Match> matches = ParseJSONp.parsep(choosePFile());
 			g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
 			
-		g.paintPatterns(matches);
+		//g.paintPatterns(matches);
 
         // Add positioning
         g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
         g.xyxize();
+
+		System.out.println(g.getNode("0").getAttribute("ui.class").toString());
 
         // Display without default layout (false)
         //Viewer viewer = g.display(false);
