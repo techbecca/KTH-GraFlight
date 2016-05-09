@@ -20,30 +20,30 @@ node{
 }
 
 node.data{
-	fill-color: green;
+	/*fill-color: green;*/
 	shape: box;
 }
 
 node.phi{
-	fill-color: orange;
+	/*fill-color: orange;*/
 }
 
 node.comp{
-	fill-color: purple;
+	/*fill-color: purple;*/
 	text-color: white;
 }
 
 node.lab{
-	fill-color: blue;
+	/*fill-color: blue;*/
 	text-color: white;
 }
 
 node.ctrl{
-	fill-color: gray;
+	/*fill-color: gray;*/
 }
 
 node.copy{
-	fill-color: red;
+	/*fill-color: red;*/
 }
 
 node.i32{

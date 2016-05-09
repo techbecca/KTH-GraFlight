@@ -1,4 +1,5 @@
 import org.graphstream.graph.Edge;
+import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.graph.Node;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  *@version 1.0
  *@since 2016-05-04
  */
-class Graphiel extends SingleGraph
+class Graphiel extends MultiGraph
 {
 	public Graphiel(String id)
 	{
