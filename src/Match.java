@@ -33,6 +33,20 @@ public class Match {
 	public int[] getGraphNodes() {
 		return GraphNodes;
 	}
+	
+	public String toString(){
+		
+		StringBuilder sb = new StringBuilder("[ Nodes: [");
+		
+		for (int i = 0; i < GraphNodes.length; i++) {
+			String currentGraphNode = String.valueOf(GraphNodes[i]) + ", ";
+			sb.append(currentGraphNode);
+		}
+		
+		sb.append("]" + "InstructionId: " + InstructionId + ", " + "PatternId: " + PatternId +"]");
+		
+		return sb.toString(); 
+	}
 
 
 }

@@ -2,7 +2,6 @@ import org.jgrapht.DirectedGraph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.json.*;
-import org.graphstream.graph.implementations.*;
 import org.graphstream.graph.*;
 
 import java.io.File;
@@ -23,7 +22,7 @@ public class ParseJSONf {
 	 * @return Returns a graph 
 	 * @throws FileNotFoundException
 	 */
-    public static Graph parse(File file) throws FileNotFoundException {
+    public static Graphiel parse(File file) throws FileNotFoundException {
 		
     	// Read an entire json file
 		String json = new Scanner(file).useDelimiter("\\A").next();		
@@ -40,7 +39,7 @@ public class ParseJSONf {
         //RawGraphDataF rawGraphDataF = new RawGraphDataF(functionName);
 
         // Creates the graph "functionName"
-		Graph gsgraph = new SingleGraph(functionName);
+		Graphiel gsgraph = new Graphiel(functionName);
 
         // Get the inputs of the compiled function
         JSONArray inputArray = jsonObject.getJSONArray("inputs");
@@ -86,7 +85,7 @@ public class ParseJSONf {
             }
 
             // This will actually be removed later, but it works this way
-            Grapher.convertNode(node);
+            Graphiel.convertNode(node);
 
         }
         
@@ -102,7 +101,7 @@ public class ParseJSONf {
 			edge.setAttribute("etype", etype);
 
             // This will actually be removed later, but it works this way
-            Grapher.convertEdge(edge);
+            Graphiel.convertEdge(edge);
 			
         }
         
