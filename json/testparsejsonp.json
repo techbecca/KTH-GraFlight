@@ -1,0 +1,27 @@
+{
+"match-data" :
+	[
+
+		{
+			"instr-id" : 0,     # ID:et på den instruktion som detta mönster
+                                # kommer ifrån. Ni kan strunta i detta.
+
+          "match" :
+			[
+				[ 5, 8 ],       # Nod 5 i funktionsgrafen har matchats med
+                                # nod 8 i mönstergrafen. Eftersom mönstrena
+                                # kommer att ritas upp inuti funktionsgrafen så
+                                # kommer ni vara mest intresserade av det första
+                                # värdet i listan. För övrigt kommer denna array
+                                # ALLTID att innehålla exakt 2 värden.
+
+				[ 15, 6 ],      # Osv...
+				[ 43, 3 ],
+				[ 49, 5 ]
+			],
+			"match-id" : 0,
+			"pattern-id" : 0
+		},
+
+	],
+}
