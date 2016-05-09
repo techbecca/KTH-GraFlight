@@ -28,7 +28,6 @@ public class Application {
 
     public static void main(String args[]) throws FileNotFoundException {
 
-
 		// gets the json files: from argument or file dialog
 		File[] jsons = Filer.run(args);
 
@@ -70,6 +69,7 @@ public class Application {
         frame.setIconImage(img);
         frame.setVisible(true);
         frame.add((Component) view);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
 		// prints some basic statistics
