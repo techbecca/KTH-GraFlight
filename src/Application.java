@@ -37,7 +37,7 @@ public class Application {
 		// adds the patterns
 		ArrayList<Match> matches = ParseJSONp.parsep(jsons[1]);
 		g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
-		g.paintPatterns(matches);
+		//g.paintPatterns(matches);
 
         // Add positioning
         g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
@@ -69,6 +69,7 @@ public class Application {
         frame.setVisible(true);
         frame.add((Component) view);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
 		// prints some basic statistics
 		System.out.println(g.toString());
