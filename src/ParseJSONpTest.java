@@ -1,9 +1,7 @@
 import static org.junit.Assert.assertEquals;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-
 import org.graphstream.graph.Graph;
 import org.junit.Test;
 
@@ -27,13 +25,13 @@ public class ParseJSONpTest {
 		ParseJSONp p = new ParseJSONp();
 		
 		//Create a new file to use as test file
-		File f = new File("C:/Users/Charlotta/projectX/json/testparsejsonp.json");
+		File testFile = new File("C:/Users/Charlotta/projectX/json/testparsejsonp.json");
 		
-		ArrayList <Match> result = p.parsep(f);
+		ArrayList <Match> result = p.parsep(testFile);
 
 		//assertEquals compares the expected output of the function with the actual output.
 		//If these do not match, an error has occurred. 
-		assertEquals("[Nodes: [5, 15, 43, 59, ], InstructionID: 0, PatternID: 0]", result.toString());
+		assertEquals("[[ Nodes: [5, 15, 43, 49, ]InstructionId: 0, PatternId: 0]]", result.toString());
 				
 	}
 	
