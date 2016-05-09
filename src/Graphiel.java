@@ -4,6 +4,7 @@ import org.graphstream.graph.Node;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *Our very own special-purpose MultiGraph subclass.
