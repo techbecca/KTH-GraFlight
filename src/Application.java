@@ -38,21 +38,26 @@ public class Application {
 		// adds the patterns
 		ArrayList<Match> matches = ParseJSONp.parsep(jsons[1]);
 		g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
-		g.paintPatterns(matches);
 
         // Add positioning
         g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
         g.xyxize();
 
+		g.patternEdges(matches);
+		
+		
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
+		//g.display();
+		
         // Display without default layout (false)
         Viewer viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         View view = viewer.addDefaultView(false);
 
 		// configures the JFrame
         JFrame frame = new JFrame("GraFlight");
+		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
         frame.setSize(screenSize);
