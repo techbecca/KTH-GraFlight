@@ -53,11 +53,12 @@ public class GraphielTest {
     }
 
     /**
-     *
+     * NOT FINISHED
      * @throws FileNotFoundException if test file is not found
      *
      * Written by Rebecca Hellström Karlsson
      */
+    /*
     @Test
     public void patternEdgesTest() throws FileNotFoundException {
         // Create mock
@@ -78,7 +79,7 @@ public class GraphielTest {
         graphiel.patternEdges(matches);
 
 
-    }
+    }*/
 
 
     /**
