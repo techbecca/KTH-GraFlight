@@ -17,7 +17,7 @@ class Graphiel extends MultiGraph
 	{
 		super(id);
 	}
-	
+
 	/**
 	* Returns the instruction IDs contained in a list of matches.
 	* @param matches A list of matches from ParseJSONp.
@@ -35,8 +35,8 @@ class Graphiel extends MultiGraph
 		}
 		return ids;
 	}
-	
-	
+
+
 	/**
 	* Adds colored edges according to a list of matches, one color per instruction.
 	* @param matches A list of matches from ParseJSONp.
@@ -51,10 +51,10 @@ class Graphiel extends MultiGraph
 		{
 			Color col = instructionColor(ids.indexOf(match.getInstructionId()), ids.size());
 			int[] nodes = match.getGraphNodes();
-			
+
 			for(int i = 0; i < nodes.length - 1; i++){
 				Node n1 = getNode(String.valueOf(nodes[i]));
-				
+
 				for (int k = i + 1; k < nodes.length; k++)
 				{
 					Node n2 = getNode(String.valueOf(nodes[k]));
@@ -67,7 +67,7 @@ class Graphiel extends MultiGraph
 			}
 		}
 	}
-	
+
 	/* public void paintPatterns(ArrayList<Match> matches){
 		for(Match match : matches){
 			int[] nodes = match.getGraphNodes();
@@ -79,7 +79,7 @@ class Graphiel extends MultiGraph
 			}
 		}
 	}*/
-	
+
 	/**
 	* Loads position information into the graph from a double[][]
 	* where [i][0] and [i][1] are the x and y coordinates of the i:th node.
@@ -93,10 +93,10 @@ class Graphiel extends MultiGraph
 			getNode(x).addAttribute("x", positions[x][0]);
 			getNode(x).addAttribute("y", -positions[x][1]); // Negative because y-positive axis defined as opposite when rendering
 
-		}			
+		}
 	}
 
-	
+
 	@Override
 	public String toString()
 	{
@@ -104,10 +104,10 @@ class Graphiel extends MultiGraph
 		sb.append("  Name: ").append( getId() ).append('\n');
 		sb.append("# Nodes: ").append(getNodeCount()).append('\n');
 		sb.append("# Edges: ").append(getEdgeCount()).append('\n');
-		
+
 		return sb.toString();
 	}
-	
+
 	/**
 	 * Converts type information in a node from attributes to style classes
 	 * @param node
@@ -124,7 +124,7 @@ class Graphiel extends MultiGraph
 		String ntype = node.getAttribute("ntype");
 
 
-		sb.append(", " +ntype);
+		sb.append(ntype);
 
 		if (ntype.equals("copy")){
 			label.append("cp");
@@ -144,7 +144,7 @@ class Graphiel extends MultiGraph
 			// Mark the entry node
 			if(node.getAttribute("block-name").equals("entry")){
 				sb.replace(0,sb.length(), "entry");
-				label.append("Entry");
+				label.replace(0,label.length(), id + ": Entry");
 			}
 		}
 
@@ -176,9 +176,9 @@ class Graphiel extends MultiGraph
 		node.addAttribute("ui.class", sb.toString());
 
 		// Set text to be shown on the node
-		node.setAttribute("ui.label", label);
+		node.setAttribute("ui.label", label.toString());
 	}
-	
+
 	/**
 	* Assigns style class to an edge based on its edge type attribute
 	* @param edge
