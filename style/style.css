@@ -19,7 +19,7 @@ node{
 	stroke-mode: plain;
 	stroke-width: 2px;
 	fill-color: rgb(173, 216, 230);
-	text-style: bold-italic;
+	/*text-style: bold-italic;*/
 	/*text-alignment: above;*/
 	text-background-mode: rounded-box;
 	text-background-color: rgb(173, 216, 230);
