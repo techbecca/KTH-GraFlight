@@ -47,14 +47,13 @@ public class Application {
 		
         // Add positioning
         g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
-        g.xyxize();
 
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         // Display without default layout (false)
         Viewer viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-        View view = viewer.addDefaultView(false);
+        DefaultView view = (DefaultView) viewer.addDefaultView(false);
 
 		// configures the JFrame
         JFrame frame = new JFrame("GraFlight");
@@ -81,6 +80,8 @@ public class Application {
 		// prints some basic statistics
 		System.out.println(g.toString());
 		frame.setFocusable(true);
+		
+		view.setForeLayoutRenderer( new ForegroundRenderer(g) );
 
 		view.addKeyListener(new ZoomListener(view));
 		view.addMouseMotionListener(new DragListener(view));
@@ -111,7 +112,7 @@ public class Application {
 		public void keyTyped(KeyEvent e) {
 			if(e.getKeyChar() == '+'){
 				double viewPercent = view.getCamera().getViewPercent();
-	if (viewPercent > 0.3) {
+				if (viewPercent > 0.3) {
 					view.getCamera().setViewPercent(viewPercent * 0.9); // Zooms in, viewPercent: 0-1 (min-max)					
 				}			} else if(e.getKeyChar() == '-') {
 				double viewPercent = view.getCamera().getViewPercent();
@@ -120,10 +121,9 @@ public class Application {
 				}
 			} else if(e.getKeyChar() == '0'){
 						view.getCamera().resetView();
-
 			}
 		}
-
+		
 		@Override
 		public void keyPressed(KeyEvent e) {
 		}
