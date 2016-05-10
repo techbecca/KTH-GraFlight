@@ -47,6 +47,7 @@ public class Application {
 		
         // Add positioning
         g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
+  
 
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
@@ -121,9 +122,10 @@ public class Application {
 				}
 			} else if(e.getKeyChar() == '0'){
 						view.getCamera().resetView();
+
 			}
 		}
-		
+
 		@Override
 		public void keyPressed(KeyEvent e) {
 		}
@@ -158,7 +160,7 @@ public class Application {
 			if(e.getWheelRotation() < 0){
 				double viewPercent = view.getCamera().getViewPercent();
 				if (viewPercent > 0.3) {
-					view.getCamera().setViewPercent(viewPercent * 0.9); // Zooms in, viewPercent: 0-1 (min-max)					
+					view.getCamera().setViewPercent(viewPercent * 0.9); // Zooms in, viewPercent: 0-1 (min-max)
 				}
 			}else if(e.getWheelRotation() > 0){
 				double viewPercent = view.getCamera().getViewPercent();

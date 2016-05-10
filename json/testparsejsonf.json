@@ -52,7 +52,10 @@
 						{
 							"ntype" : "data",   
 							"dtype" : "i32",
-							"origin" : "%n"
+							"origin" : "%n",
+							"block-name" : "for.body",
+							"op" : "br",
+							"ftype" : "ctrlFlow"
 						}
 					}
 				],
@@ -64,12 +67,41 @@
 
 						"type" :        
 						{
-							"ntype" : "data",   
+							"ntype" : "phi",
 							"dtype" : "i32",
 							"origin" : "%n"
 						}
 					}
 				],
+
+				[
+					12,
+					{
+						"id" : 12,
+
+						"type" :
+						{
+							"ntype" : "copy",
+							"dtype" : "i32",
+							"origin" : "%n"
+						}
+					}
+				],
+
+				[
+					15,
+					{
+						"id" : 15,
+
+						"type" :
+						{
+							"ntype" : "copy",
+							"dtype" : "i32",
+							"origin" : "%n",
+							"block-name" : "entry"
+						}
+					}
+				]
 
 			]
 		}
