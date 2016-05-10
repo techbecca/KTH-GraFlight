@@ -179,7 +179,7 @@ class Graphiel extends MultiGraph
 	}
 
 	private static Color instructionColor(int id, int length){
-		Color col = new Color(Color.HSBtoRGB((float) id/length,(float) 0.5,(float) 0.5));
+		Color col = new Color(Color.HSBtoRGB((float) id/length,(float) 0.75,(float) 0.75));
 		//System.out.println(col.toString());
 		return col;
 	}
