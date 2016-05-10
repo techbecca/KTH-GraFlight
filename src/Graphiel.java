@@ -36,28 +36,15 @@ class Graphiel extends MultiGraph
 	*/
 	public void positioning(double[][] positions){
 
-		//	iterates through the rows in the positions double-array
+		//	Iterates through the rows in the positions double-array
 		for(int x = 0; x < positions.length; x++){
 
 			getNode(x).addAttribute("x", positions[x][0]);
-			getNode(x).addAttribute("y", positions[x][1]);
+			getNode(x).addAttribute("y", -positions[x][1]); // Negative because y-positive axis defined as opposite when rendering
 
 		}			
 	}
-	
-	/**
-	* Flips the graph upside-down.
-	*/
-	public void xyxize(){
-		for (Node n : this)
-		{
-			Double x = n.getAttribute("x");
-			Double y = n.getAttribute("y");
 
-			n.setAttribute("x", x);
-			n.setAttribute("y", -y);
-		}
-	}
 	
 	@Override
 	public String toString()

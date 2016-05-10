@@ -38,11 +38,10 @@ public class Application {
 		ArrayList<Match> matches = ParseJSONp.parsep(jsons[1]);
 		g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
 		//g.paintPatterns(matches);
-		//g.setAttribute("ui.antialiasing", true);
+		//g.setAttribute("ui.antialiasing", true); // Explore option more? Aliasing bad on windows applications
 
         // Add positioning
         g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
-        g.xyxize();
 
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
