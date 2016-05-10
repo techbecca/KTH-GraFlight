@@ -4,9 +4,10 @@ import org.graphstream.graph.Node;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- *Our very own special-purpose MultiGraph subclass.
+ *Our very own special-purpose SingleGraph subclass.
  *@version 1.0
  *@since 2016-05-04
  */
@@ -17,7 +18,47 @@ class Graphiel extends MultiGraph
 		super(id);
 	}
 	
-	public void paintPatterns(ArrayList<Match> matches){
+	public List<Integer> getInstructionIds(ArrayList<Match> matches)
+	{
+		ArrayList<Integer> ids = new ArrayList<>();
+		for (Match match : matches)
+		{
+			if ( !ids.contains(new Integer(match.getInstructionId())) )
+			{
+				ids.add(match.getInstructionId());
+			}
+		}
+		return ids;
+	}
+	
+	public void patternEdges(ArrayList<Match> matches)
+	{
+		List<Integer> ids = getInstructionIds(matches);
+		for (Integer i : ids)
+			System.out.println(i);
+		int edgeindex = 0;
+		for (Match match : matches)
+		{
+			Color col = instructionColor(ids.indexOf(match.getInstructionId()), ids.size());
+			int[] nodes = match.getGraphNodes();
+			
+			for(int i = 0; i < nodes.length - 1; i++){
+				Node n1 = getNode(String.valueOf(nodes[i]));
+				
+				for (int k = i + 1; k < nodes.length; k++)
+				{
+					Node n2 = getNode(String.valueOf(nodes[k]));
+					if ( n1.hasEdgeBetween(n2) )
+					{
+						Edge edge = addEdge("i" + match.getInstructionId() + "p" + match.getPatternId() + edgeindex++ + "-" + i + "-" + k, n1, n2, false);
+						edge.setAttribute("ui.style", "size: 3px; fill-color: rgb(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() + ");");
+					}
+				}
+			}
+		}
+	}
+	
+	/* public void paintPatterns(ArrayList<Match> matches){
 		for(Match match : matches){
 			int[] nodes = match.getGraphNodes();
 			for(int i = 0; i < nodes.length; i++){
@@ -27,7 +68,7 @@ class Graphiel extends MultiGraph
 				n.setAttribute("ui.style", "stroke-color: rgb(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() + ");");
 			}
 		}
-	}
+	}*/
 	
 	/**
 	* Loads position information into the graph from a double[][]
@@ -137,8 +178,8 @@ class Graphiel extends MultiGraph
 		edge.addAttribute("ui.class", etype);
 	}
 
-	private static Color instructionColor(int id){
-		Color col = new Color(Color.HSBtoRGB((float) id/360,(float) 0.5,(float) 0.5));
+	private static Color instructionColor(int id, int length){
+		Color col = new Color(Color.HSBtoRGB((float) id/length,(float) 0.5,(float) 0.5));
 		//System.out.println(col.toString());
 		return col;
 	}
