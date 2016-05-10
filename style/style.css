@@ -12,22 +12,23 @@ edge.def{
 edge.ctrl{
 	size: 3px;
 }
+edge.pattern{
+	size: 3px;
+}
 
 node{
 	size-mode: dyn-size;
-	size: 40px, 40px;
+	/*size: 40px, 40px, 1%;*/
 	stroke-mode: plain;
 	stroke-width: 2px;
-	fill-color: rgb(173, 216, 230);
-	/*text-style: bold-italic;*/
-	/*text-alignment: above;*/
+	fill-color: rgba(173, 216, 230, 200);
+	text-style: bold;
 	text-background-mode: rounded-box;
-	text-background-color: rgb(173, 216, 230);
+	text-background-color: rgba(173, 216, 230, 200);
 }
 
 node.data{
-	shape: box;
-	size: 60px, 40px;
+	shape: rounded-box;
 }
 
 /*node.i32{
@@ -39,7 +40,7 @@ node.phi{
 }
 
 node.comp{
-	
+
 }*/
 
 node.lab{
