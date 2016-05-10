@@ -43,6 +43,7 @@ public class Application {
         // Add positioning
         g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
        
+	    g.patternEdges();
 
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
