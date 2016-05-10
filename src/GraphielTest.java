@@ -19,40 +19,17 @@ import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 
-
 /**
  * Created by Charlotta Spik and Isabel Ghourchian on 2016-05-09.
- *
+ * <p>
  * This is a test class for the Graphiel class, which handles
  * graphical components of the program.
  *
  * @author Isabel Ghourchian
  * @version 1.1
  * @since 2016-05-10
- *
  */
 public class GraphielTest {
-/*
-    @Test
-    public void paintPatternsTest() throws FileNotFoundException{
-
-        Graphiel graphiel = new Graphiel(null);
-
-        //  create mock
-        ParseJSONp test = mock(ParseJSONp.class);
-        File testFile = new File("C:/Users/Charlotta/projectX/json/testparsejsonp.json");
-
-        ParseJSONp p = new ParseJSONp();
-
-        ArrayList<Match> matches = test.parsep(testFile);
-
-
-
-        // define return value for method getUniqueId()
-        when(test.parsep(testFile)).thenReturn(matches);
-
-        assertEquals("hej", matches);
-    }*/
 
     @Test
     /**
@@ -62,7 +39,7 @@ public class GraphielTest {
      *
      * Written by Isabel Ghourchian and Charlotta Spik 2016-05-09
      */
-    public void positioningTest (){
+    public void positioningTest() {
 
         //Create a simple Graphiel graph
         Graphiel graphiel = new Graphiel("test");
@@ -85,13 +62,13 @@ public class GraphielTest {
 
     @Test
     /**
-     * This methods tests the method "getInstructionIds" by generating an
+     * This method tests the method "getInstructionIds" by generating an
      * ArrayList of matches from a test JSON-file (testparsejsonp.json).
      * It is parsed by a mock class created from the class ParseJSONp.
      *
      * Written by Rebecca Hellström Karlsson and Isabel Ghourchian 2016-05-10
      */
-    public void getInstructionIdsTest() throws FileNotFoundException{
+    public void getInstructionIdsTest() throws FileNotFoundException {
 
         // Create mock
         ParseJSONp test = mock(ParseJSONp.class);
@@ -105,16 +82,69 @@ public class GraphielTest {
         List<Integer> result = graphiel.getInstructionIds(matches);
 
         // Test result
-        List<Integer> expected = new ArrayList<Integer>();
+        List<Integer> expected = new ArrayList<>();
+
         expected.add(0);
         expected.add(1);
 
         assertEquals(expected, result);
     }
 
-    public void patternEdgesTest(){
+    @Test
+    /**
+     * This method tests the method "convertNode", by checking that it assigns the ui.class
+     * ui.label attributes properly. This means checking that id and relevant information is
+     * transformed into a string to the ui.label, and that relevant information is caught and
+     * added to the ui.class.
+     *
+     * Written by Rebecca Hellström Karlsson and Isabel Ghourchian 2016-05-10
+     */
+    public void convertNodeTest() throws FileNotFoundException {
+
+        // Create mock class
+        ParseJSONf test = mock(ParseJSONf.class);
+        File testFile = new File("json" + File.separator + "testparsejsonf.json");
+
+        // Generate graph with nodes
+        Graphiel graphiel = test.parse(testFile);
+
+        // Test result ui.class
+        String result = graphiel.getNode("0").getAttribute("ui.class");
+        assertEquals("data, for.body, i32, br, %n, ctrlFlow", result);
+
+        // Test results ui.label
+        String result1 = graphiel.getNode("0").getAttribute("ui.label");
+        String result2 = graphiel.getNode("26").getAttribute("ui.label");
+        String result3 = graphiel.getNode("12").getAttribute("ui.label");
+        String result4 = graphiel.getNode("15").getAttribute("ui.label");
+
+        assertEquals("0: dbr", result1);
+        assertEquals("26: phi", result2);
+        assertEquals("12: cp", result3);
+        assertEquals("15: Entry", result4);
 
     }
 
+    @Test
+    /**
+     * This method tests the method "convertEdge", by checking that it assigns the etype is
+     * added as a string to the ui.class attribute.
+     *
+     * Written by Rebecca Hellström Karlsson and Isabel Ghourchian 2016-05-10
+     */
+    public void convertEdgeTest() throws FileNotFoundException{
+
+        // Create mock class
+        ParseJSONf test = mock(ParseJSONf.class);
+        File testFile = new File("json" + File.separator + "testparsejsonf.json");
+
+        // Generate graph with nodes
+        Graphiel graphiel = test.parse(testFile);
+
+        // Test result
+        String result = graphiel.getEdge("0-26").getAttribute("ui.class");
+        assertEquals("data", result);
+
+    }
 
 }

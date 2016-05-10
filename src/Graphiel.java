@@ -127,6 +127,7 @@ class Graphiel extends MultiGraph
 	public static void convertNode(Node node){
 		StringBuilder sb = new StringBuilder();
 		StringBuilder label = new StringBuilder();
+		StringBuilder size = new StringBuilder();
 
 		// Shows node ID as text on the graph
 		String id = node.getAttribute("id");
@@ -136,16 +137,22 @@ class Graphiel extends MultiGraph
 		String ntype = node.getAttribute("ntype");
 
 
-		sb.append(", " +ntype);
+		sb.append(ntype);
 
 		if (ntype.equals("copy")){
 			label.append("cp");
+			size.append("30gu");
+
 		}
 		else  if (ntype.equals("data")){
 			label.append("d");
+			size.append("55gu");
+
 		}
 		else if (ntype.equals("phi")){
 			label.append("phi");
+			size.append("50gu");
+
 		}
 
 
@@ -156,7 +163,13 @@ class Graphiel extends MultiGraph
 			// Mark the entry node
 			if(node.getAttribute("block-name").equals("entry")){
 				sb.replace(0,sb.length(), "entry");
-				label.append("Entry");
+				label.replace(0,label.length(), id + ": Entry");
+				size.append("100gu");
+
+			}
+			else{
+				label.append(blockName);
+				size.append("50gu");						
 			}
 		}
 
@@ -171,6 +184,8 @@ class Graphiel extends MultiGraph
 			String op = node.getAttribute("op");
 			sb.append(", " + op);
 			label.append(op);
+			size.append("55gu");
+
 		}
 
 		if(node.hasAttribute("origin")){
@@ -188,7 +203,8 @@ class Graphiel extends MultiGraph
 		node.addAttribute("ui.class", sb.toString());
 
 		// Set text to be shown on the node
-		node.setAttribute("ui.label", label);
+		node.setAttribute("ui.label", label.toString());
+		node.addAttribute("ui.size", size);
 	}
 
 	/**
