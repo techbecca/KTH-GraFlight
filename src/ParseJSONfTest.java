@@ -28,7 +28,7 @@ public class ParseJSONfTest {
 		ParseJSONf p = new ParseJSONf();
 
 		//Create a new file to use as test file
-		File testFile = new File("C:/Users/Charlotta/projectX/json/testparsejsonf.json");
+		File testFile = new File("json"+ File.separator +"testparsejsonf.json");
 
 		Graphiel result = p.parse(testFile);
 

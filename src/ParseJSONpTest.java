@@ -1,6 +1,8 @@
 import static org.junit.Assert.assertEquals;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import org.graphstream.graph.Graph;
 import org.junit.Test;
@@ -25,7 +27,7 @@ public class ParseJSONpTest {
 		ParseJSONp p = new ParseJSONp();
 		
 		//Create a new file to use as test file
-		File testFile = new File("C:/Users/Charlotta/projectX/json/testparsejsonp.json");
+		File testFile = new File("json"+File.separator+"testparsejsonp.json");
 		
 		ArrayList <Match> result = p.parsep(testFile);
 
