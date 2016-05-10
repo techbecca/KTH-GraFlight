@@ -27,6 +27,10 @@ node{
 	text-background-color: rgba(173, 216, 230, 200);
 }
 
+node.highlighted{
+	fill-color: red;
+}
+
 node.data{
 	shape: rounded-box;
 }
