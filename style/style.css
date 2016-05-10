@@ -28,6 +28,10 @@ node{
 	text-background-color: rgb(173, 216, 230);
 }
 
+node.highlighted{
+	fill-color: red;
+}
+
 node.data{
 	shape: box;
 	size: 60px, 40px;

@@ -39,11 +39,11 @@ public class Application {
 		g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
 		//g.paintPatterns(matches);
 		//g.setAttribute("ui.antialiasing", true); // Explore option more? Aliasing bad on windows applications
-
+		g.matchlight(matches, 2);
         // Add positioning
         g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
-       
-	    g.patternEdges(matches);
+
+	    //g.patternEdges(matches);
 
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
@@ -57,7 +57,7 @@ public class Application {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
         frame.setSize(screenSize);
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Set JFrame Icon
         BufferedImage img = null;
@@ -71,7 +71,7 @@ public class Application {
         frame.setIconImage(img);
         frame.setVisible(true);
         frame.add((Component) view);
-      
+
 
 		// prints some basic statistics
 		System.out.println(g.toString());
@@ -80,6 +80,9 @@ public class Application {
 		view.addKeyListener(new ZoomListener(view));
 		view.addMouseMotionListener(new DragListener(view));
 		((Component) view).addMouseWheelListener(new ScrollListener(view));
+
+		g.matchlight(matches, 44);
+
 	}
 
 	/**
