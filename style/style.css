@@ -12,6 +12,9 @@ edge.def{
 edge.ctrl{
 	size: 3px;
 }
+edge.pattern{
+	size: 3px;
+}
 
 node{
 	size-mode: dyn-size;
@@ -39,7 +42,7 @@ node.phi{
 }
 
 node.comp{
-	
+
 }*/
 
 node.lab{

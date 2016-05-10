@@ -19,3 +19,4 @@ nb-configuration.xml
 build.xml
 *.mf
 *.orig
+**/doc
