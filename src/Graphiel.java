@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *Our very own special-purpose SingleGraph subclass.
+ *Our very own special-purpose MultiGraph subclass.
  *@version 1.0
  *@since 2016-05-04
  */
