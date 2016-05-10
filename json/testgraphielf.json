@@ -1,0 +1,109 @@
+
+{
+
+	"bb-exec-freqs" :
+	[
+		[ "entry", 16384 ],
+		[ "for.cond", 524288 ],
+		[ "for.body", 507904 ],
+		[ "for.end", 16384 ],
+		[ "for.inc", 507904 ],
+		[ "bb0", 524288 ],
+		[ "bb1", 524288 ]
+	],
+
+	"inputs" : [ 0 ],
+	"name" : "fact",
+
+	"op-struct" :
+	{
+    	"constraints" : [],
+
+    	"entry-block-node" : 16,
+	"graph" :
+		{
+
+			"edges" :	
+			[
+
+				[
+					0,     
+					26,     
+
+					{
+						"etype" : "data",  
+
+						"in-nr" : 0,      
+
+						"out-nr" : 0      
+					}
+				]
+			],
+
+			"nodes" :
+			[
+
+				[
+					0,          
+					{
+						"id" : 0,       
+
+						"type" :        
+						{
+							"ntype" : "data",   
+							"dtype" : "i32",
+							"origin" : "%n",
+							"block-name" : "for.body",
+							"op" : "br",
+							"ftype" : "ctrlFlow"
+						}
+					}
+				],
+				
+				[
+					26,          
+					{
+						"id" : 26,       
+
+						"type" :        
+						{
+							"ntype" : "phi",
+							"dtype" : "i32",
+							"origin" : "%n"
+						}
+					}
+				],
+
+				[
+					12,
+					{
+						"id" : 12,
+
+						"type" :
+						{
+							"ntype" : "copy",
+							"dtype" : "i32",
+							"origin" : "%n"
+						}
+					}
+				],
+
+				[
+					15,
+					{
+						"id" : 15,
+
+						"type" :
+						{
+							"ntype" : "copy",
+							"dtype" : "i32",
+							"origin" : "%n",
+							"block-name" : "entry"
+						}
+					}
+				]
+
+			]
+		}
+	}
+}
