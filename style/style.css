@@ -28,7 +28,7 @@ node{
 }
 
 node.data{
-	shape: box;
+	shape: rounded-box;
 }
 
 /*node.i32{
