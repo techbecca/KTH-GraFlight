@@ -40,14 +40,14 @@ public class Application {
 		//g.paintPatterns(matches);
 		//g.setAttribute("ui.antialiasing", true);
 
-		
+
 		//adds antialiasing for a smoother look
 		 g.addAttribute("ui.quality");
 		 g.addAttribute("ui.antialias");
-		
+
         // Add positioning
         g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
-  
+
 
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
@@ -81,12 +81,15 @@ public class Application {
 		// prints some basic statistics
 		System.out.println(g.toString());
 		frame.setFocusable(true);
-		
+
 		view.setForeLayoutRenderer( new ForegroundRenderer(g) );
 
 		view.addKeyListener(new ZoomListener(view));
 		view.addMouseMotionListener(new DragListener(view));
 		((Component) view).addMouseWheelListener(new ScrollListener(view));
+
+		g.matchlight(matches,0);
+
 	}
 
 	/**
@@ -114,7 +117,7 @@ public class Application {
 			if(e.getKeyChar() == '+'){
 				double viewPercent = view.getCamera().getViewPercent();
 				if (viewPercent > 0.3) {
-					view.getCamera().setViewPercent(viewPercent * 0.9); // Zooms in, viewPercent: 0-1 (min-max)					
+					view.getCamera().setViewPercent(viewPercent * 0.9); // Zooms in, viewPercent: 0-1 (min-max)
 				}			} else if(e.getKeyChar() == '-') {
 				double viewPercent = view.getCamera().getViewPercent();
 				if (viewPercent < 1.5) {
