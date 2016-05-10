@@ -38,12 +38,16 @@ public class Application {
 		ArrayList<Match> matches = ParseJSONp.parsep(jsons[1]);
 		g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
 		//g.paintPatterns(matches);
-		//g.setAttribute("ui.antialiasing", true); // Explore option more? Aliasing bad on windows applications
+		//g.setAttribute("ui.antialiasing", true);
 
+		
+		//adds antialiasing for a smoother look
+		 g.addAttribute("ui.quality");
+		 g.addAttribute("ui.antialias");
+		
         // Add positioning
         g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
-       
-	    g.patternEdges(matches);
+        g.xyxize();
 
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
@@ -57,7 +61,7 @@ public class Application {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
         frame.setSize(screenSize);
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Set JFrame Icon
         BufferedImage img = null;
@@ -71,7 +75,8 @@ public class Application {
         frame.setIconImage(img);
         frame.setVisible(true);
         frame.add((Component) view);
-      
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
 		// prints some basic statistics
 		System.out.println(g.toString());
@@ -106,16 +111,16 @@ public class Application {
 		public void keyTyped(KeyEvent e) {
 			if(e.getKeyChar() == '+'){
 				double viewPercent = view.getCamera().getViewPercent();
-				view.getCamera().setViewPercent(viewPercent * 0.9); // Zooms in, viewPercent: 0-1 (min-max)
-			} else if(e.getKeyChar() == '-') {
+	if (viewPercent > 0.3) {
+					view.getCamera().setViewPercent(viewPercent * 0.9); // Zooms in, viewPercent: 0-1 (min-max)					
+				}			} else if(e.getKeyChar() == '-') {
 				double viewPercent = view.getCamera().getViewPercent();
-				if (viewPercent < 4) {
+				if (viewPercent < 1.5) {
 					view.getCamera().setViewPercent(viewPercent / 0.9); // Zooms out
 				}
 			} else if(e.getKeyChar() == '0'){
-				view.getCamera().setViewPercent(1);
-				double height = -view.getCamera().getMetrics().graphHeightGU()/2;
-				view.getCamera().setViewCenter(0,height,0);
+						view.getCamera().resetView();
+
 			}
 		}
 
@@ -152,10 +157,12 @@ public class Application {
 
 			if(e.getWheelRotation() < 0){
 				double viewPercent = view.getCamera().getViewPercent();
-				view.getCamera().setViewPercent(viewPercent * 0.9);
+				if (viewPercent > 0.3) {
+					view.getCamera().setViewPercent(viewPercent * 0.9); // Zooms in, viewPercent: 0-1 (min-max)					
+				}
 			}else if(e.getWheelRotation() > 0){
 				double viewPercent = view.getCamera().getViewPercent();
-				if (viewPercent < 4) {
+				if (viewPercent < 1.5) {
 					view.getCamera().setViewPercent(viewPercent / 0.9); // Zooms out
 				}
 			}
