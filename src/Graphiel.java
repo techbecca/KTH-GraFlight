@@ -18,6 +18,11 @@ class Graphiel extends MultiGraph
 		super(id);
 	}
 	
+	/**
+	* Returns the instruction IDs contained in a list of matches.
+	* @param matches A list of matches from ParseJSONp.
+	* @return A list of unique instruction IDs.
+	*/
 	public List<Integer> getInstructionIds(ArrayList<Match> matches)
 	{
 		ArrayList<Integer> ids = new ArrayList<>();
@@ -31,6 +36,11 @@ class Graphiel extends MultiGraph
 		return ids;
 	}
 	
+	
+	/**
+	* Adds colored edges according to a list of matches, one color per instruction.
+	* @param matches A list of matches from ParseJSONp.
+	*/
 	public void patternEdges(ArrayList<Match> matches)
 	{
 		List<Integer> ids = getInstructionIds(matches);
