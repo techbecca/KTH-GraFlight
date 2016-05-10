@@ -42,6 +42,8 @@ public class Application {
 
         // Add positioning
         g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
+       
+	    g.patternEdges(matches);
 
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
@@ -55,7 +57,7 @@ public class Application {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
         frame.setSize(screenSize);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Set JFrame Icon
         BufferedImage img = null;
@@ -69,8 +71,7 @@ public class Application {
         frame.setIconImage(img);
         frame.setVisible(true);
         frame.add((Component) view);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+      
 
 		// prints some basic statistics
 		System.out.println(g.toString());
