@@ -5,6 +5,7 @@ import org.graphstream.graph.Node;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 
 /**
  *Our very own special-purpose MultiGraph subclass.
@@ -71,7 +72,7 @@ class Graphiel extends MultiGraph
 	/**
 	 * This method loops through the matches and colors the nodes that match an input instruction ID
 	 * @param matches all the matches in the graph
-	 * @oaram inst the int representation of instruction ID
+	 * @param inst the int representation of instruction ID
 	 */
 	public void matchlight(ArrayList<Match> matches, int inst) {
 		for(Match match : matches) {
@@ -80,6 +81,21 @@ class Graphiel extends MultiGraph
 					UImod.adduiC(getNode(String.valueOf(node)), "highlighted");
 				}
 			}
+		}
+	}
+
+
+	/**
+	 * This method loops through the matches and removes the highlights from nodes that match an input instruction ID
+	 * @param matches all the matches in the graph
+	 * @param inst the int representation of instruction ID
+	 */
+	public void matchdark() {
+
+		Iterator<Node> nite = getNodeIterator();
+
+		while(nite.hasNext()) {
+			UImod.rmuiC(nite.next(), "highlighted");
 		}
 	}
 
