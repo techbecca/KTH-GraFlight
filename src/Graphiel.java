@@ -13,43 +13,40 @@ import java.util.List;
  */
 class Graphiel extends MultiGraph
 {
+	List<Integer> instructionIDs;
+	List<Match> matches;
+	
 	public Graphiel(String id)
 	{
 		super(id);
 	}
-
-	/**
-	* Returns the instruction IDs contained in a list of matches.
-	* @param matches A list of matches from ParseJSONp.
-	* @return A list of unique instruction IDs.
-	*/
-	public List<Integer> getInstructionIds(ArrayList<Match> matches)
+	
+	public void addMatches(List<Match> matches)
 	{
+		this.matches = matches;
 		ArrayList<Integer> ids = new ArrayList<>();
 		for (Match match : matches)
 		{
 			if ( !ids.contains(new Integer(match.getInstructionId())) )
-			{
 				ids.add(match.getInstructionId());
-			}
 		}
-		return ids;
+		instructionIDs = ids;
+	}
+	
+	public List<Integer> getInstructionIds()
+	{
+		return instructionIDs;
 	}
 
-
 	/**
-	* Adds colored edges according to a list of matches, one color per instruction.
-	* @param matches A list of matches from ParseJSONp.
+	* Adds colored edges according to the list of matches, one color per instruction.
 	*/
-	public void patternEdges(ArrayList<Match> matches)
+	public void patternEdges()
 	{
-		List<Integer> ids = getInstructionIds(matches);
-		for (Integer i : ids)
-			System.out.println(i);
 		int edgeindex = 0;
 		for (Match match : matches)
 		{
-			Color col = instructionColor(ids.indexOf(match.getInstructionId()), ids.size());
+			Color col = instructionColor(edgeindex, instructionIDs.size());
 			int[] nodes = match.getGraphNodes();
 
 			for(int i = 0; i < nodes.length - 1; i++){
@@ -70,10 +67,9 @@ class Graphiel extends MultiGraph
 
 	/**
 	 * This method loops through the matches and colors the nodes that match an input instruction ID
-	 * @param matches all the matches in the graph
 	 * @oaram inst the int representation of instruction ID
 	 */
-	public void matchlight(ArrayList<Match> matches, int inst) {
+	public void matchlight(int inst) {
 		for(Match match : matches) {
 			if(match.getInstructionId() == inst) {
 				for(int node : match.getGraphNodes()) {
@@ -119,6 +115,8 @@ class Graphiel extends MultiGraph
 		sb.append("Name:  ").append( getId() ).append('\n');
 		sb.append("# Nodes: ").append(getNodeCount()).append('\n');
 		sb.append("# Edges: ").append(getEdgeCount()).append('\n');
+		sb.append("# Instructions: ").append(instructionIDs.size()).append('\n');
+		sb.append("# Matches: ").append(matches.size()).append('\n');
 
 		return sb.toString();
 	}

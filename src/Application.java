@@ -35,7 +35,7 @@ public class Application {
 		Graphiel g = ParseJSONf.parse(jsons[0]);
 
 		// adds the patterns
-		ArrayList<Match> matches = ParseJSONp.parsep(jsons[1]);
+		g.addMatches(ParseJSONp.parsep(jsons[1]));
 		g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
 		//g.paintPatterns(matches);
 		//g.setAttribute("ui.antialiasing", true);
@@ -88,7 +88,7 @@ public class Application {
 		view.addMouseMotionListener(new DragListener(view));
 		((Component) view).addMouseWheelListener(new ScrollListener(view));
 
-		g.matchlight(matches,0);
+		g.matchlight(0);
 
 	}
 
