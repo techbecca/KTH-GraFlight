@@ -16,4 +16,17 @@ public class UImod {
 		String priors = e.getAttribute("ui.class");
 		if(!priors.contains(attr)) e.setAttribute("ui.class", priors + "," + attr);
 	}
+
+	/**
+	 * This method removes a key and all saved related values
+	 * @param e an element that contains attributes
+	 * @param key the key represented as a String
+	 */
+	public static void rmuiC(Element e, String attr) {
+		String priors = e.getAttribute("ui.class");
+		if(priors.contains(attr)) {
+			priors = priors.replace(","+attr,"");
+			e.setAttribute("ui.class", priors);
+		}
+	}
 }

@@ -89,6 +89,8 @@ public class Application {
 		((Component) view).addMouseWheelListener(new ScrollListener(view));
 
 		g.matchlight(matches,0);
+		g.matchlight(matches,2);
+		g.matchdark();
 
 	}
 
