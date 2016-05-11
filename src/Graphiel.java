@@ -132,7 +132,7 @@ class Graphiel extends MultiGraph
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append("  Name: ").append( getId() ).append('\n');
+		sb.append("Name:  ").append( getId() ).append('\n');
 		sb.append("# Nodes: ").append(getNodeCount()).append('\n');
 		sb.append("# Edges: ").append(getEdgeCount()).append('\n');
 
@@ -160,17 +160,17 @@ class Graphiel extends MultiGraph
 
 		if (ntype.equals("copy")){
 			label.append("cp");
-			size.append("30gu");
+			size.append("70gu");
 
 		}
 		else  if (ntype.equals("data")){
 			label.append("d");
-			size.append("55gu");
+			size.append("150gu");
 
 		}
 		else if (ntype.equals("phi")){
 			label.append("phi");
-			size.append("50gu");
+			size.append("70gu");
 
 		}
 
@@ -183,12 +183,12 @@ class Graphiel extends MultiGraph
 			if(node.getAttribute("block-name").equals("entry")){
 				sb.replace(0,sb.length(), "entry");
 				label.replace(0,label.length(), id + ": Entry");
-				size.append("100gu");
+				size.append("300gu");
 
 			}
 			else{
 				label.append(blockName);
-				size.append("50gu");
+				size.append("150gu");
 			}
 		}
 
@@ -203,7 +203,7 @@ class Graphiel extends MultiGraph
 			String op = node.getAttribute("op");
 			sb.append(", " + op);
 			label.append(op);
-			size.append("55gu");
+			size.append("75gu");
 
 		}
 
