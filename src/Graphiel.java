@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 /**
  *Our very own special-purpose MultiGraph subclass.
@@ -16,12 +17,12 @@ class Graphiel extends MultiGraph
 {
 	List<Integer> instructionIDs;
 	List<Match> matches;
-	
+
 	public Graphiel(String id)
 	{
 		super(id);
 	}
-	
+
 	public void addMatches(List<Match> matches)
 	{
 		this.matches = matches;
@@ -35,7 +36,7 @@ class Graphiel extends MultiGraph
 		}
 		instructionIDs = ids;
 	}
-	
+
 	public List<Integer> getInstructionIds()
 	{
 		return instructionIDs;
@@ -84,9 +85,7 @@ class Graphiel extends MultiGraph
 
 
 	/**
-	 * This method loops through the matches and removes the highlights from nodes that match an input instruction ID
-	 * @param matches all the matches in the graph
-	 * @param inst the int representation of instruction ID
+	 * This method loops through and removes the highlights from nodes
 	 */
 	public void matchdark() {
 
@@ -96,6 +95,30 @@ class Graphiel extends MultiGraph
 			UImod.rmuiC(nite.next(), "highlighted");
 		}
 	}
+
+	/**
+	 * This method loops through the nodes and highlights them, then de-highlihgts them
+	 */
+	public void matchflash(int delay) {
+
+		Node current;
+		ArrayList<Node> matchnodes = new ArrayList(8);
+
+		for(Match match : matches) {
+			for(int node : match.getGraphNodes()) {
+				current = getNode(String.valueOf(node));
+				matchnodes.add(current);
+				UImod.adduiC(current,"highlighted");
+			}
+			try {TimeUnit.MILLISECONDS.sleep(delay);} catch (InterruptedException x) {}
+
+			for(Node node : matchnodes){
+				UImod.rmuiC(node,"highlighted");
+			}
+			System.out.println("pattern: "+match.getInstructionId()+"."+match.getPatternId());
+		}
+	}
+
 
 	/* public void paintPatterns(ArrayList<Match> matches){
 		for(Match match : matches){

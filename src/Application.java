@@ -47,7 +47,7 @@ public class Application {
 
         // Add positioning
         g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
-
+		//g.patternEdges();
 
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
@@ -88,9 +88,7 @@ public class Application {
 		view.addMouseMotionListener(new DragListener(view));
 		((Component) view).addMouseWheelListener(new ScrollListener(view));
 
-		g.matchlight(0);
-		g.matchlight(2);
-		g.matchdark();
+		g.matchflash(750);
 	}
 
 	/**
