@@ -75,6 +75,15 @@ class Graphiel extends MultiGraph
 
 				for(int node : match.getGraphNodes()) {
 					UImod.adduiC(getNode(String.valueOf(node)), "highlighted");
+					Node n1 = getNode(String.valueOf(node));
+					for(int node2 : match.getGraphNodes()){
+						Node n2 = getNode(String.valueOf(node2));
+						if(n1.hasEdgeToward(n2)){
+							Edge e = n1.getEdgeToward(n2);
+							UImod.adduiC(e, "highlighted");
+							//n1.getEdgeToward(n2).setAttribute("ui.class", "highlighted");
+						}
+					}
 				}
 			}
 		}
@@ -101,7 +110,6 @@ class Graphiel extends MultiGraph
 
 		//	Iterates through the rows in the positions double-array
 		for(int x = 0; x < positions.length; x++){
-
 			getNode(x).addAttribute("x", positions[x][0]);
 			getNode(x).addAttribute("y", -positions[x][1]); // Negative because y-positive axis defined as opposite when rendering
 

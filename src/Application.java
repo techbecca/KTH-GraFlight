@@ -39,6 +39,8 @@ public class Application {
 		g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
 		//g.paintPatterns(matches);
 
+		//g.patternEdges(matches);
+
 		g.matchlight(matches, 2);
 
 		//adds antialiasing for a smoother look

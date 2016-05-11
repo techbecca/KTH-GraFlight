@@ -15,6 +15,11 @@ edge.ctrl{
 edge.pattern{
 	size: 3px;
 }
+edge.highlighted{
+	fill-color: red;
+	shape: blob;
+	arrow-size: 12px;
+}
 
 node{
 	size-mode: dyn-size;
