@@ -1,7 +1,10 @@
 import org.graphstream.ui.graphicGraph.GraphicGraph;
 import org.graphstream.ui.swingViewer.LayerRenderer;
 
+
+import java.awt.GraphicsEnvironment;
 import java.awt.Graphics2D;
+import java.awt.Font;
 import java.awt.Color;
 
 /**
@@ -27,8 +30,9 @@ class ForegroundRenderer implements LayerRenderer
     int widthPx, int heightPx, double minXGu, double minYGu,
     double maxXGu, double maxYGu)
 	{
+		graphics.setFont(new Font("Verdana", Font.BOLD, 18));
 		graphics.setColor(Color.black);	
-		drawString(graphics, infostring, 20, 30);
+		drawString(graphics, infostring, 30, heightPx - 145);
 	}
 	
 	/**

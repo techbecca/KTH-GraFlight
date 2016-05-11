@@ -1,5 +1,6 @@
 import org.junit.Test;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -135,7 +136,7 @@ public class GraphielTest {
         String result = graphiel.getNode("0").getAttribute("ui.class");
         assertEquals("data, for.body, i32, br, %n, ctrlFlow", result);
 
-        // Test results ui.label4
+        // Test results ui.label
         String result1 = graphiel.getNode("0").getAttribute("ui.label");
         String result2 = graphiel.getNode("26").getAttribute("ui.label");
         String result3 = graphiel.getNode("12").getAttribute("ui.label");
