@@ -177,8 +177,7 @@ class Graphiel extends MultiGraph
 
 		if(node.hasAttribute("block-name")){
 			String blockName = node.getAttribute("block-name");
-			sb.append(", " + blockName);
-			//label.append(", " + blockName);
+			sb.append("," + blockName);
 			// Mark the entry node
 			if(node.getAttribute("block-name").equals("entry")){
 				sb.replace(0,sb.length(), "entry");
@@ -195,13 +194,12 @@ class Graphiel extends MultiGraph
 
 		if(node.hasAttribute("dtype")){
 			String dtype = node.getAttribute("dtype");
-			sb.append(", " + dtype);
-			//label.append(", " + dtype);
+			sb.append("," + dtype);
 		}
 
 		if(node.hasAttribute("op")){
 			String op = node.getAttribute("op");
-			sb.append(", " + op);
+			//sb.append("," + op);
 			label.append(op);
 			size.append("75gu");
 
@@ -209,18 +207,16 @@ class Graphiel extends MultiGraph
 
 		if(node.hasAttribute("origin")){
 			String origin = node.getAttribute("origin");
-			sb.append(", " + origin);
-			//label.append(", " + origin);
+			//sb.append("," + origin);
 		}
 
 		if(node.hasAttribute("ftype")){
 			String ftype = node.getAttribute("ftype");
-			sb.append(", " + ftype);
+			sb.append("," + ftype);
 		}
 
 		// Set graphical properties to the node
 		node.addAttribute("ui.class", sb.toString());
-
 		// Set text to be shown on the node
 		node.setAttribute("ui.label", label.toString());
 		node.addAttribute("ui.size", size);

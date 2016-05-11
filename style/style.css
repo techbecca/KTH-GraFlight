@@ -18,7 +18,6 @@ edge.pattern{
 
 node{
 	size-mode: dyn-size;
-	/*size: 40px, 40px, 1%;*/
 	stroke-mode: plain;
 	stroke-width: 2px;
 	fill-color: rgba(173, 216, 230, 200);
@@ -35,24 +34,9 @@ node.data{
 	shape: rounded-box;
 }
 
-/*node.i32{
-	size: 50px, 50px;
-	fill-color: black;
-}
-
-node.phi{
-}
-
-node.comp{
-
-}*/
 
 node.lab{
 	shape: box;
-}
-
-node.entry{
-	size: 80px, 80px;
 }
 
 node.ctrl{
@@ -62,10 +46,3 @@ node.ctrl{
 node.ctrlFlow{
 	stroke-width: 3px;
 }
-
-node.copy{
-	size: 10px, 10px;
-}
-
-
-
