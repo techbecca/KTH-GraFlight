@@ -38,8 +38,8 @@ public class Application {
 		ArrayList<Match> matches = ParseJSONp.parsep(jsons[1]);
 		g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
 		//g.paintPatterns(matches);
+		//g.setAttribute("ui.antialiasing", true);
 
-		g.matchlight(matches, 2);
 
 		//adds antialiasing for a smoother look
 		 g.addAttribute("ui.quality");
@@ -48,12 +48,13 @@ public class Application {
         // Add positioning
         g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
 
+
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         // Display without default layout (false)
         Viewer viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-        View view = viewer.addDefaultView(false);
+        DefaultView view = (DefaultView) viewer.addDefaultView(false);
 
 		// configures the JFrame
         JFrame frame = new JFrame("GraFlight");
@@ -76,15 +77,18 @@ public class Application {
         frame.add((Component) view);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+
 		// prints some basic statistics
 		System.out.println(g.toString());
 		frame.setFocusable(true);
+
+		view.setForeLayoutRenderer( new ForegroundRenderer(g) );
 
 		view.addKeyListener(new ZoomListener(view));
 		view.addMouseMotionListener(new DragListener(view));
 		((Component) view).addMouseWheelListener(new ScrollListener(view));
 
-		g.matchlight(matches, 44);
+		g.matchlight(matches,0);
 
 	}
 
@@ -112,7 +116,7 @@ public class Application {
 		public void keyTyped(KeyEvent e) {
 			if(e.getKeyChar() == '+'){
 				double viewPercent = view.getCamera().getViewPercent();
-	if (viewPercent > 0.3) {
+				if (viewPercent > 0.3) {
 					view.getCamera().setViewPercent(viewPercent * 0.9); // Zooms in, viewPercent: 0-1 (min-max)
 				}			} else if(e.getKeyChar() == '-') {
 				double viewPercent = view.getCamera().getViewPercent();

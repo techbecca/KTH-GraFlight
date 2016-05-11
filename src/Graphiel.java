@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *Our very own special-purpose SingleGraph subclass.
+ *Our very own special-purpose MultiGraph subclass.
  *@version 1.0
  *@since 2016-05-04
  */
@@ -68,11 +68,14 @@ class Graphiel extends MultiGraph
 		}
 	}
 
+	/**
+	 * This method loops through the matches and colors the nodes that match an input instruction ID
+	 * @param matches all the matches in the graph
+	 * @oaram inst the int representation of instruction ID
+	 */
 	public void matchlight(ArrayList<Match> matches, int inst) {
-
 		for(Match match : matches) {
 			if(match.getInstructionId() == inst) {
-
 				for(int node : match.getGraphNodes()) {
 					UImod.adduiC(getNode(String.valueOf(node)), "highlighted");
 				}
@@ -169,7 +172,7 @@ class Graphiel extends MultiGraph
 			}
 			else{
 				label.append(blockName);
-				size.append("50gu");						
+				size.append("50gu");
 			}
 		}
 
