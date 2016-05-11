@@ -24,13 +24,16 @@ public class GraphielTest {
 
 
     /**
+     *
+     * DEPRECATED
+     *
      * This method tests the method "getInstructionIds" by generating an
      * ArrayList of matches from a test JSON-file (testparsejsonp.json).
      * It is parsed by a mock class created from the class ParseJSONp.
      *
      * Written by Rebecca Hellström Karlsson and Isabel Ghourchian 2016-05-10
      */
-    @Test
+    /*@Test
     public void getInstructionIdsTest() throws FileNotFoundException {
 
         // Create mock
@@ -51,7 +54,7 @@ public class GraphielTest {
         expected.add(1);
 
         assertEquals(expected, result);
-    }
+    }*/
 
     /**
      * NOT FINISHED
