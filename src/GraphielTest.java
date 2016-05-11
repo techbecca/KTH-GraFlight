@@ -79,7 +79,7 @@ public class GraphielTest {
 
         // Use ArrayList to call on method
         Graphiel graphiel = new Graphiel("test");
-        List<Integer> result = graphiel.getInstructionIds(matches);
+        List<Integer> result = graphiel.getInstructionIds();
 
         // Test result
         List<Integer> expected = new ArrayList<>();
