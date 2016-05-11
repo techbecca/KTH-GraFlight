@@ -116,7 +116,7 @@ class Graphiel extends MultiGraph
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append("  Name: ").append( getId() ).append('\n');
+		sb.append("Name:  ").append( getId() ).append('\n');
 		sb.append("# Nodes: ").append(getNodeCount()).append('\n');
 		sb.append("# Edges: ").append(getEdgeCount()).append('\n');
 
