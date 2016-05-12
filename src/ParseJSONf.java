@@ -152,7 +152,8 @@ public class ParseJSONf {
         StringBuilder size = new StringBuilder();
 
         // Shows node ID as text on the graph
-        label.append(node.getId() + ": ");
+        String id = node.getId();
+        label.append(id + ": ");
 
         // Continue building string depending on type
         String ntype = node.getAttribute("ntype");
