@@ -30,7 +30,10 @@ node{
 	text-background-mode: rounded-box;
 	text-background-color: rgba(173, 216, 230, 200);
 }
-
+node.selected{
+	fill-color : green;
+	
+}
 node.highlighted{
 	fill-color: red;
 }
