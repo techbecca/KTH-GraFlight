@@ -1,6 +1,8 @@
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.graph.Node;
+import org.graphstream.ui.spriteManager.SpriteManager;
+import org.graphstream.ui.spriteManager.Sprite;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -18,10 +20,13 @@ class Graphiel extends MultiGraph
 {
 	List<Integer> instructionIDs;
 	List<Match> matches;
-
+	
+	SpriteManager sman;
+	
 	public Graphiel(String id)
 	{
 		super(id);
+		sman = new SpriteManager(this);
 	}
 
 	public void addMatches(List<Match> matches)
@@ -59,9 +64,10 @@ class Graphiel extends MultiGraph
 		for (Node n: getEachNode()){
 			if ((int) n.getAttribute("matches")==0){
 				UImod.adduiC(n,"noMatch");
+				Sprite s = sman.addSprite("nomatch" + n.getId());
+				UImod.adduiC(s, "noMatch");
 			}
 		}
-
 	}
 
 	/**
