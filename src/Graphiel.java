@@ -20,9 +20,9 @@ class Graphiel extends MultiGraph
 {
 	List<Integer> instructionIDs;
 	List<Match> matches;
-	
+
 	SpriteManager sman;
-	
+
 	public Graphiel(String id)
 	{
 		super(id);
@@ -125,7 +125,6 @@ class Graphiel extends MultiGraph
 		}
 	}
 
-
 	/**
 	 * This method loops through and removes the highlights from nodes
 	 */
@@ -161,19 +160,6 @@ class Graphiel extends MultiGraph
 		}
 	}
 
-
-	/* public void paintPatterns(ArrayList<Match> matches){
-		for(Match match : matches){
-			int[] nodes = match.getGraphNodes();
-			for(int i = 0; i < nodes.length; i++){
-				Node n = getNode(String.valueOf(nodes[i]));
-				n.setAttribute("ui.class", n.getAttribute("ui.class") + ", " + "instruction" + match.getInstructionId());
-				Color col = instructionColor(match.getInstructionId());
-				n.setAttribute("ui.style", "stroke-color: rgb(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() + ");");
-			}
-		}
-	}*/
-
 	/**
 	 * Loads position information into the graph from a double[][]
 	 * where [i][0] and [i][1] are the x and y coordinates of the i:th node.
@@ -190,7 +176,6 @@ class Graphiel extends MultiGraph
 		}
 	}
 
-
 	@Override
 	public String toString()
 	{
@@ -203,8 +188,6 @@ class Graphiel extends MultiGraph
 
 		return sb.toString();
 	}
-
-
 
 	private static Color instructionColor(int id, int length){
 		Color col = new Color(Color.HSBtoRGB((float) id/length,(float) 0.75,(float) 0.75));
