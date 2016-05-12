@@ -34,4 +34,9 @@ public class UImod {
 			e.setAttribute("ui.class", priors);
 		}
 	}
+
+	public static boolean checkuiC(Element e, String attr){
+		String classes = e.getAttribute("ui.class");
+		return classes.contains(attr);
+	}
 }

@@ -69,23 +69,6 @@ class Graphiel extends MultiGraph
 	//	}
 
 
-	public ArrayList <Match> filterByNode(Node n){
-		ArrayList <Match> filteredMatches = new ArrayList<>();
-		for(Match match : matches){
-			for(int GraphNode : match.getGraphNodes()){
-				if(GraphNode == Integer.parseInt(n.getId())){
-					filteredMatches.add(match);
-				}
-
-			}
-		}
-		
-		return filteredMatches;
-
-	}
-
-
-
 	/**
 	 * Adds colored edges according to the list of matches, one color per instruction.
 	 */
@@ -304,5 +287,21 @@ class Graphiel extends MultiGraph
 		Color col = new Color(Color.HSBtoRGB((float) id/length,(float) 0.75,(float) 0.75));
 		//System.out.println(col.toString());
 		return col;
+	}
+
+
+	public ArrayList <Match> filterByNode(Node n){
+		ArrayList <Match> filteredMatches = new ArrayList<>();
+		for(Match match : matches){
+			for(int GraphNode : match.getGraphNodes()){
+				if(GraphNode == Integer.parseInt(n.getId())){
+					filteredMatches.add(match);
+				}
+
+			}
+		}
+
+		return filteredMatches;
+
 	}
 }

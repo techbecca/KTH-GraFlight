@@ -32,7 +32,11 @@ node{
 }
 node.selected{
 	fill-color : green;
+	text-background-color: green;
 	
+}
+node.hovered{
+	stroke-width: 5px;
 }
 node.highlighted{
 	fill-color: red;
