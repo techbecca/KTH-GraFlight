@@ -145,23 +145,7 @@ public class ParseJSONf {
         return directedGraph;
     }
 
-    public static void main(String[] args) throws FileNotFoundException{
 
-        // Look for a JSON file from the argument
-        File json = null;
-        json = new File(args[0]);
-
-
-        Graph gsgraph = parse(json);
-
-
-        //System.out.println(String.valueOf(gsgraph.getAttribute("inputs")));
-        //System.out.println(String.valueOf(gsgraph.getAttribute("constraints")));
-        int lol = gsgraph.getAttribute("entry-block-node");
-        String lol2 = String.valueOf(lol);
-        System.out.println(lol2);
-
-    }
 
     /**
      * This method iterates through node attributes and parses it into graphical attributes.
@@ -259,5 +243,23 @@ public class ParseJSONf {
     public static void convertEdge(Edge edge){
         String etype = edge.getAttribute("etype");
         edge.addAttribute("ui.class", etype);
+    }
+
+    public static void main(String[] args) throws FileNotFoundException{
+
+        // Look for a JSON file from the argument
+        File json = null;
+        json = new File(args[0]);
+
+
+        Graph gsgraph = parse(json);
+
+
+        //System.out.println(String.valueOf(gsgraph.getAttribute("inputs")));
+        //System.out.println(String.valueOf(gsgraph.getAttribute("constraints")));
+        int lol = gsgraph.getAttribute("entry-block-node");
+        String lol2 = String.valueOf(lol);
+        System.out.println(lol2);
+
     }
 }
