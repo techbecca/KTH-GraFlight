@@ -181,7 +181,7 @@ class Graphiel extends MultiGraph
 		StringBuilder size = new StringBuilder();
 
 		// Shows node ID as text on the graph
-		String id = node.getAttribute("id");
+		String id = node.getId();
 		label.append(id + ": ");
 
 		// Continue building string depending on type
