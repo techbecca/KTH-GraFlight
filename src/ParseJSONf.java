@@ -75,7 +75,7 @@ public class ParseJSONf {
 
             // Parses JSON-keys to Java-attributes in the Node object
             for(String s : type.keySet()) {
-            	if (type.get(s).equals(null)){
+            	if (type.get(s).equals(null)) {
             		continue;
             		}
                 node.setAttribute(s, type.getString(s));
@@ -102,7 +102,7 @@ public class ParseJSONf {
             convertEdge(edge);
 
             // Assign that nodes are part of the control flow
-            if (etype.equals("ctrl")){
+            if (etype.equals("ctrl")) {
                 gsgraph.getNode(source).setAttribute("ftype", "ctrlFlow");
                 gsgraph.getNode(target).setAttribute("ftype", "ctrlFlow");
 
@@ -146,14 +146,13 @@ public class ParseJSONf {
      * Modified by Rebecca Hellström Karlsson and Mathilda von Schantz 2016-05-09
      * Modified by Nahida Islam and Mathilda von Schantz 2016-05-10
      */
-    public static void convertNode(Node node){
+    public static void convertNode(Node node) {
         StringBuilder sb = new StringBuilder();
         StringBuilder label = new StringBuilder();
         StringBuilder size = new StringBuilder();
 
         // Shows node ID as text on the graph
-        String id = node.getAttribute("id");
-        label.append(id + ": ");
+        label.append(node.getId() + ": ");
 
         // Continue building string depending on type
         String ntype = node.getAttribute("ntype");
@@ -161,28 +160,28 @@ public class ParseJSONf {
 
         sb.append(ntype);
 
-        if (ntype.equals("copy")){
+        if (ntype.equals("copy")) {
             label.append("cp");
             size.append("70gu");
 
         }
-        else  if (ntype.equals("data")){
+        else  if (ntype.equals("data")) {
             label.append("d");
             size.append("150gu");
 
         }
-        else if (ntype.equals("phi")){
+        else if (ntype.equals("phi")) {
             label.append("phi");
             size.append("70gu");
 
         }
 
 
-        if(node.hasAttribute("block-name")){
+        if(node.hasAttribute("block-name")) {
             String blockName = node.getAttribute("block-name");
             sb.append("," + blockName);
             // Mark the entry node
-            if(node.getAttribute("block-name").equals("entry")){
+            if(node.getAttribute("block-name").equals("entry")) {
                 sb.replace(0,sb.length(), "entry");
                 label.replace(0,label.length(), id + ": Entry");
                 size.append("300gu");
@@ -195,12 +194,12 @@ public class ParseJSONf {
         }
 
 
-        if(node.hasAttribute("dtype")){
+        if(node.hasAttribute("dtype")) {
             String dtype = node.getAttribute("dtype");
             sb.append("," + dtype);
         }
 
-        if(node.hasAttribute("op")){
+        if(node.hasAttribute("op")) {
             String op = node.getAttribute("op");
             //sb.append("," + op);
             label.append(op);
@@ -208,12 +207,12 @@ public class ParseJSONf {
 
         }
 
-        if(node.hasAttribute("origin")){
+        if(node.hasAttribute("origin")) {
             String origin = node.getAttribute("origin");
             //sb.append("," + origin);
         }
 
-        if(node.hasAttribute("ftype")){
+        if(node.hasAttribute("ftype")) {
             String ftype = node.getAttribute("ftype");
             sb.append("," + ftype);
         }
@@ -231,12 +230,12 @@ public class ParseJSONf {
      *
      * Written by Aiman Josefsson 2016-04-30
      */
-    public static void convertEdge(Edge edge){
+    public static void convertEdge(Edge edge) {
         String etype = edge.getAttribute("etype");
         edge.addAttribute("ui.class", etype);
     }
 
-    public static void main(String[] args) throws FileNotFoundException{
+    public static void main(String[] args) throws FileNotFoundException {
 
         // Look for a JSON file from the argument
         File json = null;
