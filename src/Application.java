@@ -178,7 +178,7 @@ public class Application {
 		public void mouseEntered(MouseEvent e) {
 			// TODO Auto-generated method stub
 
-			
+
 		}
 
 		@Override
