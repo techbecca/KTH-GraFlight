@@ -3,6 +3,7 @@ import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.ui.geom.Point3;
+import org.graphstream.ui.graphicGraph.GraphicElement;
 import org.graphstream.ui.swingViewer.*;
 import org.graphstream.ui.view.*;
 
@@ -52,7 +53,7 @@ public class Application {
 		//g.patternEdges();
 
 		// Check for nodes with no matches
-		g.flagNoMatches();
+//		g.flagNoMatches();
 
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
