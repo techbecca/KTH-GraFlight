@@ -20,3 +20,4 @@ build.xml
 *.mf
 *.orig
 **/doc
+*.jar

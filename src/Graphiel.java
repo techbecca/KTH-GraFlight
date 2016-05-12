@@ -5,26 +5,26 @@ import org.graphstream.graph.Node;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 
 /**
- *Our very own special-purpose SingleGraph subclass.
+ *Our very own special-purpose MultiGraph subclass.
  *@version 1.0
  *@since 2016-05-04
  */
 class Graphiel extends MultiGraph
 {
+	List<Integer> instructionIDs;
+	List<Match> matches;
+
 	public Graphiel(String id)
 	{
 		super(id);
 	}
 
-	/**
-	* Returns the instruction IDs contained in a list of matches.
-	* @param matches A list of matches from ParseJSONp.
-	* @return A list of unique instruction IDs.
-	*/
-	public List<Integer> getInstructionIds(ArrayList<Match> matches)
+	public void addMatches(List<Match> matches)
 	{
+		this.matches = matches;
 		ArrayList<Integer> ids = new ArrayList<>();
 		for (Match match : matches)
 		{
@@ -33,23 +33,23 @@ class Graphiel extends MultiGraph
 				ids.add(match.getInstructionId());
 			}
 		}
-		return ids;
+		instructionIDs = ids;
 	}
 
+	public List<Integer> getInstructionIds()
+	{
+		return instructionIDs;
+	}
 
 	/**
-	* Adds colored edges according to a list of matches, one color per instruction.
-	* @param matches A list of matches from ParseJSONp.
-	*/
-	public void patternEdges(ArrayList<Match> matches)
+	 * Adds colored edges according to the list of matches, one color per instruction.
+	 */
+	public void patternEdges()
 	{
-		List<Integer> ids = getInstructionIds(matches);
-		for (Integer i : ids)
-			System.out.println(i);
 		int edgeindex = 0;
 		for (Match match : matches)
 		{
-			Color col = instructionColor(ids.indexOf(match.getInstructionId()), ids.size());
+			Color col = instructionColor(edgeindex, instructionIDs.size());
 			int[] nodes = match.getGraphNodes();
 
 			for(int i = 0; i < nodes.length - 1; i++){
@@ -68,6 +68,10 @@ class Graphiel extends MultiGraph
 		}
 	}
 
+	/**
+	 * This method loops through the matches and colors the nodes that match an input instruction ID
+	 * @oaram inst the int representation of instruction ID
+	 */
 	public void matchlight(ArrayList<Match> matches, int inst) {
 
 		for(Match match : matches) {
@@ -81,11 +85,23 @@ class Graphiel extends MultiGraph
 						if(n1.hasEdgeToward(n2)){
 							Edge e = n1.getEdgeToward(n2);
 							UImod.adduiC(e, "highlighted");
-							//n1.getEdgeToward(n2).setAttribute("ui.class", "highlighted");
 						}
 					}
 				}
 			}
+		}
+	}
+
+
+	/**
+	 * This method loops through the matches and removes the highlights from nodes that match an input instruction ID
+	 */
+	public void matchdark() {
+
+		Iterator<Node> nite = getNodeIterator();
+
+		while(nite.hasNext()) {
+			UImod.rmuiC(nite.next(), "highlighted");
 		}
 	}
 
@@ -102,10 +118,10 @@ class Graphiel extends MultiGraph
 	}*/
 
 	/**
-	* Loads position information into the graph from a double[][]
-	* where [i][0] and [i][1] are the x and y coordinates of the i:th node.
-	* @param positions The 2D double-array containing node positions.
-	*/
+	 * Loads position information into the graph from a double[][]
+	 * where [i][0] and [i][1] are the x and y coordinates of the i:th node.
+	 * @param positions The 2D double-array containing node positions.
+	 */
 	public void positioning(double[][] positions){
 
 		//	Iterates through the rows in the positions double-array
@@ -121,9 +137,11 @@ class Graphiel extends MultiGraph
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append("  Name: ").append( getId() ).append('\n');
+		sb.append("Name:  ").append( getId() ).append('\n');
 		sb.append("# Nodes: ").append(getNodeCount()).append('\n');
 		sb.append("# Edges: ").append(getEdgeCount()).append('\n');
+		sb.append("# Instructions: ").append(instructionIDs.size()).append('\n');
+		sb.append("# Matches: ").append(matches.size()).append('\n');
 
 		return sb.toString();
 	}
@@ -149,76 +167,72 @@ class Graphiel extends MultiGraph
 
 		if (ntype.equals("copy")){
 			label.append("cp");
-			size.append("30gu");
+			size.append("70gu");
 
 		}
 		else  if (ntype.equals("data")){
 			label.append("d");
-			size.append("55gu");
+			size.append("150gu");
 
 		}
 		else if (ntype.equals("phi")){
 			label.append("phi");
-			size.append("50gu");
+			size.append("70gu");
 
 		}
 
 
 		if(node.hasAttribute("block-name")){
 			String blockName = node.getAttribute("block-name");
-			sb.append(", " + blockName);
-			//label.append(", " + blockName);
+			sb.append("," + blockName);
 			// Mark the entry node
 			if(node.getAttribute("block-name").equals("entry")){
 				sb.replace(0,sb.length(), "entry");
 				label.replace(0,label.length(), id + ": Entry");
-				size.append("100gu");
+				size.append("300gu");
 
 			}
 			else{
 				label.append(blockName);
-				size.append("50gu");						
+				size.append("150gu");
 			}
 		}
 
 
 		if(node.hasAttribute("dtype")){
 			String dtype = node.getAttribute("dtype");
-			sb.append(", " + dtype);
-			//label.append(", " + dtype);
+			sb.append("," + dtype);
 		}
 
 		if(node.hasAttribute("op")){
 			String op = node.getAttribute("op");
-			sb.append(", " + op);
+			//sb.append("," + op);
 			label.append(op);
-			size.append("55gu");
+			size.append("75gu");
 
 		}
 
 		if(node.hasAttribute("origin")){
 			String origin = node.getAttribute("origin");
-			sb.append(", " + origin);
-			//label.append(", " + origin);
+			//sb.append("," + origin);
 		}
 
 		if(node.hasAttribute("ftype")){
 			String ftype = node.getAttribute("ftype");
-			sb.append(", " + ftype);
+			sb.append("," + ftype);
 		}
 
 		// Set graphical properties to the node
 		node.addAttribute("ui.class", sb.toString());
-
 		// Set text to be shown on the node
 		node.setAttribute("ui.label", label.toString());
 		node.addAttribute("ui.size", size);
 	}
 
 	/**
-	* Assigns style class to an edge based on its edge type attribute
-	* @param edge
-	*/
+	 * Assigns style class to an edge based on its edge type attribute
+	 * @param edge
+	 */
 	public static void convertEdge(Edge edge){
 		String etype = edge.getAttribute("etype");
 		edge.addAttribute("ui.class", etype);
