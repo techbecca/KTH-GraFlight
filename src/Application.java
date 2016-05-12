@@ -3,12 +3,14 @@ import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.ui.geom.Point3;
+import org.graphstream.ui.graphicGraph.GraphicElement;
+import org.graphstream.ui.graphicGraph.GraphicGraph;
 import org.graphstream.ui.swingViewer.*;
 import org.graphstream.ui.view.*;
 
 import org.graphstream.ui.view.Viewer;
+import org.graphstream.ui.view.util.MouseManager;
 import org.graphstream.ui.view.View;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +21,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.graphstream.ui.swingViewer.util.*;
+
+
 /**
  * This is the main application class for GraFlight
  * @author Aiman Josefsson
@@ -26,7 +31,7 @@ import java.util.ArrayList;
  */
 public class Application {
 
-    public static void main(String args[]) throws FileNotFoundException {
+	public static void main(String args[]) throws FileNotFoundException {
 
 		// gets the json files: from argument or file dialog
 		File[] jsons = Filer.run(args);
@@ -36,6 +41,9 @@ public class Application {
 
 		// adds the patterns
 		g.addMatches(ParseJSONp.parsep(jsons[1]));
+
+		//		g.addMatchIds(g);
+
 		g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
 		//g.paintPatterns(matches);
 		//g.setAttribute("ui.antialiasing", true);
@@ -43,43 +51,40 @@ public class Application {
 		//g.patternEdges();
 
 		//adds antialiasing for a smoother look
-		 g.addAttribute("ui.quality");
-		 g.addAttribute("ui.antialias");
+		g.addAttribute("ui.quality");
+		g.addAttribute("ui.antialias");
 
-        // Add positioning
-        g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
-		//g.patternEdges();
-
-		// Check for nodes with no matches
-		g.flagNoMatches();
+		// Add positioning
+		g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
+		g.patternEdges();
 
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
-        // Display without default layout (false)
-        Viewer viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-        DefaultView view = (DefaultView) viewer.addDefaultView(false);
+		// Display without default layout (false)
+		Viewer viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+		DefaultView view = (DefaultView) viewer.addDefaultView(false);
 
 		// configures the JFrame
-        JFrame frame = new JFrame("GraFlight");
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
-        frame.setSize(screenSize);
+		JFrame frame = new JFrame("GraFlight");
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
+		frame.setSize(screenSize);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Set JFrame Icon
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(new File("teamlogo" + File.separatorChar+"icon_32.png"));
+		// Set JFrame Icon
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(new File("teamlogo" + File.separatorChar+"icon_32.png"));
 		} catch (IOException e) {
 			System.out.println("Logo not found!");
 		}
 
 		// shows the window
-        frame.setIconImage(img);
-        frame.setVisible(true);
-        frame.add((Component) view);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setIconImage(img);
+		frame.setVisible(true);
+		frame.add((Component) view);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
 		// prints some basic statistics
@@ -91,12 +96,117 @@ public class Application {
 		view.addKeyListener(new ZoomListener(view));
 		view.addMouseMotionListener(new DragListener(view));
 		((Component) view).addMouseWheelListener(new ScrollListener(view));
-
+		view.addMouseListener(new Clack(view, g));
 		//g.matchlight(0);
 		//g.matchlight(2);
-		g.matchdark();
-		g.matchflash(750);
+		//		g.matchdark();
+//		g.matchflash(750);
+
+
 	}
+
+
+	private static class Clack implements MouseListener{
+
+		private View view = null;
+		private Graphiel g = null;
+
+		/**
+		 * Constructor for ZoomListener
+		 * @param view the view in which to zoom
+		 */
+		public Clack(View view, Graphiel g){
+			this.view = view; 
+			this.g = g;
+		}
+
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+
+			GraphicElement curElement = view.findNodeOrSpriteAt(e.getX(), e.getY());
+			Node n = g.getNode(curElement.toString());
+			ArrayList <Match> filteredMatches = g.filterByNode(n);
+
+			for(Match match: filteredMatches){
+				for(int GraphNode : match.getGraphNodes()){
+					System.out.println(GraphNode);
+					UImod.adduiC(g.getNode(GraphNode), "selected");
+
+				}				
+			}
+
+
+//			System.out.println(curElement.toString());					
+			//
+			//			if(curElement.hasAttribute("ui.selected")){
+			//			
+
+			/*
+			 * get a list of matches
+			 * select one of the matches
+			 * highlight all the nodes in that match
+			 */
+
+
+
+
+			//				Element n = curElement.getAttribute("match-ids");
+
+			//				System.out.println("hi");
+			//			}
+			//			
+			//			else{
+			//				curElement.removeAttribute("ui.selected");
+			//				
+			//			}
+
+
+
+
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+
+
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+
+
+
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+
+
+
+		}
+
+
+
+
+	}
+
+
 
 	/**
 	 * This class provides a key listener for the graph window, with which you can zoom.
@@ -125,14 +235,14 @@ public class Application {
 				if (viewPercent > 0.3) {
 					view.getCamera().setViewPercent(viewPercent * 0.9); // Zooms in, viewPercent: 0-1 (min-max)
 				}			} else if(e.getKeyChar() == '-') {
-				double viewPercent = view.getCamera().getViewPercent();
-				if (viewPercent < 1.5) {
-					view.getCamera().setViewPercent(viewPercent / 0.9); // Zooms out
-				}
-			} else if(e.getKeyChar() == '0'){
-						view.getCamera().resetView();
+					double viewPercent = view.getCamera().getViewPercent();
+					if (viewPercent < 1.5) {
+						view.getCamera().setViewPercent(viewPercent / 0.9); // Zooms out
+					}
+				} else if(e.getKeyChar() == '0'){
+					view.getCamera().resetView();
 
-			}
+				}
 		}
 
 		@Override
