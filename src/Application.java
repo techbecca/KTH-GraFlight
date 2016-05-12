@@ -40,6 +40,7 @@ public class Application {
 		//g.paintPatterns(matches);
 		//g.setAttribute("ui.antialiasing", true);
 
+		//g.patternEdges();
 
 		//adds antialiasing for a smoother look
 		 g.addAttribute("ui.quality");
@@ -91,6 +92,9 @@ public class Application {
 		view.addMouseMotionListener(new DragListener(view));
 		((Component) view).addMouseWheelListener(new ScrollListener(view));
 
+		//g.matchlight(0);
+		//g.matchlight(2);
+		g.matchdark();
 		g.matchflash(750);
 	}
 

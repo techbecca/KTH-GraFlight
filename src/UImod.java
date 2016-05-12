@@ -9,18 +9,23 @@ import org.graphstream.graph.Element;
 public class UImod {
 	/**
 	 * This method adds an attribute to the given node
-	 * @param Node a Graphiel node
+	 * @param element a Graphiel node
 	 * @param attr a String that contains the value of to be added to the ui.class key
 	 */
-	public static void adduiC(Element e, String attr) {
-		String priors = e.getAttribute("ui.class");
-		if(!priors.contains(attr)) e.setAttribute("ui.class", priors + "," + attr);
+	public static void adduiC(Element element, String attr) {
+		//System.out.println(node.getAttribute("ui.class").toString());
+		String priors = element.getAttribute("ui.class");
+		if (priors == null) {
+			priors = "";
+
+		}
+		if (!priors.contains(attr)) element.setAttribute("ui.class", priors + "," + attr);
 	}
 
 	/**
 	 * This method removes a key and all saved related values
 	 * @param e an element that contains attributes
-	 * @param key the key represented as a String
+	 * @param attr the key represented as a String
 	 */
 	public static void rmuiC(Element e, String attr) {
 		String priors = e.getAttribute("ui.class");

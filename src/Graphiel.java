@@ -1,8 +1,6 @@
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.graph.Node;
-import org.graphstream.ui.spriteManager.SpriteManager;
-import org.graphstream.ui.spriteManager.Sprite;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -49,7 +47,6 @@ class Graphiel extends MultiGraph
 		}
 		instructionIDs = ids;
 	}
-
 
 	public List<Integer> getInstructionIds()
 	{
@@ -106,6 +103,14 @@ class Graphiel extends MultiGraph
 			if(match.getInstructionId() == inst) {
 				for(int node : match.getGraphNodes()) {
 					UImod.adduiC(getNode(String.valueOf(node)), "highlighted");
+					Node n1 = getNode(String.valueOf(node));
+					for(int node2 : match.getGraphNodes()){
+						Node n2 = getNode(String.valueOf(node2));
+						if(n1.hasEdgeToward(n2)){
+							Edge e = n1.getEdgeToward(n2);
+							UImod.adduiC(e, "highlighted");
+						}
+					}
 				}
 			}
 		}
@@ -125,7 +130,7 @@ class Graphiel extends MultiGraph
 	}
 
 	/**
-	 * This method loops through the nodes and highlights them, then de-highlihgts them
+	 * This method loops through the nodes and highlights them, then de-highlights them
 	 */
 	public void matchflash(int delay) {
 
@@ -161,10 +166,10 @@ class Graphiel extends MultiGraph
 	}*/
 
 	/**
-	* Loads position information into the graph from a double[][]
-	* where [i][0] and [i][1] are the x and y coordinates of the i:th node.
-	* @param positions The 2D double-array containing node positions.
-	*/
+	 * Loads position information into the graph from a double[][]
+	 * where [i][0] and [i][1] are the x and y coordinates of the i:th node.
+	 * @param positions The 2D double-array containing node positions.
+	 */
 	public void positioning(double[][] positions){
 
 		//	Iterates through the rows in the positions double-array
@@ -189,6 +194,7 @@ class Graphiel extends MultiGraph
 
 		return sb.toString();
 	}
+
 
 
 	private static Color instructionColor(int id, int length){
