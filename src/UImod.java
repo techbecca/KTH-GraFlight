@@ -35,11 +35,8 @@ public class UImod {
 		}
 	}
 
-	public static void addatt(Element e) {
-		String ntype = e.getAttribute("ntype");
-		if(ntype.equals(null)) {
-			e.addAttribute("ui.class", e.getAttribute("etype"));
-		}
+	public static boolean checkuiC(Element e, String attr){
+		String classes = e.getAttribute("ui.class");
+		return classes.contains(attr);
 	}
-
 }

@@ -17,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -86,7 +87,7 @@ public class Application {
 		System.out.println(g.toString());
 		frame.setFocusable(true);
 
-		view.setForeLayoutRenderer( new ForegroundRenderer(g) );
+		view.setForeLayoutRenderer(new ForegroundRenderer(g));
 
 		view.addKeyListener(new ZoomListener(view));
 		view.addMouseMotionListener(new DragListener(view));
@@ -103,6 +104,7 @@ public class Application {
 
 		private View view = null;
 		private Graphiel g = null;
+		private int matchIndex = 0;
 
 		/**
 		 * Constructor for ZoomListener
@@ -123,13 +125,24 @@ public class Application {
 			Node n = g.getNode(curElement.toString());
 			ArrayList <Match> filteredMatches = g.filterByNode(n);
 
-			for(Match match: filteredMatches){
-				for(int GraphNode : match.getGraphNodes()){
-					System.out.println(GraphNode);
-					UImod.adduiC(g.getNode(GraphNode), "selected");
-
-				}				
+			if(!UImod.checkuiC(n, "selected")){
+				matchIndex = 0;
+				UImod.adduiC(g.getNode(String.valueOf(n)), "selected");
+			}else{
+				matchIndex++;
 			}
+
+			for(Node resetNode : g.getNodeSet()){
+				UImod.rmuiC(resetNode, "selected");
+			}
+
+			System.out.println(matchIndex);
+			Match match = filteredMatches.get(matchIndex);
+			for(int gnodes : match.getGraphNodes()){
+				System.out.println(gnodes);
+				UImod.adduiC(g.getNode(String.valueOf(gnodes)), "selected");
+			}
+
 
 
 //			System.out.println(curElement.toString());					
@@ -165,7 +178,7 @@ public class Application {
 		public void mouseEntered(MouseEvent e) {
 			// TODO Auto-generated method stub
 
-
+			
 		}
 
 		@Override

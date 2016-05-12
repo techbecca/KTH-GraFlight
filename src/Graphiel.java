@@ -31,6 +31,7 @@ class Graphiel extends MultiGraph
 
 	public void addMatches(List<Match> matches)
 	{
+
 		this.matches = matches;
 		ArrayList<Integer> ids = new ArrayList<>();
 		for (Match match : matches)
@@ -57,28 +58,37 @@ class Graphiel extends MultiGraph
 	public List<Integer> getInstructionIds()
 	{
 		return instructionIDs;
-	}
+	} 
 
-	/**
-	 * Finds nodes in the graph that has no matches and marks them.
-	 *
-	 * Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-12
+	/*
+	 * Adds match-id:s to nodes as attributes to
+	 * make it easier to highlight patterns 
+	 * when clicking a node
 	 */
-	public void flagNoMatches () {
-		for (Node n: getEachNode()){
-			if ((int) n.getAttribute("matches")==0){
-				//UImod.adduiC(n,"noMatch");
-				Sprite s = sman.addSprite("nomatch" + n.getId());
-				UImod.adduiC(s, "noMatch");
-				s.attachToNode( n.getId() );
-				s.setPosition(50, 0, 90);
-			}
-		}
-	}
+	//	public void addMatchIds(Graphiel g){
+	//		
+	//		for (Match match : matches){
+	//			for(int gn : match.getGraphNodes()){
+	//				g.getNode(gn).addAttribute("match-id", match.getMatchId());
+	//				
+	//			}
+	//			
+	//		}
+	//
+	//		
+	//		
+	////		Iterator<Node> nite = getNodeIterator();
+	////
+	////		while(nite.hasNext()) {
+	////			nite.next().addAttribute(arg0, arg1);
+	////		}
+	//		
+	//	}
+
 
 	/**
-	* Adds colored edges according to the list of matches, one color per instruction.
-	*/
+	 * Adds colored edges according to the list of matches, one color per instruction.
+	 */
 	public void patternEdges()
 	{
 		int edgeindex = 0;
@@ -112,18 +122,11 @@ class Graphiel extends MultiGraph
 			if(match.getInstructionId() == inst) {
 				for(int node : match.getGraphNodes()) {
 					UImod.adduiC(getNode(String.valueOf(node)), "highlighted");
-					Node n1 = getNode(String.valueOf(node));
-					for(int node2 : match.getGraphNodes()){
-						Node n2 = getNode(String.valueOf(node2));
-						if(n1.hasEdgeToward(n2)){
-							Edge e = n1.getEdgeToward(n2);
-							UImod.adduiC(e, "highlighted");
-						}
-					}
 				}
 			}
 		}
 	}
+
 
 	/**
 	 * This method loops through and removes the highlights from nodes
@@ -138,7 +141,7 @@ class Graphiel extends MultiGraph
 	}
 
 	/**
-	 * This method loops through the nodes and highlights them, then de-highlights them
+	 * This method loops through the nodes and highlights them, then de-highlihgts them
 	 */
 	public void matchflash(int delay) {
 
@@ -160,6 +163,19 @@ class Graphiel extends MultiGraph
 		}
 	}
 
+
+	/* public void paintPatterns(ArrayList<Match> matches){
+		for(Match match : matches){
+			int[] nodes = match.getGraphNodes();
+			for(int i = 0; i < nodes.length; i++){
+				Node n = getNode(String.valueOf(nodes[i]));
+				n.setAttribute("ui.class", n.getAttribute("ui.class") + ", " + "instruction" + match.getInstructionId());
+				Color col = instructionColor(match.getInstructionId());
+				n.setAttribute("ui.style", "stroke-color: rgb(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() + ");");
+			}
+		}
+	}*/
+
 	/**
 	 * Loads position information into the graph from a double[][]
 	 * where [i][0] and [i][1] are the x and y coordinates of the i:th node.
@@ -175,6 +191,7 @@ class Graphiel extends MultiGraph
 
 		}
 	}
+
 
 	@Override
 	public String toString()
@@ -287,5 +304,21 @@ class Graphiel extends MultiGraph
 		Color col = new Color(Color.HSBtoRGB((float) id/length,(float) 0.75,(float) 0.75));
 		//System.out.println(col.toString());
 		return col;
+	}
+
+
+	public ArrayList <Match> filterByNode(Node n){
+		ArrayList <Match> filteredMatches = new ArrayList<>();
+		for(Match match : matches){
+			for(int GraphNode : match.getGraphNodes()){
+				if(GraphNode == Integer.parseInt(n.getId())){
+					filteredMatches.add(match);
+				}
+
+			}
+		}
+
+		return filteredMatches;
+
 	}
 }
