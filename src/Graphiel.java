@@ -44,7 +44,11 @@ class Graphiel extends MultiGraph
 			int[] nodes = match.getGraphNodes();
 			for (int i =0; i< nodes.length; i++){
 				Node node = getNode(String.valueOf(nodes[i]));
-				node.setAttribute("matches", (int) node.getAttribute("matches")+1);
+				if (node == null){
+					continue;
+				}else {
+					node.setAttribute("matches", (int) node.getAttribute("matches") + 1);
+				}
 			}
 		}
 		instructionIDs = ids;
@@ -56,8 +60,9 @@ class Graphiel extends MultiGraph
 	}
 
 	/**
-	 * Finds nodes in the graph that has no matches and marks them
+	 * Finds nodes in the graph that has no matches and marks them.
 	 *
+	 * Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-12
 	 */
 	public void flagNoMatches () {
 		for (Node n: getEachNode()){

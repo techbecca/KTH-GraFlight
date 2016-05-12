@@ -22,42 +22,8 @@ import static org.mockito.Mockito.mock;
  */
 public class GraphielTest {
 
-
     /**
-     *
-     * DEPRECATED
-     *
-     * This method tests the method "getInstructionIds" by generating an
-     * ArrayList of matches from a test JSON-file (testparsejsonp.json).
-     * It is parsed by a mock class created from the class ParseJSONp.
-     *
-     * Written by Rebecca Hellström Karlsson and Isabel Ghourchian 2016-05-10
-     */
-    /*@Test
-    public void getInstructionIdsTest() throws FileNotFoundException {
-
-        // Create mock
-        ParseJSONp test = mock(ParseJSONp.class);
-        File testFile = new File("json" + File.separator + "testgraphielp.json");
-
-        // Generate ArrayList
-        ArrayList<Match> matches = test.parsep(testFile);
-
-        // Use ArrayList to call on method
-        Graphiel graphiel = new Graphiel("test");
-        List<Integer> result = graphiel.getInstructionIds(matches);
-
-        // Test result
-        List<Integer> expected = new ArrayList<>();
-
-        expected.add(0);
-        expected.add(1);
-
-        assertEquals(expected, result);
-    }*/
-
-    /**
-     * NOT FINISHED
+     * RELEVANT?
      * @throws FileNotFoundException if test file is not found
      *
      * Written by Rebecca Hellström Karlsson
@@ -84,6 +50,37 @@ public class GraphielTest {
 
 
     }*/
+
+    /**
+     * Tests that matches are added correctly to the nodes attribute
+     *
+     * Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-12
+     */
+    @Test
+    public void addMatchesTest() throws FileNotFoundException {
+        // Create mock class
+        ParseJSONf testF = mock(ParseJSONf.class);
+        ParseJSONp testP = mock(ParseJSONp.class);
+        File testFileF = new File("json" + File.separator + "testgraphielf.json");
+        File testFileP = new File("json" + File.separator + "testgraphielp.json");
+
+        // Generate matches
+        ArrayList<Match> matches = testP.parsep(testFileP);
+
+        // Generate graph with nodes
+        Graphiel graphiel = testF.parse(testFileF);
+        graphiel.addMatches(matches);
+
+        // Run flagNoMatches
+        graphiel.flagNoMatches();
+
+        // Test results
+        assertEquals(0,  (int )graphiel.getNode("0").getAttribute("matches"));
+        assertEquals(1,  (int )graphiel.getNode("26").getAttribute("matches"));
+        assertEquals(0,  (int )graphiel.getNode("12").getAttribute("matches"));
+        assertEquals(1,  (int )graphiel.getNode("15").getAttribute("matches"));
+
+    }
 
 
     /**
@@ -137,7 +134,7 @@ public class GraphielTest {
 
         // Test result ui.class
         String result = graphiel.getNode("0").getAttribute("ui.class");
-        assertEquals("data, for.body, i32, br, %n, ctrlFlow", result);
+        assertEquals("data,for.body,i32,br,%n,ctrlFlow", result);
 
         // Test results ui.label
         String result1 = graphiel.getNode("0").getAttribute("ui.label");
