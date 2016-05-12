@@ -1,9 +1,11 @@
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URL;
 import java.util.Scanner;
 
 import javax.swing.ButtonModel;
@@ -108,6 +110,20 @@ public class Toolbar {
 		
 		JMenuItem about = new JMenuItem("About GraFlight");
 		help.add(about);
+		about.addActionListener(new MenuActionListener(){
+			public void actionPerformed(ActionEvent e)
+		    {
+				openWebpage("https://people.kth.se/~aiman/ID1003/");
+		    }
+		});
+	}
+	
+	public static void openWebpage(String urlString) {
+	    try {
+	        Desktop.getDesktop().browse(new URL(urlString).toURI());
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 
 }
