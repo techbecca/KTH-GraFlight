@@ -26,28 +26,12 @@ import java.util.ArrayList;
  */
 public class Application {
 
-    public static void main(String args[]) throws FileNotFoundException {
+    public static void main(String args[]) throws FileNotFoundException{
 
 		// gets the json files: from argument or file dialog
 		File[] jsons = Filer.run(args);
 
-		// create the main graph object class
-		Graphiel g = ParseJSONf.parse(jsons[0]);
-
-		// adds the patterns
-		g.addMatches(ParseJSONp.parsep(jsons[1]));
-		g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
-		//g.paintPatterns(matches);
-		//g.setAttribute("ui.antialiasing", true);
-
-
-		//adds antialiasing for a smoother look
-		 g.addAttribute("ui.quality");
-		 g.addAttribute("ui.antialias");
-
-        // Add positioning
-        g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
-		//g.patternEdges();
+		Graphiel g = createGraph(jsons);
 
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
@@ -94,6 +78,26 @@ public class Application {
 		g.matchflash(750);
 	}
 
+	public static Graphiel createGraph(File[] jsons) throws FileNotFoundException
+	{
+		// create the main graph object class
+		Graphiel g = ParseJSONf.parse(jsons[0]);
+
+		// adds the patterns
+		g.addMatches(ParseJSONp.parsep(jsons[1]));
+		g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
+
+		//adds antialiasing for a smoother look
+		 g.addAttribute("ui.quality");
+		 g.addAttribute("ui.antialias");
+
+		// Add positioning
+		g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
+		//g.patternEdges();
+	
+		return g;
+	}
+	
 	/**
 	 * This class provides a key listener for the graph window, with which you can zoom.
 	 * @author Aiman Josefsson & Rebecca Hellström Karlsson

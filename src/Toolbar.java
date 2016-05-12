@@ -16,10 +16,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import org.graphstream.graph.Graph;
+import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.swingViewer.DefaultView;
 
 
 public class Toolbar {
+	
+	
 	
 	public void menu (JFrame jframe, Graphiel g, DefaultView v){
 		
@@ -37,7 +40,18 @@ public class Toolbar {
 		open.addActionListener(new MenuActionListener(){
 			public void actionPerformed(ActionEvent e)
 		    {
-				
+				File[] jsons = Filer.choose();
+				try {
+					Graphiel newg = Application.createGraph(jsons);
+					jframe.remove(v);
+					Viewer viewer = new Viewer(newg, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+					DefaultView v = (DefaultView) viewer.addDefaultView(false);
+					jframe.add((Component) v);
+					jframe.revalidate();
+				}
+				catch (FileNotFoundException ex){
+					
+				}
 		    }
 		});
 		

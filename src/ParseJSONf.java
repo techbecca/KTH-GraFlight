@@ -26,10 +26,9 @@ public class ParseJSONf {
      * Modified by Mathilda von Schantz and Rebecca Hellström Karlsson 2016-05-09
 	 */
     public static Graphiel parse(File file) throws FileNotFoundException {
-
     	// Read an entire json file
 		String json = new Scanner(file).useDelimiter("\\A").next();
-
+		
 		// Creates a handy object from the String
         JSONObject jsonObject = new JSONObject(json);
         JSONObject graph = jsonObject.getJSONObject("op-struct").getJSONObject("graph");
