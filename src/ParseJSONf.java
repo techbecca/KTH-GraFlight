@@ -89,6 +89,8 @@ public class ParseJSONf {
                 node.setAttribute(s, type.getString(s));
             }
 
+            node.addAttribute("matches", 0);
+
             // Set graphical properties to the node
             convertNode(node);
 

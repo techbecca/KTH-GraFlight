@@ -49,6 +49,9 @@ public class Application {
         g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
 		//g.patternEdges();
 
+		// Check for nodes with no matches
+		g.flagNoMatches();
+
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 

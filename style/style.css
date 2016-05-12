@@ -46,3 +46,7 @@ node.ctrl{
 node.ctrlFlow{
 	stroke-width: 3px;
 }
+
+node.noMatch{
+	fill-color: magenta;
+}

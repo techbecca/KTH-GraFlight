@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  *Our very own special-purpose MultiGraph subclass.
+ *@author Christian Callergård
  *@version 1.0
  *@since 2016-05-04
  */
@@ -33,13 +34,34 @@ class Graphiel extends MultiGraph
 			{
 				ids.add(match.getInstructionId());
 			}
+
+			// Store number of matches on nodes
+			int[] nodes = match.getGraphNodes();
+			for (int i =0; i< nodes.length; i++){
+				Node node = getNode(String.valueOf(nodes[i]));
+				node.setAttribute("matches", (int) node.getAttribute("matches")+1);
+			}
 		}
 		instructionIDs = ids;
 	}
 
+
 	public List<Integer> getInstructionIds()
 	{
 		return instructionIDs;
+	}
+
+	/**
+	 * Finds nodes in the graph that has no matches and marks them
+	 *
+	 */
+	public void flagNoMatches () {
+		for (Node n: getEachNode()){
+			if ((int) n.getAttribute("matches")==0){
+				UImod.adduiC(n,"noMatch");
+			}
+		}
+
 	}
 
 	/**
