@@ -40,9 +40,7 @@ public class Application {
 		//g.paintPatterns(matches);
 		//g.setAttribute("ui.antialiasing", true);
 
-		g.patternEdges();
-
-		//g.matchlight(matches, 2);
+		//g.patternEdges();
 
 		//adds antialiasing for a smoother look
 		 g.addAttribute("ui.quality");
@@ -50,7 +48,7 @@ public class Application {
 
         // Add positioning
         g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
-
+		//g.patternEdges();
 
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
@@ -94,6 +92,7 @@ public class Application {
 		//g.matchlight(0);
 		//g.matchlight(2);
 		g.matchdark();
+		g.matchflash(750);
 	}
 
 	/**
