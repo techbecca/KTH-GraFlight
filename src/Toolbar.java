@@ -2,14 +2,10 @@ import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
-import java.util.Scanner;
 
-import javax.swing.ButtonModel;
-import javax.swing.DefaultButtonModel;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -21,8 +17,6 @@ import org.graphstream.ui.swingViewer.DefaultView;
 
 
 public class Toolbar {
-	
-	
 	
 	public void menu (JFrame jframe, Graphiel g, DefaultView v){
 		
@@ -95,13 +89,19 @@ public class Toolbar {
 		
 		JMenuItem statistics = new JMenuItem("Statistics");
 		view.add(statistics);
-		ButtonModel bm = new DefaultButtonModel();
-		statistics.setModel(bm);
+
 		statistics.addActionListener(new MenuActionListener(){
 			public void actionPerformed(ActionEvent e)
-		    {
-				v.setForeLayoutRenderer( new ForegroundRenderer(g) );
-		    }
+			{
+				if (!statistics.isSelected()) {
+					statistics.setSelected(false);
+					v.setForeLayoutRenderer( new ForegroundRenderer(g,false) );
+				} 
+				else if (statistics.isSelected()){
+					statistics.setSelected(true);
+					v.setForeLayoutRenderer( new ForegroundRenderer(g, true) );
+				}
+			}
 		});
 		
 		JMenu layout = new JMenu("Layout");
