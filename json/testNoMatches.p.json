@@ -1,0 +1,21 @@
+
+{
+	"match-data" :
+	[
+
+
+		{
+			"instr-id" : 116,
+			"match" :
+			[
+				[ 8, 1 ],
+				[ 42, 0 ],
+				[ 43, 2 ]
+			],
+			"match-id" : 64,
+			"pattern-id" : 3
+		}
+	],
+	"target-machine-id" : "Mips32",
+	"time" : 0.02638398
+}

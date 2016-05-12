@@ -1,0 +1,1402 @@
+
+{
+	"bb-exec-freqs" :
+	[
+		[ "entry", 16384 ],
+		[ "for.cond", 524288 ],
+		[ "for.body", 507904 ],
+		[ "for.end", 16384 ],
+		[ "for.inc", 507904 ],
+		[ "bb0", 524288 ],
+		[ "bb1", 524288 ]
+	],
+	"inputs" : [ 0 ],
+	"name" : "fact",
+	"op-struct" :
+	{
+		"constraints" : [],
+		"entry-block-node" : 16,
+		"graph" :
+		{
+			"edges" :
+			[
+
+				[
+					0,
+					26,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					0,
+					28,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 1
+					}
+				],
+
+				[
+					1,
+					30,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					2,
+					4,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					4,
+					32,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					4,
+					34,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 1
+					}
+				],
+
+				[
+					5,
+					36,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					6,
+					8,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					8,
+					38,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					8,
+					40,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 1
+					}
+				],
+
+				[
+					8,
+					42,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 2
+					}
+				],
+
+				[
+					9,
+					44,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					10,
+					12,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					12,
+					46,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					13,
+					1,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					14,
+					48,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					15,
+					5,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					16,
+					0,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					16,
+					9,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 1
+					}
+				],
+
+				[
+					16,
+					14,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 2
+					}
+				],
+
+				[
+					16,
+					17,
+
+					{
+						"etype" : "ctrl",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					17,
+					18,
+
+					{
+						"etype" : "ctrl",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					18,
+					4,
+
+					{
+						"etype" : "def",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					18,
+					8,
+
+					{
+						"etype" : "def",
+						"in-nr" : 0,
+						"out-nr" : 1
+					}
+				],
+
+				[
+					18,
+					19,
+
+					{
+						"etype" : "ctrl",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					19,
+					50,
+
+					{
+						"etype" : "ctrl",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					19,
+					52,
+
+					{
+						"etype" : "ctrl",
+						"in-nr" : 0,
+						"out-nr" : 1
+					}
+				],
+
+				[
+					20,
+					22,
+
+					{
+						"etype" : "ctrl",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					21,
+					25,
+
+					{
+						"etype" : "ctrl",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					22,
+					23,
+
+					{
+						"etype" : "ctrl",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					23,
+					24,
+
+					{
+						"etype" : "ctrl",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					24,
+					18,
+
+					{
+						"etype" : "ctrl",
+						"in-nr" : 1,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					26,
+					27,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					27,
+					2,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					27,
+					16,
+
+					{
+						"etype" : "def",
+						"in-nr" : 2,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					28,
+					29,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					29,
+					6,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					29,
+					16,
+
+					{
+						"etype" : "def",
+						"in-nr" : 3,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					30,
+					31,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					31,
+					2,
+
+					{
+						"etype" : "data",
+						"in-nr" : 1,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					31,
+					23,
+
+					{
+						"etype" : "def",
+						"in-nr" : 2,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					32,
+					33,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					33,
+					13,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					34,
+					35,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					35,
+					25,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					36,
+					37,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					37,
+					6,
+
+					{
+						"etype" : "data",
+						"in-nr" : 1,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					37,
+					23,
+
+					{
+						"etype" : "def",
+						"in-nr" : 3,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					38,
+					39,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					39,
+					10,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					40,
+					41,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					41,
+					13,
+
+					{
+						"etype" : "data",
+						"in-nr" : 1,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					42,
+					43,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					43,
+					15,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					44,
+					45,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					45,
+					10,
+
+					{
+						"etype" : "data",
+						"in-nr" : 1,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					46,
+					47,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					47,
+					19,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					48,
+					49,
+
+					{
+						"etype" : "data",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					49,
+					15,
+
+					{
+						"etype" : "data",
+						"in-nr" : 1,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					50,
+					51,
+
+					{
+						"etype" : "ctrl",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					51,
+					20,
+
+					{
+						"etype" : "ctrl",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					52,
+					53,
+
+					{
+						"etype" : "ctrl",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				],
+
+				[
+					53,
+					21,
+
+					{
+						"etype" : "ctrl",
+						"in-nr" : 0,
+						"out-nr" : 0
+					}
+				]
+			],
+			"nodes" :
+			[
+
+				[
+					0,
+
+					{
+						"id" : 0,
+						"type" :
+						{
+							"dtype" : "i32",
+							"ntype" : "data",
+							"origin" : "%n"
+						}
+					}
+				],
+
+				[
+					1,
+
+					{
+						"id" : 1,
+						"type" :
+						{
+							"dtype" : "i32",
+							"ntype" : "data",
+							"origin" : "%mul"
+						}
+					}
+				],
+
+				[
+					2,
+
+					{
+						"id" : 2,
+						"type" :
+						{
+							"ntype" : "phi"
+						}
+					}
+				],
+
+				[
+					4,
+
+					{
+						"id" : 4,
+						"type" :
+						{
+							"dtype" : "i32",
+							"ntype" : "data",
+							"origin" : "%res.0"
+						}
+					}
+				],
+
+				[
+					5,
+
+					{
+						"id" : 5,
+						"type" :
+						{
+							"dtype" : "i32",
+							"ntype" : "data",
+							"origin" : "%dec"
+						}
+					}
+				],
+
+				[
+					6,
+
+					{
+						"id" : 6,
+						"type" :
+						{
+							"ntype" : "phi"
+						}
+					}
+				],
+
+				[
+					8,
+
+					{
+						"id" : 8,
+						"type" :
+						{
+							"dtype" : "i32",
+							"ntype" : "data",
+							"origin" : "%n.addr.0"
+						}
+					}
+				],
+
+				[
+					9,
+
+					{
+						"id" : 9,
+						"type" :
+						{
+							"dtype" : "1 i32",
+							"ntype" : "data",
+							"origin" : "%const.1"
+						}
+					}
+				],
+
+				[
+					10,
+
+					{
+						"id" : 10,
+						"type" :
+						{
+							"ntype" : "comp",
+							"op" : "si >"
+						}
+					}
+				],
+
+				[
+					12,
+
+					{
+						"id" : 12,
+						"type" :
+						{
+							"dtype" : "i1",
+							"ntype" : "data",
+							"origin" : "%cmp"
+						}
+					}
+				],
+
+				[
+					13,
+
+					{
+						"id" : 13,
+						"type" :
+						{
+							"ntype" : "comp",
+							"op" : "i *"
+						}
+					}
+				],
+
+				[
+					14,
+
+					{
+						"id" : 14,
+						"type" :
+						{
+							"dtype" : "-1 i32",
+							"ntype" : "data",
+							"origin" : "%const.-1"
+						}
+					}
+				],
+
+				[
+					15,
+
+					{
+						"id" : 15,
+						"type" :
+						{
+							"ntype" : "comp",
+							"op" : "i +"
+						}
+					}
+				],
+
+				[
+					16,
+
+					{
+						"id" : 16,
+						"type" :
+						{
+							"block-name" : "entry",
+							"ntype" : "lab"
+						}
+					}
+				],
+
+				[
+					17,
+
+					{
+						"id" : 17,
+						"type" :
+						{
+							"ntype" : "ctrl",
+							"op" : "br"
+						}
+					}
+				],
+
+				[
+					18,
+
+					{
+						"id" : 18,
+						"type" :
+						{
+							"block-name" : "for.cond",
+							"ntype" : "lab"
+						}
+					}
+				],
+
+				[
+					19,
+
+					{
+						"id" : 19,
+						"type" :
+						{
+							"ntype" : "ctrl",
+							"op" : "cbr"
+						}
+					}
+				],
+
+				[
+					20,
+
+					{
+						"id" : 20,
+						"type" :
+						{
+							"block-name" : "for.body",
+							"ntype" : "lab"
+						}
+					}
+				],
+
+				[
+					21,
+
+					{
+						"id" : 21,
+						"type" :
+						{
+							"block-name" : "for.end",
+							"ntype" : "lab"
+						}
+					}
+				],
+
+				[
+					22,
+
+					{
+						"id" : 22,
+						"type" :
+						{
+							"ntype" : "ctrl",
+							"op" : "br"
+						}
+					}
+				],
+
+				[
+					23,
+
+					{
+						"id" : 23,
+						"type" :
+						{
+							"block-name" : "for.inc",
+							"ntype" : "lab"
+						}
+					}
+				],
+
+				[
+					24,
+
+					{
+						"id" : 24,
+						"type" :
+						{
+							"ntype" : "ctrl",
+							"op" : "br"
+						}
+					}
+				],
+
+				[
+					25,
+
+					{
+						"id" : 25,
+						"type" :
+						{
+							"ntype" : "ctrl",
+							"op" : "ret"
+						}
+					}
+				],
+
+				[
+					26,
+
+					{
+						"id" : 26,
+						"type" :
+						{
+							"ntype" : "copy"
+						}
+					}
+				],
+
+				[
+					27,
+
+					{
+						"id" : 27,
+						"type" :
+						{
+							"dtype" : "i32",
+							"ntype" : "data",
+							"origin" : "%n.copy.1"
+						}
+					}
+				],
+
+				[
+					28,
+
+					{
+						"id" : 28,
+						"type" :
+						{
+							"ntype" : "copy"
+						}
+					}
+				],
+
+				[
+					29,
+
+					{
+						"id" : 29,
+						"type" :
+						{
+							"dtype" : "i32",
+							"ntype" : "data",
+							"origin" : "%n.copy.2"
+						}
+					}
+				],
+
+				[
+					30,
+
+					{
+						"id" : 30,
+						"type" :
+						{
+							"ntype" : "copy"
+						}
+					}
+				],
+
+				[
+					31,
+
+					{
+						"id" : 31,
+						"type" :
+						{
+							"dtype" : "i32",
+							"ntype" : "data",
+							"origin" : "%mul.copy.1"
+						}
+					}
+				],
+
+				[
+					32,
+
+					{
+						"id" : 32,
+						"type" :
+						{
+							"ntype" : "copy"
+						}
+					}
+				],
+
+				[
+					33,
+
+					{
+						"id" : 33,
+						"type" :
+						{
+							"dtype" : "i32",
+							"ntype" : "data",
+							"origin" : "%res.0.copy.1"
+						}
+					}
+				],
+
+				[
+					34,
+
+					{
+						"id" : 34,
+						"type" :
+						{
+							"ntype" : "copy"
+						}
+					}
+				],
+
+				[
+					35,
+
+					{
+						"id" : 35,
+						"type" :
+						{
+							"dtype" : "i32",
+							"ntype" : "data",
+							"origin" : "%res.0.copy.2"
+						}
+					}
+				],
+
+				[
+					36,
+
+					{
+						"id" : 36,
+						"type" :
+						{
+							"ntype" : "copy"
+						}
+					}
+				],
+
+				[
+					37,
+
+					{
+						"id" : 37,
+						"type" :
+						{
+							"dtype" : "i32",
+							"ntype" : "data",
+							"origin" : "%dec.copy.1"
+						}
+					}
+				],
+
+				[
+					38,
+
+					{
+						"id" : 38,
+						"type" :
+						{
+							"ntype" : "copy"
+						}
+					}
+				],
+
+				[
+					39,
+
+					{
+						"id" : 39,
+						"type" :
+						{
+							"dtype" : "i32",
+							"ntype" : "data",
+							"origin" : "%n.addr.0.copy.1"
+						}
+					}
+				],
+
+				[
+					40,
+
+					{
+						"id" : 40,
+						"type" :
+						{
+							"ntype" : "copy"
+						}
+					}
+				],
+
+				[
+					41,
+
+					{
+						"id" : 41,
+						"type" :
+						{
+							"dtype" : "i32",
+							"ntype" : "data",
+							"origin" : "%n.addr.0.copy.2"
+						}
+					}
+				],
+
+				[
+					42,
+
+					{
+						"id" : 42,
+						"type" :
+						{
+							"ntype" : "copy"
+						}
+					}
+				],
+
+				[
+					43,
+
+					{
+						"id" : 43,
+						"type" :
+						{
+							"dtype" : "i32",
+							"ntype" : "data",
+							"origin" : "%n.addr.0.copy.3"
+						}
+					}
+				],
+
+				[
+					44,
+
+					{
+						"id" : 44,
+						"type" :
+						{
+							"ntype" : "copy"
+						}
+					}
+				],
+
+				[
+					45,
+
+					{
+						"id" : 45,
+						"type" :
+						{
+							"dtype" : "i32",
+							"ntype" : "data",
+							"origin" : "%const.1.copy.1"
+						}
+					}
+				],
+
+				[
+					46,
+
+					{
+						"id" : 46,
+						"type" :
+						{
+							"ntype" : "copy"
+						}
+					}
+				],
+
+				[
+					47,
+
+					{
+						"id" : 47,
+						"type" :
+						{
+							"dtype" : "i1",
+							"ntype" : "data",
+							"origin" : "%cmp.copy.1"
+						}
+					}
+				],
+
+				[
+					48,
+
+					{
+						"id" : 48,
+						"type" :
+						{
+							"ntype" : "copy"
+						}
+					}
+				],
+
+				[
+					49,
+
+					{
+						"id" : 49,
+						"type" :
+						{
+							"dtype" : "i32",
+							"ntype" : "data",
+							"origin" : "%const.-1.copy.1"
+						}
+					}
+				],
+
+				[
+					50,
+
+					{
+						"id" : 50,
+						"type" :
+						{
+							"block-name" : "bb0",
+							"ntype" : "lab"
+						}
+					}
+				],
+
+				[
+					51,
+
+					{
+						"id" : 51,
+						"type" :
+						{
+							"ntype" : "ctrl",
+							"op" : "br"
+						}
+					}
+				],
+
+				[
+					52,
+
+					{
+						"id" : 52,
+						"type" :
+						{
+							"block-name" : "bb1",
+							"ntype" : "lab"
+						}
+					}
+				],
+
+				[
+					53,
+
+					{
+						"id" : 53,
+						"type" :
+						{
+							"ntype" : "ctrl",
+							"op" : "br"
+						}
+					}
+				]
+			]
+		}
+	}
+}
