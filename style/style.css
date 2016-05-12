@@ -55,3 +55,13 @@ node.ctrlFlow{
 node.noMatch{
 	fill-color: magenta;
 }
+
+sprite {
+	size: 32px;
+	size-mode: dyn-size;
+}
+
+sprite.noMatch{
+	fill-mode: image-scaled;
+	fill-image: url('./style/nomatches.png');
+}
