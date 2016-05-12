@@ -94,7 +94,7 @@ public class Application {
 
 		//g.matchlight(0);
 		//g.matchlight(2);
-		g.matchdark();
+		//g.matchdark();
 		g.matchflash(750);
 	}
 
