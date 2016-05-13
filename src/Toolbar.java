@@ -1,12 +1,14 @@
 import java.awt.Component;
 import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.net.URL;
 
+import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -74,6 +76,13 @@ public class Toolbar {
 
 		JMenuItem toolbar = new JMenuItem("Toolbar");
 		view.add(toolbar);
+		toolbar.addActionListener(new MenuActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				InternalFrame internal = new InternalFrame();
+				internal.createFrame();
+			}
+		});
 
 		JCheckBoxMenuItem  statistics = new JCheckBoxMenuItem ("Statistics");
 		view.add(statistics);
