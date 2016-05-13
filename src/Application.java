@@ -23,23 +23,14 @@ import java.util.ArrayList;
  * This is the main application class for GraFlight
  * @author Aiman Josefsson
  * @since 2016-04-28
+ * Modified by Christian Callergård and Rebecca Hellström Karlsson on 2016-05-13
  */
 public class Application {
+	
+	private Graphiel g;
+	private DefaultView v;
 
     public static void main(String args[]) throws FileNotFoundException{
-
-		// gets the json files: from argument or file dialog
-		File[] jsons = Filer.run(args);
-
-		Graphiel g = createGraph(jsons);
-
-		// Use the advanced renderer
-		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
-
-        // Display without default layout (false)
-        Viewer viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-        DefaultView view = (DefaultView) viewer.addDefaultView(false);
-
 		// configures the JFrame
         JFrame frame = new JFrame("GraFlight");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -47,8 +38,8 @@ public class Application {
         frame.setSize(screenSize);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		Toolbar tb = new Toolbar();
-	    tb.menu(frame, g, view);
+		// Adds our menubar to the frame.
+		frame.add(new GMenuBar());
 
         // Set JFrame Icon
         BufferedImage img = null;
@@ -61,23 +52,67 @@ public class Application {
 		// shows the window
         frame.setIconImage(img);
         frame.setVisible(true);
-        frame.add((Component) view);
+        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-		// prints some basic statistics
-		System.out.println(g.toString());
 		frame.setFocusable(true);
 
-		//view.setForeLayoutRenderer( new ForegroundRenderer(g) );
+		// Use the advanced renderer
+		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+		
+		// gets the json files: from argument or file dialog
+		File[] jsons = Filer.run(args);
+
+		// Create graph and view in the frame.
+		g = createGraph(jsons);
+		v = createView(frame);
+
+		// Highlights patterns in order.
+		g.matchflash(750);
+	}
+	
+	/**
+	* Opens file chooser, loads a new graph from the chosen files and replaces the old view in the frame.
+	* Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-13
+	*/
+	public static void loadNewGraph()
+	{
+		File[] jsons = Filer.choose();
+		g = createGraph(jsons);
+		JFrame frame = v.getParent();
+		frame.remove(v);
+		v = createView(frame);
+	}
+	
+	/**
+	* Creates a Viewer on the graph adds a View with the appropriate listeners to our frame.
+	* @param frame The frame to contain the new view.
+	* @return The new view.
+	* Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-13
+	*/
+	public static DefaultView createView(JFrame frame)
+	{
+        Viewer viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+        DefaultView view = (DefaultView) viewer.addDefaultView(false); // false = not using default GraphStream layout
+		
+		view.setForeLayoutRenderer( new ForegroundRenderer(g, true) );
 
 		view.addKeyListener(new ZoomListener(view));
 		view.addMouseMotionListener(new DragListener(view));
 		((Component) view).addMouseWheelListener(new ScrollListener(view));
-
-		g.matchflash(750);
+		
+		frame.add((Component) view);
+		frame.revalidate();
+		
+		return view;
 	}
 
+	/**
+	* Creates the graph from the file paths returned from Filer, with stylesheet and layout.
+	* @throws FileNotFoundException
+	* @param jsons Array of f and p json files.
+	* @return The new graph.
+	* Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-13
+	*/
 	public static Graphiel createGraph(File[] jsons) throws FileNotFoundException
 	{
 		// create the main graph object class
@@ -96,6 +131,16 @@ public class Application {
 		//g.patternEdges();
 	
 		return g;
+	}
+	
+	public static Graphiel getGraph()
+	{
+		return g;
+	}
+	
+	public static View getView()
+	{
+		return v;
 	}
 	
 	/**

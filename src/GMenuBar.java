@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.io.File;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
@@ -16,32 +17,24 @@ import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.swingViewer.DefaultView;
 
 
-public class Toolbar {
+public class GMenuBar extends JMenuBar {
 	
-	public void menu (JFrame jframe, Graphiel g, DefaultView v){
-		
-		JMenuBar menuBar = new JMenuBar();
-		
-		jframe.setJMenuBar(menuBar);
+	JFrame jframe;
+	
+	public GMenuBar (){
+		jframe = (JFrame) getParent();
 		
 		JMenu file = new JMenu("File");
-		
-		menuBar.add(file);
+		add(file);
 		
 		JMenuItem open = new JMenuItem("Open New File...");
-		
 		file.add(open);
 		open.addActionListener(new MenuActionListener(){
 			public void actionPerformed(ActionEvent e)
 		    {
 				File[] jsons = Filer.choose();
 				try {
-					Graphiel newg = Application.createGraph(jsons);
-					jframe.remove(v);
-					Viewer viewer = new Viewer(newg, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-					DefaultView v = (DefaultView) viewer.addDefaultView(false);
-					jframe.add((Component) v);
-					jframe.revalidate();
+					Application.loadNewGraph();
 				}
 				catch (FileNotFoundException ex){
 					
@@ -82,7 +75,7 @@ public class Toolbar {
 		file.add(reset);
 		
 		JMenu view = new JMenu("View");
-		menuBar.add(view);
+		add(view);
 		
 		JMenuItem toolbar = new JMenuItem("Toolbar");
 		view.add(toolbar);
@@ -105,7 +98,7 @@ public class Toolbar {
 		});
 		
 		JMenu layout = new JMenu("Layout");
-		menuBar.add(layout);
+		add(layout);
 		
 		JMenuItem hir = new JMenuItem("Hierarchical");
 		layout.add(hir);
@@ -114,7 +107,7 @@ public class Toolbar {
 		layout.add(comTree);
 		
 		JMenu help = new JMenu("Help");
-		menuBar.add(help);
+		add(help);
 		
 		JMenuItem manual = new JMenuItem("User Manual");
 		help.add(manual);

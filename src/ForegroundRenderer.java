@@ -1,7 +1,6 @@
 import org.graphstream.ui.graphicGraph.GraphicGraph;
 import org.graphstream.ui.swingViewer.LayerRenderer;
 
-
 import java.awt.GraphicsEnvironment;
 import java.awt.Graphics2D;
 import java.awt.Font;
@@ -17,9 +16,12 @@ class ForegroundRenderer implements LayerRenderer
 {
 	String infostring;
 	
-	public ForegroundRenderer(Graphiel g)
+	public ForegroundRenderer(Graphiel g, boolean showstats)
 	{
-		infostring = g.toString();
+		if (showstats)
+			infostring = g.toString();
+		else
+			infostring = "";
 	}
 	
 	/**
