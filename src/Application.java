@@ -93,6 +93,7 @@ public class Application {
         view.addKeyListener(new ZoomListener(view, g));
         view.addMouseMotionListener(new DragListener(view));
         view.addMouseWheelListener(new ScrollListener(view));
+		view.addMouseListener(new Clack(view, g));
 
         //g.matchlight(0);
         //g.matchlight(2);
@@ -100,6 +101,97 @@ public class Application {
         //g.matchflash(750);
     }
 
+	    
+	private static class Clack implements MouseListener{
+
+		private View view = null;
+		private Graphiel g = null;
+		private int matchIndex = 0;
+
+		/**
+		 * Constructor for ZoomListener
+		 * @param view the view in which to zoom
+		 */
+		public Clack(View view, Graphiel g){
+			this.view = view; 
+			this.g = g;
+		}
+
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+
+
+
+
+			GraphicElement curElement = view.findNodeOrSpriteAt(e.getX(), e.getY());
+			Node n = g.getNode(curElement.toString());
+			ArrayList <Match> filteredMatches = g.filterByNode(n);
+			int max = filteredMatches.size()-1;
+
+
+
+			if(!UImod.checkuiC(n, "selected")){
+				matchIndex = 0;
+				UImod.adduiC(g.getNode(String.valueOf(n)), "selected");
+			}else{
+				if(matchIndex < max){
+					matchIndex++;
+				}
+
+				//				now we have iterated through all the matches of the current node
+				else{
+					UImod.rmuiC(curElement, "selected");
+
+					Match lastMatch = filteredMatches.get(max);
+					//change back opacity of edges
+					g.resetMatch(lastMatch);
+
+
+
+					matchIndex = 0;
+					return;
+
+				}
+			}
+			//
+			//			for(Edge resetEdge : g.getEdgeSet()){
+			//				UImod.rmuiC(resetEdge, "ui.style");
+			//			}
+			//
+
+
+
+			for(Node resetNode : g.getNodeSet()){
+				UImod.rmuiC(resetNode, "selected");
+
+			}
+
+
+			//			System.out.println(matchIndex);
+			Match match = filteredMatches.get(matchIndex);
+			if(matchIndex > 0){
+				Match oldMatch = filteredMatches.get(matchIndex - 1);
+				g.resetMatch(oldMatch);
+
+			}
+
+
+			g.oneMatchAtATime(match);
+
+
+			for(int graphNodes : match.getGraphNodes()){
+				//				System.out.println(gnodes);
+				UImod.adduiC(g.getNode(String.valueOf(graphNodes)), "selected");
+			}
+
+
+
+		}
+	
+	
     /**
      * This class provides a key listener for the graph window, with which you can zoom.
      *
