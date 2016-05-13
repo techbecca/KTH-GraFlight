@@ -92,7 +92,7 @@ public class Application {
 		} catch (FileNotFoundException ex)
 		{
 			System.err.println( ex );
-			loadNewGraph();
+			//loadNewGraph();
 		}
 	}
 	

@@ -64,7 +64,7 @@ public class GMenuBar extends JMenuBar {
 		JMenuItem toolbar = new JMenuItem("Toolbar");
 		viewmenu.add(toolbar);
 		
-		JMenuItem statistics = new JMenuItem("Statistics");
+		JCheckBoxMenuItem statistics = new JCheckBoxMenuItem("Statistics", true);
 		viewmenu.add(statistics);
 
 		statistics.addActionListener(new MenuActionListener(){
