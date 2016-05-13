@@ -91,6 +91,12 @@ public class Application {
 		view.addMouseMotionListener(new DragListener(view));
 		((Component) view).addMouseWheelListener(new ScrollListener(view));
 
+<<<<<<< HEAD
+=======
+		//g.matchlight(0);
+		//g.matchlight(2);
+		//g.matchdark();
+>>>>>>> 20a6873e3564ff8bd91872d4f43b8be05557e8b8
 		g.matchflash(750);
 	}
 

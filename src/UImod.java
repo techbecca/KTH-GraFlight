@@ -34,4 +34,12 @@ public class UImod {
 			e.setAttribute("ui.class", priors);
 		}
 	}
+
+	public static void addatt(Element e) {
+		String ntype = e.getAttribute("ntype");
+		if(ntype.equals(null)) {
+			e.addAttribute("ui.class", e.getAttribute("etype"));
+		}
+	}
+
 }
