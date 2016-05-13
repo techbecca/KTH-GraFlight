@@ -121,7 +121,7 @@ public class ParseJSONf {
      *
      * Written by Aiman Josefsson and Rebecca Hellström Karlsson 2016-04-29
      */
-    public static DirectedGraph fromGStoJG(Graph gsgraph) throws FileNotFoundException {
+    public static DirectedGraph fromGStoJG(Graph gsgraph) {
         DirectedGraph<String, DefaultEdge> directedGraph = new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
         // Copies the nodes over to the directed graph
         for(Node n : gsgraph.getNodeSet()){

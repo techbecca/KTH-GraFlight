@@ -72,7 +72,7 @@ public class Application {
 		} catch (FileNotFoundException ex)
 		{
 			System.err.println( ex );
-			loadNewGraph();
+			System.exit(-1);
 		}
 		
 		// Highlights patterns in order.
@@ -93,6 +93,7 @@ public class Application {
 		} catch (FileNotFoundException ex)
 		{
 			System.err.println( ex );
+			System.exit(-1);
 			//loadNewGraph();
 		}
 	}
