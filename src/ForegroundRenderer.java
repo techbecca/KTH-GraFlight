@@ -22,6 +22,14 @@ class ForegroundRenderer implements LayerRenderer
 		infostring = g.toString();
 	}
 	
+	public ForegroundRenderer(Graphiel g, boolean b)
+    {
+        if (b)
+            infostring = g.toString();
+        else
+            infostring = "";
+    }
+	
 	/**
 	* This method is called each time the graph has been rendered,
 	* in order to draw on top of it with the Graphics2D object.
