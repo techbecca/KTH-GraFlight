@@ -21,3 +21,4 @@ build.xml
 *.orig
 **/doc
 *.jar
+*.png

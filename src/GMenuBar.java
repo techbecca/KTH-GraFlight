@@ -18,17 +18,18 @@ import org.graphstream.ui.swingViewer.DefaultView;
 
 public class GMenuBar extends JMenuBar {
 	
-	JFrame jframe;
-	
 	public GMenuBar (){
-		jframe = (JFrame) getParent();
-		
 		JMenu file = new JMenu("File");
 		add(file);
 		
 		JMenuItem open = new JMenuItem("Open New File...");
 		file.add(open);
-		open.addActionListener(new LoadNewGraphListener());
+		open.addActionListener(new MenuActionListener(){
+			public void actionPerformed(ActionEvent e)
+		    {
+					Application.loadNewGraph();
+		    }
+		});
 		
 		JMenuItem close = new JMenuItem("Close");
 		file.add(close);
@@ -41,12 +42,7 @@ public class GMenuBar extends JMenuBar {
 		
 		JMenuItem save = new JMenuItem("Save As PNG");
 		file.add(save);
-		save.addActionListener(new MenuActionListener(){
-			public void actionPerformed(ActionEvent e)
-		    {
-				Application.getGraph().addAttribute("ui.screenshot", "image.png");
-		    }
-		});
+		save.addActionListener(new ScreenshotAction());
 		
 		//Update graph
 		JMenuItem refresh = new JMenuItem("Refresh");
@@ -54,7 +50,7 @@ public class GMenuBar extends JMenuBar {
 		refresh.addActionListener(new MenuActionListener(){
 			public void actionPerformed(ActionEvent e)
 		    {
-				jframe.revalidate();
+				getParent().revalidate();
 		    }
 		});
 		
@@ -62,14 +58,14 @@ public class GMenuBar extends JMenuBar {
 		JMenuItem reset = new JMenuItem("Reset");
 		file.add(reset);
 		
-		JMenu view = new JMenu("View");
-		add(view);
+		JMenu viewmenu = new JMenu("View");
+		add(viewmenu);
 		
 		JMenuItem toolbar = new JMenuItem("Toolbar");
-		view.add(toolbar);
+		viewmenu.add(toolbar);
 		
 		JMenuItem statistics = new JMenuItem("Statistics");
-		view.add(statistics);
+		viewmenu.add(statistics);
 
 		statistics.addActionListener(new MenuActionListener(){
 			public void actionPerformed(ActionEvent e)
