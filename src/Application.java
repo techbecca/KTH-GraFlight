@@ -19,7 +19,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -29,7 +28,7 @@ import java.util.ArrayList;
  */
 public class Application {
 
-	public static void main(String args[]) throws FileNotFoundException {
+    public static void main(String args[]) throws FileNotFoundException {
 
 		// gets the json files: from argument or file dialog
 		File[] jsons = Filer.run(args);
@@ -46,55 +45,57 @@ public class Application {
 		//g.patternEdges();
 
 		//adds antialiasing for a smoother look
-		g.addAttribute("ui.quality");
-		g.addAttribute("ui.antialias");
+		 g.addAttribute("ui.quality");
+		 g.addAttribute("ui.antialias");
 
 		// Add positioning
 		g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
 		g.patternEdges();
 
 		// Check for nodes with no matches
-		//		g.flagNoMatches();
+		g.flagNoMatches();
 
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
-		// Display without default layout (false)
-		Viewer viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-		DefaultView view = (DefaultView) viewer.addDefaultView(false);
+        // Display without default layout (false)
+        Viewer viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+        DefaultView view = (DefaultView) viewer.addDefaultView(false);
 
 		// configures the JFrame
-		JFrame frame = new JFrame("GraFlight");
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
-		frame.setSize(screenSize);
+        JFrame frame = new JFrame("GraFlight");
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
+        frame.setSize(screenSize);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		Toolbar tb = new Toolbar();
+	    tb.menu(frame, g, view);
 
-		// Set JFrame Icon
-		BufferedImage img = null;
-		try {
-			img = ImageIO.read(new File("teamlogo" + File.separatorChar+"icon_32.png"));
+        // Set JFrame Icon
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File("teamlogo" + File.separatorChar+"icon_32.png"));
 		} catch (IOException e) {
 			System.out.println("Logo not found!");
 		}
 
 		// shows the window
-		frame.setIconImage(img);
-		frame.setVisible(true);
-		frame.add((Component) view);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setIconImage(img);
+        frame.setVisible(true);
+        frame.add((Component) view);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
 		// prints some basic statistics
 		System.out.println(g.toString());
 		frame.setFocusable(true);
 
-		view.setForeLayoutRenderer(new ForegroundRenderer(g));
+		//view.setForeLayoutRenderer( new ForegroundRenderer(g) );
 
 		view.addKeyListener(new ZoomListener(view));
 		view.addMouseMotionListener(new DragListener(view));
-		view.addMouseWheelListener(new ScrollListener(view));
-		view.addMouseListener(new Clack(view,g));
+		((Component) view).addMouseWheelListener(new ScrollListener(view));
 
 		//g.matchlight(0);
 		//g.matchlight(2);
@@ -234,7 +235,7 @@ public class Application {
 
 	/**
 	 * This class provides a key listener for the graph window, with which you can zoom.
-	 * @author Aiman Josefsson & Rebecca Hellström Karlsson
+	 * @author Aiman Josefsson & Rebecca HellstrÃ¶m Karlsson
 	 * @since 2016-05-04
 	 */
 	private static class ZoomListener implements KeyListener{
@@ -259,14 +260,14 @@ public class Application {
 				if (viewPercent > 0.3) {
 					view.getCamera().setViewPercent(viewPercent * 0.9); // Zooms in, viewPercent: 0-1 (min-max)
 				}			} else if(e.getKeyChar() == '-') {
-					double viewPercent = view.getCamera().getViewPercent();
-					if (viewPercent < 1.5) {
-						view.getCamera().setViewPercent(viewPercent / 0.9); // Zooms out
-					}
-				} else if(e.getKeyChar() == '0'){
-					view.getCamera().resetView();
-
+				double viewPercent = view.getCamera().getViewPercent();
+				if (viewPercent < 1.5) {
+					view.getCamera().setViewPercent(viewPercent / 0.9); // Zooms out
 				}
+			} else if(e.getKeyChar() == '0'){
+						view.getCamera().resetView();
+
+			}
 		}
 
 		@Override
