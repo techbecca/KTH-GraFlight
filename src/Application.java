@@ -1,3 +1,4 @@
+import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.MultiGraph;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
  */
 public class Application {
 
-    public static void main(String args[]) throws FileNotFoundException {
+	public static void main(String args[]) throws FileNotFoundException {
 
 		// gets the json files: from argument or file dialog
 		File[] jsons = Filer.run(args);
@@ -45,43 +46,43 @@ public class Application {
 		//g.patternEdges();
 
 		//adds antialiasing for a smoother look
-		 g.addAttribute("ui.quality");
-		 g.addAttribute("ui.antialias");
+		g.addAttribute("ui.quality");
+		g.addAttribute("ui.antialias");
 
-        // Add positioning
-        g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
-		//g.patternEdges();
+		// Add positioning
+		g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
+		g.patternEdges();
 
 		// Check for nodes with no matches
-//		g.flagNoMatches();
+		//		g.flagNoMatches();
 
 		// Use the advanced renderer
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
-        // Display without default layout (false)
-        Viewer viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-        DefaultView view = (DefaultView) viewer.addDefaultView(false);
+		// Display without default layout (false)
+		Viewer viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+		DefaultView view = (DefaultView) viewer.addDefaultView(false);
 
 		// configures the JFrame
-        JFrame frame = new JFrame("GraFlight");
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
-        frame.setSize(screenSize);
+		JFrame frame = new JFrame("GraFlight");
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
+		frame.setSize(screenSize);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Set JFrame Icon
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(new File("teamlogo" + File.separatorChar+"icon_32.png"));
+		// Set JFrame Icon
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(new File("teamlogo" + File.separatorChar+"icon_32.png"));
 		} catch (IOException e) {
 			System.out.println("Logo not found!");
 		}
 
 		// shows the window
-        frame.setIconImage(img);
-        frame.setVisible(true);
-        frame.add((Component) view);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setIconImage(img);
+		frame.setVisible(true);
+		frame.add((Component) view);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
 		// prints some basic statistics
@@ -92,12 +93,13 @@ public class Application {
 
 		view.addKeyListener(new ZoomListener(view));
 		view.addMouseMotionListener(new DragListener(view));
-		((Component) view).addMouseWheelListener(new ScrollListener(view));
+		view.addMouseWheelListener(new ScrollListener(view));
+		view.addMouseListener(new Clack(view,g));
 
 		//g.matchlight(0);
 		//g.matchlight(2);
 		//g.matchdark();
-		g.matchflash(750);
+		//g.matchflash(750);
 	}
 
 
@@ -122,54 +124,69 @@ public class Application {
 			// TODO Auto-generated method stub
 
 
+
+
+
 			GraphicElement curElement = view.findNodeOrSpriteAt(e.getX(), e.getY());
 			Node n = g.getNode(curElement.toString());
 			ArrayList <Match> filteredMatches = g.filterByNode(n);
+			int max = filteredMatches.size()-1;
+
+
 
 			if(!UImod.checkuiC(n, "selected")){
 				matchIndex = 0;
 				UImod.adduiC(g.getNode(String.valueOf(n)), "selected");
 			}else{
-				matchIndex++;
+				if(matchIndex < max){
+					matchIndex++;
+				}
+
+				//				now we have iterated through all the matches of the current node
+				else{
+					UImod.rmuiC(curElement, "selected");
+
+					Match lastMatch = filteredMatches.get(max);
+					//change back opacity of edges
+					g.resetMatch(lastMatch);
+
+
+
+					matchIndex = 0;
+					return;
+
+				}
 			}
+			//
+			//			for(Edge resetEdge : g.getEdgeSet()){
+			//				UImod.rmuiC(resetEdge, "ui.style");
+			//			}
+			//
+
+
 
 			for(Node resetNode : g.getNodeSet()){
 				UImod.rmuiC(resetNode, "selected");
+
 			}
+
 
 			System.out.println(matchIndex);
 			Match match = filteredMatches.get(matchIndex);
-			for(int gnodes : match.getGraphNodes()){
-				System.out.println(gnodes);
-				UImod.adduiC(g.getNode(String.valueOf(gnodes)), "selected");
+			if(matchIndex > 0){
+				Match oldMatch = filteredMatches.get(matchIndex - 1);
+				g.resetMatch(oldMatch);
+
 			}
 
 
-
-//			System.out.println(curElement.toString());					
-			//
-			//			if(curElement.hasAttribute("ui.selected")){
-			//			
-
-			/*
-			 * get a list of matches
-			 * select one of the matches
-			 * highlight all the nodes in that match
-			 */
+			g.oneMatchAtATime(match);
 
 
-
-
-			//				Element n = curElement.getAttribute("match-ids");
-
-			//				System.out.println("hi");
-			//			}
-			//			
-			//			else{
-			//				curElement.removeAttribute("ui.selected");
-			//				
-			//			}
-
+			for(int graphNodes : match.getGraphNodes()){
+				//				System.out.println(gnodes);
+				UImod.adduiC(g.getNode(String.valueOf(graphNodes)), "selected");
+			}
 
 
 
@@ -217,7 +234,7 @@ public class Application {
 
 	/**
 	 * This class provides a key listener for the graph window, with which you can zoom.
-	 * @author Aiman Josefsson & Rebecca HellstrÃ¶m Karlsson
+	 * @author Aiman Josefsson & Rebecca Hellström Karlsson
 	 * @since 2016-05-04
 	 */
 	private static class ZoomListener implements KeyListener{
@@ -242,14 +259,14 @@ public class Application {
 				if (viewPercent > 0.3) {
 					view.getCamera().setViewPercent(viewPercent * 0.9); // Zooms in, viewPercent: 0-1 (min-max)
 				}			} else if(e.getKeyChar() == '-') {
-				double viewPercent = view.getCamera().getViewPercent();
-				if (viewPercent < 1.5) {
-					view.getCamera().setViewPercent(viewPercent / 0.9); // Zooms out
-				}
-			} else if(e.getKeyChar() == '0'){
-						view.getCamera().resetView();
+					double viewPercent = view.getCamera().getViewPercent();
+					if (viewPercent < 1.5) {
+						view.getCamera().setViewPercent(viewPercent / 0.9); // Zooms out
+					}
+				} else if(e.getKeyChar() == '0'){
+					view.getCamera().resetView();
 
-			}
+				}
 		}
 
 		@Override

@@ -1,8 +1,8 @@
 import org.graphstream.graph.Edge;
+import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.graph.Node;
 import org.graphstream.ui.spriteManager.SpriteManager;
-import org.graphstream.ui.spriteManager.Sprite;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  *Our very own special-purpose MultiGraph subclass.
- *@author Christian CallergÃ¥rd
+ *@author Christian Callergård
  *@version 1.0
  *@since 2016-05-04
  */
@@ -105,13 +105,92 @@ class Graphiel extends MultiGraph
 					Node n2 = getNode(String.valueOf(nodes[k]));
 					if ( n1.hasEdgeBetween(n2) )
 					{
-						Edge edge = addEdge("i" + match.getInstructionId() + "p" + match.getPatternId() + edgeindex++ + "-" + i + "-" + k, n1, n2, false);
-						edge.setAttribute("ui.style", "size: 3px; fill-color: rgb(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() + ");");
+						
+						Edge edge = addEdge("i" + match.getInstructionId() + "p" + match.getPatternId() + "-" + edgeindex++ + "-" + i + "-" + k, n1, n2, false);
+						
+						System.out.println(edge.getId());
+						edge.setAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 100 + ");");
 					}
 				}
 			}
 		}
 	}
+	
+	
+	
+	
+	public void oneMatchAtATime(Match m)
+	{
+		int edgeindex = 0;
+		for (Match match : matches)
+		{
+			Color col = instructionColor(edgeindex, instructionIDs.size());
+			int[] nodes = m.getGraphNodes();
+
+			for(int i = 0; i < nodes.length - 1; i++){
+				Node n1 = getNode(String.valueOf(nodes[i]));
+
+				for (int k = i + 1; k < nodes.length; k++)
+				{
+					Node n2 = getNode(String.valueOf(nodes[k]));
+					if ( n1.hasEdgeBetween(n2) )
+					{
+//						n1.getEdge
+//						n1.getEdgeSet()
+//						
+//						
+//						edge-id:
+//						"i" + match.getInstructionId() + "p" + match.getPatternId() + edgeindex++ + "-" + i + "-" + k
+						
+						
+						Iterator<Edge> iter = n1.getEdgeIterator();
+						while(iter.hasNext()){
+							System.out.println(iter.next().getId());
+							
+						}
+						
+//						Graph g = n1.getGraph();
+//						<edge extends Edge>  edge = (Edge)getEdge("i" + m.getInstructionId() + "p" + m.getPatternId() +"-" + edgeindex++ + "-" + i + "-" + k);
+//						System.out.println(edge.toString());
+//						Edge edge = n1.getEdgeBetween(n2);
+//						Edge edge = addEdge("i" + match.getInstructionId() + "p" + match.getPatternId() + edgeindex++ + "-" + i + "-" + k, n1, n2, false);
+//						edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 255 + ");");
+					}
+				}
+			}	
+		}
+	}
+	
+	
+	public void resetMatch(Match m)
+	{
+		int edgeindex = 0;
+		for (Match match : matches)
+		{
+			Color col = instructionColor(edgeindex, instructionIDs.size());
+			int[] nodes = m.getGraphNodes();
+
+			for(int i = 0; i < nodes.length - 1; i++){
+				Node n1 = getNode(String.valueOf(nodes[i]));
+
+				for (int k = i + 1; k < nodes.length; k++)
+				{
+					Node n2 = getNode(String.valueOf(nodes[k]));
+					if ( n1.hasEdgeBetween(n2) )
+					{
+//						Graph g = n1.getGraph();
+//						Edge edge = getEdge("i" + m.getInstructionId() + "p" + m.getPatternId() + "-" +edgeindex++ + "-" + i + "-" + k);
+											
+//						edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 100 + ");");
+					}
+				}
+			}
+		}
+	}
+	
+	
+	
+	
 
 	/**
 	 * This method loops through the matches and colors the nodes that match an input instruction ID
