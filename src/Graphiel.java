@@ -256,10 +256,11 @@ class Graphiel extends MultiGraph
 
 		//	Iterates through the rows in the positions double-array
 		for(int x = 0; x < positions.length; x++){
-
-			getNode(x).addAttribute("x", positions[x][0]);
-			getNode(x).addAttribute("y", -positions[x][1]); // Negative because y-positive axis defined as opposite when rendering
-
+			Node node = getNode(x);
+			node.addAttribute("x", positions[x][0]);
+			node.addAttribute("initX", positions[x][0]);
+			node.addAttribute("y", -positions[x][1]); // Negative because y-positive axis defined as opposite when rendering
+			node.addAttribute("initY", -positions[x][1]);
 		}
 	}
 
