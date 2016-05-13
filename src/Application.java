@@ -129,7 +129,7 @@ public class Application {
         public void keyTyped(KeyEvent e) {
 
             double viewPercent = view.getCamera().getViewPercent();
-            switch(e.getKeyChar()){
+            switch(e.getKeyChar()) {
                 case '+':
                     if (viewPercent > 0.3) {
                         view.getCamera().setViewPercent(viewPercent * 0.9); // Zooms in, viewPercent: 0-1 (min-max)
@@ -141,28 +141,12 @@ public class Application {
                     }
                     break;
                 case 'x':
-                    for(Node n : g.getNodeSet()){
+                    for (Node n : g.getNodeSet()) {
 
                         n.setAttribute("x", (Object) n.getAttribute("initX"));
                         n.setAttribute("y", (Object) n.getAttribute("initY"));
                     }
             }
-            /*
-            if (e.getKeyChar() == '+') {
-                double viewPercent = view.getCamera().getViewPercent();
-                if (viewPercent > 0.3) {
-                    view.getCamera().setViewPercent(viewPercent * 0.9); // Zooms in, viewPercent: 0-1 (min-max)
-                }
-            } else if (e.getKeyChar() == '-') {
-                double viewPercent = view.getCamera().getViewPercent();
-                if (viewPercent < 1.5) {
-                    view.getCamera().setViewPercent(viewPercent / 0.9); // Zooms out
-                }
-            } else if (e.getKeyChar() == '0') {
-                view.getCamera().resetView();
-
-            }
-            */
         }
 
         @Override
