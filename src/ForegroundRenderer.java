@@ -16,10 +16,10 @@ class ForegroundRenderer implements LayerRenderer
 {
 	String infostring;
 	
-	public ForegroundRenderer(Graphiel g, boolean showstats)
+	public ForegroundRenderer(boolean showstats)
 	{
 		if (showstats)
-			infostring = g.toString();
+			infostring = Application.getGraph().toString();
 		else
 			infostring = "";
 	}

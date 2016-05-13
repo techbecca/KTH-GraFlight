@@ -29,17 +29,15 @@ public class Application {
 	
 	private static Graphiel g;
 	private static DefaultView v;
+	private static JFrame frame;
 
     public static void main(String args[]) throws FileNotFoundException{
 		// configures the JFrame
-        JFrame frame = new JFrame("GraFlight");
+        frame = new JFrame("GraFlight");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
         frame.setSize(screenSize);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		// Adds our menubar to the frame.
-		frame.add(new GMenuBar());
 
         // Set JFrame Icon
         BufferedImage img = null;
@@ -62,10 +60,20 @@ public class Application {
 		// gets the json files: from argument or file dialog
 		File[] jsons = Filer.run(args);
 
-		// Create graph and view in the frame.
-		g = createGraph(jsons);
-		v = createView(frame);
-
+		
+		// Adds our menubar to the frame.
+		frame.setJMenuBar(new GMenuBar());
+		
+		try {
+			// Create graph and view in the frame.
+			g = createGraph(jsons);
+			v = createView(frame);
+		} catch (FileNotFoundException ex)
+		{
+			System.err.println( ex );
+			loadNewGraph();
+		}
+		
 		// Highlights patterns in order.
 		g.matchflash(750);
 	}
@@ -76,11 +84,16 @@ public class Application {
 	*/
 	public static void loadNewGraph()
 	{
-		File[] jsons = Filer.choose();
-		g = createGraph(jsons);
-		JFrame frame = v.getParent();
-		frame.remove(v);
-		v = createView(frame);
+		try {
+			File[] jsons = Filer.choose();
+			g = createGraph(jsons);
+			frame.remove(v);
+			v = createView(frame);
+		} catch (FileNotFoundException ex)
+		{
+			System.err.println( ex );
+			loadNewGraph();
+		}
 	}
 	
 	/**
@@ -94,13 +107,13 @@ public class Application {
         Viewer viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         DefaultView view = (DefaultView) viewer.addDefaultView(false); // false = not using default GraphStream layout
 		
-		view.setForeLayoutRenderer( new ForegroundRenderer(g, true) );
+		view.setForeLayoutRenderer( new ForegroundRenderer(true) );
 
 		view.addKeyListener(new ZoomListener(view));
 		view.addMouseMotionListener(new DragListener(view));
-		((Component) view).addMouseWheelListener(new ScrollListener(view));
+		view.addMouseWheelListener(new ScrollListener(view));
 		
-		frame.add((Component) view);
+		frame.add(view);
 		frame.revalidate();
 		
 		return view;
@@ -138,7 +151,7 @@ public class Application {
 		return g;
 	}
 	
-	public static View getView()
+	public static DefaultView getView()
 	{
 		return v;
 	}

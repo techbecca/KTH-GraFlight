@@ -32,13 +32,7 @@ public class GMenuBar extends JMenuBar {
 		open.addActionListener(new MenuActionListener(){
 			public void actionPerformed(ActionEvent e)
 		    {
-				File[] jsons = Filer.choose();
-				try {
 					Application.loadNewGraph();
-				}
-				catch (FileNotFoundException ex){
-					
-				}
 		    }
 		});
 		
@@ -56,7 +50,7 @@ public class GMenuBar extends JMenuBar {
 		save.addActionListener(new MenuActionListener(){
 			public void actionPerformed(ActionEvent e)
 		    {
-				g.addAttribute("ui.screenshot", "C:/Users/Charlotta/projectX/image.png");
+				Application.getGraph().addAttribute("ui.screenshot", "image.png");
 		    }
 		});
 		
@@ -88,11 +82,11 @@ public class GMenuBar extends JMenuBar {
 			{
 				if (!statistics.isSelected()) {
 					statistics.setSelected(false);
-					Application.getView().setForeLayoutRenderer( new ForegroundRenderer(g, false) );
+					Application.getView().setForeLayoutRenderer( new ForegroundRenderer(false) );
 				} 
 				else if (statistics.isSelected()){
 					statistics.setSelected(true);
-					Application.getView().setForeLayoutRenderer( new ForegroundRenderer(g, true) );
+					Application.getView().setForeLayoutRenderer( new ForegroundRenderer(true) );
 				}
 			}
 		});
