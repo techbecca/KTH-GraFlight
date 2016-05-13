@@ -88,11 +88,11 @@ public class GMenuBar extends JMenuBar {
 			{
 				if (!statistics.isSelected()) {
 					statistics.setSelected(false);
-					v.setForeLayoutRenderer( new ForegroundRenderer(g,false) );
+					Application.getView().setForeLayoutRenderer( new ForegroundRenderer(g, false) );
 				} 
 				else if (statistics.isSelected()){
 					statistics.setSelected(true);
-					v.setForeLayoutRenderer( new ForegroundRenderer(g, true) );
+					Application.getView().setForeLayoutRenderer( new ForegroundRenderer(g, true) );
 				}
 			}
 		});

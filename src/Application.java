@@ -27,8 +27,8 @@ import java.util.ArrayList;
  */
 public class Application {
 	
-	private Graphiel g;
-	private DefaultView v;
+	private static Graphiel g;
+	private static DefaultView v;
 
     public static void main(String args[]) throws FileNotFoundException{
 		// configures the JFrame
