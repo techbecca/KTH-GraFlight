@@ -171,7 +171,7 @@ public class Application {
 			}
 
 
-			System.out.println(matchIndex);
+//			System.out.println(matchIndex);
 			Match match = filteredMatches.get(matchIndex);
 			if(matchIndex > 0){
 				Match oldMatch = filteredMatches.get(matchIndex - 1);

@@ -8,13 +8,19 @@ public class Match {
 	final private int PatternId;
 	final private int InstructionId;
 	final private int[] GraphNodes;
+	final private int MatchId;
 
-	public Match(int[] GraphNodes, 	int PatternId, int InstructionId) {
+	public Match(int[] GraphNodes, 	int PatternId, int InstructionId, int MatchId) {
 
 		this.PatternId = PatternId;
 		this.InstructionId = InstructionId;
+		this.MatchId = MatchId;
 		this.GraphNodes = GraphNodes;
 
+	}
+
+	public int getMatchId() {
+		return MatchId;
 	}
 
 	public int getPatternId() {
@@ -28,18 +34,18 @@ public class Match {
 	public int[] getGraphNodes() {
 		return GraphNodes;
 	}
-	
+
 	public String toString(){
-		
+
 		StringBuilder sb = new StringBuilder("[ Nodes: [");
-		
+
 		for (int i = 0; i < GraphNodes.length; i++) {
 			String currentGraphNode = String.valueOf(GraphNodes[i]) + ", ";
 			sb.append(currentGraphNode);
 		}
-		
-		sb.append("]" + "InstructionId: " + InstructionId + ", " + "PatternId: " + PatternId +"]");
-		
+
+		sb.append("]" + "InstructionId: " + InstructionId + ", " + "PatternId: " + PatternId + ", " + MatchId + "]");
+
 		return sb.toString(); 
 	}
 

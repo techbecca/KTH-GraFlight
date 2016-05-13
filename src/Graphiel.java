@@ -105,27 +105,33 @@ class Graphiel extends MultiGraph
 					Node n2 = getNode(String.valueOf(nodes[k]));
 					if ( n1.hasEdgeBetween(n2) )
 					{
-						
-						Edge edge = addEdge("i" + match.getInstructionId() + "p" + match.getPatternId() + "-" + edgeindex++ + "-" + i + "-" + k, n1, n2, false);
-						
+						edgeindex++;
+
+						Edge edge = addEdge("i" + match.getInstructionId() + "p" + match.getPatternId() + "-" + match.getMatchId() + "-" + i + "-" + k, 
+								n1, n2, false);
+						edge.addAttribute("Edge-index", edgeindex);
 						System.out.println(edge.getId());
-						edge.setAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 100 + ");");
+						edge.setAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 150 + ");");
 					}
 				}
 			}
 		}
 	}
-	
-	
-	
-	
-	public void oneMatchAtATime(Match m)
+
+
+
+	/*
+	 * This method selects the colored edges in a match,
+	 * and thereby increases their opacity
+	 */
+	public void oneMatchAtATime(Match match)
 	{
 		int edgeindex = 0;
-		for (Match match : matches)
+		for (Match m : matches)
 		{
+//			int edgeindex = 0;
 			Color col = instructionColor(edgeindex, instructionIDs.size());
-			int[] nodes = m.getGraphNodes();
+			int[] nodes = match.getGraphNodes();
 
 			for(int i = 0; i < nodes.length - 1; i++){
 				Node n1 = getNode(String.valueOf(nodes[i]));
@@ -135,62 +141,65 @@ class Graphiel extends MultiGraph
 					Node n2 = getNode(String.valueOf(nodes[k]));
 					if ( n1.hasEdgeBetween(n2) )
 					{
-//						n1.getEdge
-//						n1.getEdgeSet()
-//						
-//						
-//						edge-id:
-//						"i" + match.getInstructionId() + "p" + match.getPatternId() + edgeindex++ + "-" + i + "-" + k
+
+//						edgeindex ++;
 						
 						
-						Iterator<Edge> iter = n1.getEdgeIterator();
-						while(iter.hasNext()){
-							System.out.println(iter.next().getId());
-							
-						}
+						Edge  edge = getEdge("i" + match.getInstructionId() + "p" + match.getPatternId() +"-" + match.getMatchId() + "-" + i + "-" + k);
 						
-//						Graph g = n1.getGraph();
-//						<edge extends Edge>  edge = (Edge)getEdge("i" + m.getInstructionId() + "p" + m.getPatternId() +"-" + edgeindex++ + "-" + i + "-" + k);
-//						System.out.println(edge.toString());
-//						Edge edge = n1.getEdgeBetween(n2);
-//						Edge edge = addEdge("i" + match.getInstructionId() + "p" + match.getPatternId() + edgeindex++ + "-" + i + "-" + k, n1, n2, false);
-//						edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 255 + ");");
+						edgeindex = edge.getAttribute("Edge-index");
+						edgeindex++;
+						edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 255 + ");");
+
+						//					edge.addAttribute("ui.class", "selected");
 					}
 				}
 			}	
 		}
 	}
-	
-	
-	public void resetMatch(Match m)
+
+	/*
+	 * This method deselects the colored edges in a match,
+	 * and thereby lowers their opacity
+	 */
+	public void resetMatch(Match match)
 	{
 		int edgeindex = 0;
-		for (Match match : matches)
+		for (Match m : matches)
 		{
 			Color col = instructionColor(edgeindex, instructionIDs.size());
-			int[] nodes = m.getGraphNodes();
+			int[] nodes = match.getGraphNodes();
 
 			for(int i = 0; i < nodes.length - 1; i++){
 				Node n1 = getNode(String.valueOf(nodes[i]));
 
 				for (int k = i + 1; k < nodes.length; k++)
 				{
+
+					
 					Node n2 = getNode(String.valueOf(nodes[k]));
 					if ( n1.hasEdgeBetween(n2) )
 					{
-//						Graph g = n1.getGraph();
-//						Edge edge = getEdge("i" + m.getInstructionId() + "p" + m.getPatternId() + "-" +edgeindex++ + "-" + i + "-" + k);
-											
-//						edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 100 + ");");
+						Edge  edge = getEdge("i" + match.getInstructionId() + "p" + match.getPatternId() +"-" + match.getMatchId() + "-" + i + "-" + k);
+
+						edgeindex = edge.getAttribute("Edge-index");
+
+						edgeindex++;
+
+						
+						//						edge.addAttribute("ui.class", "deselected");
+						edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 100 + ");");
+
+
 					}
 				}
 			}
 		}
 	}
-	
-	
-	
-	
+
+
+
+
 
 	/**
 	 * This method loops through the matches and colors the nodes that match an input instruction ID
