@@ -30,33 +30,33 @@ public class LayGraph {
         // Create and configure the layout
 
         /*final JGraphCompactTreeLayout hir = new JGraphCompactTreeLayout();
-	hir.setLevelDistance(10.0);
-	hir.setNodeDistance(10);
-	hir.setTreeDistance(40);
-	hir.setRouteTreeEdges(false);
-	hir.setPositionMultipleTrees(true);
-	hir.setOrientation(1);
-	*/
+		hir.setLevelDistance(10.0);
+		hir.setNodeDistance(10);
+		hir.setTreeDistance(40);
+		hir.setRouteTreeEdges(false);
+		hir.setPositionMultipleTrees(true);
+		hir.setOrientation(1);
+		*/
 
 
 
-	JGraphHierarchicalLayout hir = new JGraphHierarchicalLayout();
-	hir.setLayoutFromSinks(true);
-	hir.setDeterministic(true);
-	hir.setFineTuning(true);
-	hir.setInterRankCellSpacing(80.0);
-	hir.setIntraCellSpacing(110.0);
+		JGraphHierarchicalLayout hir = new JGraphHierarchicalLayout();
+		hir.setLayoutFromSinks(true);
+		hir.setDeterministic(true);
+		hir.setFineTuning(true);
+		hir.setInterRankCellSpacing(80.0);
+		hir.setIntraCellSpacing(110.0);
 
 
-	/*
-	JGraphRadialTreeLayout hir = new JGraphRadialTreeLayout();
-	hir.setAutoRadius(true);
-	hir.setMaxradiusx(40.0);
-	hir.setMaxradiusy(40.0);
-	hir.setMinradiusy(20.0);
-	hir.setMinradiusy(20.0);
-	hir.setAngleOffset(0.5);
-	*/
+		/*
+		JGraphRadialTreeLayout hir = new JGraphRadialTreeLayout();
+		hir.setAutoRadius(true);
+		hir.setMaxradiusx(40.0);
+		hir.setMaxradiusy(40.0);
+		hir.setMinradiusy(20.0);
+		hir.setMinradiusy(20.0);
+		hir.setAngleOffset(0.5);
+		*/
 
         // create a visualization using JGraph, via the adapter
         JGraph jgraph = new JGraph(new JGraphModelAdapter(g));

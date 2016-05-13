@@ -1,6 +1,5 @@
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 

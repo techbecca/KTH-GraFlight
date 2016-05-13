@@ -29,6 +29,7 @@ public class Application {
 	
 	private static Graphiel g;
 	private static DefaultView v;
+	private static Viewer viewer;
 	private static JFrame frame;
 
     public static void main(String args[]) throws FileNotFoundException{
@@ -104,7 +105,7 @@ public class Application {
 	 */
 	public static DefaultView createView(JFrame frame)
 	{
-        Viewer viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+        viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         DefaultView view = (DefaultView) viewer.addDefaultView(false); // false = not using default GraphStream layout
 		
 		view.setForeLayoutRenderer( new ForegroundRenderer(true) );
@@ -146,6 +147,10 @@ public class Application {
 		return g;
 	}
 	
+	public static Viewer getViewer()
+	{
+		return viewer;
+	}
 	public static Graphiel getGraph()
 	{
 		return g;

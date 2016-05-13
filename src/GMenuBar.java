@@ -3,7 +3,7 @@ import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import javax.swing.KeyStroke;
+
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.io.File;
@@ -101,10 +101,26 @@ public class GMenuBar extends JMenuBar {
 		add(layout);
 		
 		JMenuItem hir = new JMenuItem("Hierarchical");
+		hir.addActionListener(new MenuActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				Application.getViewer().disableAutoLayout();
+				Application.getGraph().positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(Application.getGraph())));
+			}
+		});
 		layout.add(hir);
 		
 		JMenuItem comTree = new JMenuItem("Compact Tree");
 		layout.add(comTree);
+		
+		JMenuItem gsl = new JMenuItem("GraphStream: Force-based");
+		gsl.addActionListener(new MenuActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				Application.getViewer().enableAutoLayout();
+			}
+		});
+		layout.add(gsl);
 		
 		// Help menu starts here!
 		JMenu help = new JMenu("Help");
