@@ -79,9 +79,9 @@ public class Application {
 	}
 	
 	/**
-	* Opens file chooser, loads a new graph from the chosen files and replaces the old view in the frame.
-	* Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-13
-	*/
+	 * Opens file chooser, loads a new graph from the chosen files and replaces the old view in the frame.
+	 * Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-13
+	 */
 	public static void loadNewGraph()
 	{
 		try {
@@ -97,11 +97,11 @@ public class Application {
 	}
 	
 	/**
-	* Creates a Viewer on the graph adds a View with the appropriate listeners to our frame.
-	* @param frame The frame to contain the new view.
-	* @return The new view.
-	* Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-13
-	*/
+	 * Creates a Viewer on the graph adds a View with the appropriate listeners to our frame.
+	 * @param frame The frame to contain the new view.
+	 * @return The new view.
+	 * Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-13
+	 */
 	public static DefaultView createView(JFrame frame)
 	{
         Viewer viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
@@ -120,12 +120,12 @@ public class Application {
 	}
 
 	/**
-	* Creates the graph from the file paths returned from Filer, with stylesheet and layout.
-	* @throws FileNotFoundException
-	* @param jsons Array of f and p json files.
-	* @return The new graph.
-	* Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-13
-	*/
+	 * Creates the graph from the file paths returned from Filer, with stylesheet and layout.
+	 * @throws FileNotFoundException
+	 * @param jsons Array of f and p json files.
+	 * @return The new graph.
+	 * Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-13
+	 */
 	public static Graphiel createGraph(File[] jsons) throws FileNotFoundException
 	{
 		// create the main graph object class

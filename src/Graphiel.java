@@ -11,10 +11,8 @@ import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
 /**
- *Our very own special-purpose MultiGraph subclass.
- *@author Christian Callergård
- *@version 1.0
- *@since 2016-05-04
+ * Our very own special-purpose MultiGraph subclass.
+ * @author Christian Callergård
  */
 class Graphiel extends MultiGraph
 {

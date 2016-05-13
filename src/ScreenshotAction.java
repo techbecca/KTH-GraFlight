@@ -8,6 +8,11 @@ import java.io.File;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
+/**
+ * An action that saves a timestamped screenshot of the graph as png.
+ * @author Christian Callergård and Rebecca Hellström Karlsson
+ */
+
 public class ScreenshotAction extends AbstractAction
 {
 	public ScreenshotAction()
