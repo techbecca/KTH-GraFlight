@@ -95,6 +95,8 @@ class Graphiel extends MultiGraph
 		for (Match match : matches)
 		{
 			Color col = instructionColor(edgeindex, instructionIDs.size());
+			match.setMatchColor(col);
+
 			int[] nodes = match.getGraphNodes();
 
 			for(int i = 0; i < nodes.length - 1; i++){
@@ -111,7 +113,7 @@ class Graphiel extends MultiGraph
 								n1, n2, false);
 						edge.addAttribute("Edge-index", edgeindex);
 						System.out.println(edge.getId());
-						edge.setAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 150 + ");");
+						edge.setAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 255 + ");");
 					}
 				}
 			}
@@ -126,36 +128,24 @@ class Graphiel extends MultiGraph
 	 */
 	public void oneMatchAtATime(Match match)
 	{
-		int edgeindex = 0;
-		for (Match m : matches)
-		{
-//			int edgeindex = 0;
-			Color col = instructionColor(edgeindex, instructionIDs.size());
-			int[] nodes = match.getGraphNodes();
+		int[] nodes = match.getGraphNodes();
 
-			for(int i = 0; i < nodes.length - 1; i++){
-				Node n1 = getNode(String.valueOf(nodes[i]));
+		for(int i = 0; i < nodes.length - 1; i++){
+			Node n1 = getNode(String.valueOf(nodes[i]));
 
-				for (int k = i + 1; k < nodes.length; k++)
+			for (int k = i + 1; k < nodes.length; k++)
+			{
+				Node n2 = getNode(String.valueOf(nodes[k]));
+				if ( n1.hasEdgeBetween(n2) )
 				{
-					Node n2 = getNode(String.valueOf(nodes[k]));
-					if ( n1.hasEdgeBetween(n2) )
-					{
+					Edge  edge = getEdge("i" + match.getInstructionId() + "p" + match.getPatternId() +"-" + match.getMatchId() + "-" + i + "-" + k);
+					Color col = match.getColor();
 
-//						edgeindex ++;
-						
-						
-						Edge  edge = getEdge("i" + match.getInstructionId() + "p" + match.getPatternId() +"-" + match.getMatchId() + "-" + i + "-" + k);
-						
-						edgeindex = edge.getAttribute("Edge-index");
-						edgeindex++;
-						edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 255 + ");");
+					edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 255 + ");");
 
-						//					edge.addAttribute("ui.class", "selected");
-					}
 				}
-			}	
-		}
+			}
+		}	
 	}
 
 	/*
@@ -164,10 +154,8 @@ class Graphiel extends MultiGraph
 	 */
 	public void resetMatch(Match match)
 	{
-		int edgeindex = 0;
-		for (Match m : matches)
+
 		{
-			Color col = instructionColor(edgeindex, instructionIDs.size());
 			int[] nodes = match.getGraphNodes();
 
 			for(int i = 0; i < nodes.length - 1; i++){
@@ -176,20 +164,15 @@ class Graphiel extends MultiGraph
 				for (int k = i + 1; k < nodes.length; k++)
 				{
 
-					
+
 					Node n2 = getNode(String.valueOf(nodes[k]));
 					if ( n1.hasEdgeBetween(n2) )
 					{
 						Edge  edge = getEdge("i" + match.getInstructionId() + "p" + match.getPatternId() +"-" + match.getMatchId() + "-" + i + "-" + k);
 
-						edgeindex = edge.getAttribute("Edge-index");
+						Color col = match.getColor();
 
-						edgeindex++;
-
-						
-						//						edge.addAttribute("ui.class", "deselected");
-						edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 100 + ");");
-
+						edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 200 + ");");
 
 					}
 				}

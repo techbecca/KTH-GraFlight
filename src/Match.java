@@ -1,3 +1,5 @@
+import java.awt.Color;
+
 /**
  * Saves matches between nodes. 
  * @author Mathilda Strandberg von Schantz
@@ -9,6 +11,7 @@ public class Match {
 	final private int InstructionId;
 	final private int[] GraphNodes;
 	final private int MatchId;
+	public Color matchColor;
 
 	public Match(int[] GraphNodes, 	int PatternId, int InstructionId, int MatchId) {
 
@@ -18,6 +21,15 @@ public class Match {
 		this.GraphNodes = GraphNodes;
 
 	}
+	
+	
+
+	public void setMatchColor(Color matchColor) {
+		
+		this.matchColor = matchColor;
+	}
+
+
 
 	public int getMatchId() {
 		return MatchId;
@@ -34,6 +46,12 @@ public class Match {
 	public int[] getGraphNodes() {
 		return GraphNodes;
 	}
+	
+	public Color getColor(){
+		
+		return matchColor;
+		
+	}
 
 	public String toString(){
 
@@ -48,6 +66,9 @@ public class Match {
 
 		return sb.toString(); 
 	}
+
+
+
 
 
 }
