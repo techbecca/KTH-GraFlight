@@ -2,6 +2,8 @@ import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import javax.swing.KeyStroke;
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.io.File;
@@ -19,9 +21,12 @@ import org.graphstream.ui.swingViewer.DefaultView;
 public class GMenuBar extends JMenuBar {
 	
 	public GMenuBar (){
+		// File menu starts here!
 		JMenu file = new JMenu("File");
+		file.setMnemonic(KeyEvent.VK_F);
 		add(file);
 		
+		// Open a new graph
 		JMenuItem open = new JMenuItem("Open New File...");
 		file.add(open);
 		open.addActionListener(new MenuActionListener(){
@@ -31,18 +36,9 @@ public class GMenuBar extends JMenuBar {
 		    }
 		});
 		
-		JMenuItem close = new JMenuItem("Close");
-		file.add(close);
-		close.addActionListener(new MenuActionListener(){
-			public void actionPerformed(ActionEvent e)
-		    {
-				System.exit(0);
-		    }
-		});
-		
-		JMenuItem save = new JMenuItem("Save As PNG");
+		// Take a screenshot as PNG.
+		JMenuItem save = new JMenuItem(new ScreenshotAction());
 		file.add(save);
-		save.addActionListener(new ScreenshotAction());
 		
 		//Update graph
 		JMenuItem refresh = new JMenuItem("Refresh");
@@ -58,11 +54,29 @@ public class GMenuBar extends JMenuBar {
 		JMenuItem reset = new JMenuItem("Reset");
 		file.add(reset);
 		
+		//Close the application
+		JMenuItem close = new JMenuItem("Close");
+		file.add(close);
+		close.addActionListener(new MenuActionListener(){
+			public void actionPerformed(ActionEvent e)
+		    {
+				System.exit(0);
+		    }
+		});
+		
+		// View menu starts here!
 		JMenu viewmenu = new JMenu("View");
+		viewmenu.setMnemonic(KeyEvent.VK_V);
 		add(viewmenu);
 		
 		JMenuItem toolbar = new JMenuItem("Toolbar");
 		viewmenu.add(toolbar);
+		toolbar.addActionListener(new MenuActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				
+			}
+		});
 		
 		JCheckBoxMenuItem statistics = new JCheckBoxMenuItem("Statistics", true);
 		viewmenu.add(statistics);
@@ -81,7 +95,9 @@ public class GMenuBar extends JMenuBar {
 			}
 		});
 		
+		// Layout menu starts here!
 		JMenu layout = new JMenu("Layout");
+		layout.setMnemonic(KeyEvent.VK_L);
 		add(layout);
 		
 		JMenuItem hir = new JMenuItem("Hierarchical");
@@ -90,7 +106,9 @@ public class GMenuBar extends JMenuBar {
 		JMenuItem comTree = new JMenuItem("Compact Tree");
 		layout.add(comTree);
 		
+		// Help menu starts here!
 		JMenu help = new JMenu("Help");
+		help.setMnemonic(KeyEvent.VK_H);
 		add(help);
 		
 		JMenuItem manual = new JMenuItem("User Manual");
