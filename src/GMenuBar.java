@@ -16,7 +16,6 @@ import org.graphstream.graph.Graph;
 import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.swingViewer.DefaultView;
 
-
 public class GMenuBar extends JMenuBar {
 	
 	JFrame jframe;
@@ -29,12 +28,7 @@ public class GMenuBar extends JMenuBar {
 		
 		JMenuItem open = new JMenuItem("Open New File...");
 		file.add(open);
-		open.addActionListener(new MenuActionListener(){
-			public void actionPerformed(ActionEvent e)
-		    {
-					Application.loadNewGraph();
-		    }
-		});
+		open.addActionListener(new LoadNewGraphListener());
 		
 		JMenuItem close = new JMenuItem("Close");
 		file.add(close);
