@@ -1,7 +1,7 @@
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.MultiGraph;
-import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.ui.graphicGraph.GraphicElement;
 import org.graphstream.ui.geom.Point3;
 import org.graphstream.ui.swingViewer.*;
 import org.graphstream.ui.view.*;
@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 /**
  * This is the main application class for GraFlight
+ *
  * @author Aiman Josefsson
  * @since 2016-04-28
  * Modified by Christian Callergård and Rebecca Hellström Karlsson on 2016-05-13
@@ -33,6 +34,9 @@ public class Application {
 	private static JFrame frame;
 
     public static void main(String args[]) throws FileNotFoundException{
+		
+		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+		
 		// configures the JFrame
         frame = new JFrame("GraFlight");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -50,18 +54,11 @@ public class Application {
 
 		// shows the window
         frame.setIconImage(img);
-        frame.setVisible(true);
-        
+        frame.setVisible(true);        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setFocusable(true);
 
-		// Use the advanced renderer
-		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 		
-		// gets the json files: from argument or file dialog
 		File[] jsons = Filer.run(args);
-
-		
 		// Adds our menubar to the frame.
 		frame.setJMenuBar(new GMenuBar());
 		
@@ -131,21 +128,20 @@ public class Application {
 	public static Graphiel createGraph(File[] jsons) throws FileNotFoundException
 	{
 		// create the main graph object class
-		Graphiel g = ParseJSONf.parse(jsons[0]);
+		Graphiel gr = ParseJSONf.parse(jsons[0]);
 
 		// adds the patterns
-		g.addMatches(ParseJSONp.parsep(jsons[1]));
-		g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
-
+		gr.addMatches(ParseJSONp.parsep(jsons[1]));
+		gr.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
 		//adds antialiasing for a smoother look
-		 g.addAttribute("ui.quality");
-		 g.addAttribute("ui.antialias");
+		gr.addAttribute("ui.quality");
+		gr.addAttribute("ui.antialias");
 
 		// Add positioning
-		g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
+		gr.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(gr)));
 		//g.patternEdges();
 	
-		return g;
+		return gr;
 	}
 	
 	public static Viewer getViewer()
@@ -169,38 +165,49 @@ public class Application {
 	 */
 	private static class ZoomListener implements KeyListener{
 		private View view = null;
+        private Graphiel g;
 
-		/**
-		 * Constructor for ZoomListener
-		 * @param view the view in which to zoom
-		 */
-		public ZoomListener(View view){
-			this.view = view;
-		}
+        /**
+         * Constructor for ZoomListener
+         *
+         * @param view the view in which to zoom
+         */
+        public ZoomListener(View view) {
+            this.view = view;
+            this.g = getGraph();
+        }
 
-		/**
-		 * Every time the keys +, - or 0 are pressed the view will be zoomed accordingly
-		 * @param e
-		 */
+        /**
+         * Every time the keys +, - or 0 are pressed the view will be zoomed accordingly
+         *
+         * @param e
+         */
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+            double viewPercent = view.getCamera().getViewPercent();
+            switch(e.getKeyChar()) {
+                case '+':
+                    if (viewPercent > 0.3) {
+                        view.getCamera().setViewPercent(viewPercent * 0.9); // Zooms in, viewPercent: 0-1 (min-max)
+                    }
+                    break;
+                case '-':
+                    if (viewPercent < 1.5) {
+                        view.getCamera().setViewPercent(viewPercent / 0.9); // Zooms out
+                    }
+                    break;
+                case 'x':
+                    for (Node n : g.getNodeSet()) {
+
+                        n.setAttribute("x", (Object) n.getAttribute("initX"));
+                        n.setAttribute("y", (Object) n.getAttribute("initY"));
+                    }
+            }
+        }
+		
 		@Override
-		public void keyTyped(KeyEvent e) {
-			if(e.getKeyChar() == '+'){
-				double viewPercent = view.getCamera().getViewPercent();
-				if (viewPercent > 0.3) {
-					view.getCamera().setViewPercent(viewPercent * 0.9); // Zooms in, viewPercent: 0-1 (min-max)
-				}			} else if(e.getKeyChar() == '-') {
-				double viewPercent = view.getCamera().getViewPercent();
-				if (viewPercent < 1.5) {
-					view.getCamera().setViewPercent(viewPercent / 0.9); // Zooms out
-				}
-			} else if(e.getKeyChar() == '0'){
-						view.getCamera().resetView();
-
-			}
-		}
-
-		@Override
-		public void keyPressed(KeyEvent e) {
+		public void keyPressed(KeyEvent e){
 		}
 
 		@Override
@@ -246,49 +253,56 @@ public class Application {
 	}
 
 	/**
-	 * Listens to Drag-events
-	 * @author Aiman
-	 */
-	private static class DragListener implements MouseMotionListener{
-		private View view = null;
-		private double oldX = 0;
-		private double oldY = 0;
+     * Listens to Drag-events
+     *
+     * @author Aiman
+     */
+    private static class DragListener implements MouseMotionListener {
+        private View view = null;
+        private double oldX = 0;
+        private double oldY = 0;
 
 
-		/**
-		 * Constructor
-		 * @param view
-		 */
-		public DragListener(View view){
-			this.view = view;
-		}
+        /**
+         * Constructor
+         *
+         * @param view
+         */
+        public DragListener(View view) {
+            this.view = view;
+        }
 
-		/**
-		 * Decides how the dragging should work
-		 * @param e
-		 */
-		@Override
-		public void mouseDragged(MouseEvent e) {
-			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-			Point3 center = view.getCamera().getViewCenter();
+        /**
+         * Decides how the dragging should work
+         *
+         * @param e
+         */
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            GraphicElement currElement = view.findNodeOrSpriteAt(e.getX(), e.getY());
+            if (currElement == null) {
+                Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                Point3 center = view.getCamera().getViewCenter();
 
-			//center.moveTo((screenSize.getWidth()/2 - e.getX()), -screenSize.getHeight() + e.getY());
+                //center.moveTo((screenSize.getWidth()/2 - e.getX()), -screenSize.getHeight() + e.getY());
 
-			center.moveTo(center.x + (e.getX() - oldX)/4, center.y - (e.getY() - oldY)/4);
+                center.moveTo(center.x + (e.getX() - oldX) / 4, center.y - (e.getY() - oldY) / 4);
 
 
 			/*double dx = (-e.getX() + oldX) > 0 ? 1 : -1;
-			double dy = (-e.getY() + oldY) > 0 ? 1 : -1;
+            double dy = (-e.getY() + oldY) > 0 ? 1 : -1;
 			center.move(dx, dy);*/
 
-			//center.move(- e.getX() + oldX, e.getY() - oldY);
+                //center.move(- e.getX() + oldX, e.getY() - oldY);
 
-		}
+            }
 
-		@Override
-		public void mouseMoved(MouseEvent e) {
-			oldX = e.getX();
-			oldY = e.getY();
-		}
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            oldX = e.getX();
+            oldY = e.getY();
+        }
 	}
 }

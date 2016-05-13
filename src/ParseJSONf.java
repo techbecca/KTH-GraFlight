@@ -37,35 +37,33 @@ public class ParseJSONf {
 
         // get the name of the compiled function
         String functionName = jsonObject.getString("name");
-        //RawGraphDataF rawGraphDataF = new RawGraphDataF(functionName);
 
         // Creates the graph "functionName"
 		Graphiel gsgraph = new Graphiel(functionName);
 
         // Get the inputs of the compiled function
         JSONArray inputArray = jsonObject.getJSONArray("inputs");
-        int[] inputs = new int[inputArray.length()];
-        for(int i = 0; i < inputArray.length(); i++) {
+        int len = inputArray.length();
+        int[] inputs = new int[len];
+        for(int i = 0; i < len; i++) {
             inputs[i] = inputArray.getInt(i);
         }
+        gsgraph.setAttribute("inputs", inputs);
 
         // Gets the constraints of the function
-        ArrayList<String> constraints =  new ArrayList<>();
         JSONArray constraintsArray = jsonObject.getJSONObject("op-struct").getJSONArray("constraints");
-        for (int i = 0; i <constraintsArray.length(); i++) {
+        len = constraintsArray.length();
+        ArrayList constraints =  new ArrayList(len);
+        for (int i = 0; i < len; i++) {
             constraints.add(constraintsArray.getString(i));
         }
+        gsgraph.setAttribute("constraints", constraints);
 
         // Get entry-block-node of the function
         int entryBlockNode = jsonObject.getJSONObject("op-struct").getInt("entry-block-node");
-
-        // Sets attributes for the previously gotten information
-		gsgraph.setAttribute("inputs", inputs);
-        gsgraph.setAttribute("contraints", constraints);
         gsgraph.setAttribute("entry-block-node", entryBlockNode);
-        LayGraph.onMe(ParseJSONf.fromGStoJG(gsgraph));
 
-		// Iterates through the node array and adds them to the graph
+		    // Iterates through the node array and adds them to the graph
         for(int i = 0; i < nodes.length(); i++) {
             JSONArray jsonNode = nodes.getJSONArray(i);
             String id = String.valueOf( jsonNode.getInt(0) );
@@ -74,40 +72,28 @@ public class ParseJSONf {
 
             // Parses JSON-keys to Java-attributes in the Node object
             for(String s : type.keySet()) {
-            	if (type.get(s).equals(null)) {
-            		continue;
-            		}
+            	if (type.get(s).equals(null)) continue;
                 node.setAttribute(s, type.getString(s));
             }
 
             node.addAttribute("matches", 0);
 
             // Set graphical properties to the node
-            convertNode(node);
+            UImod.adduiAtt(node);
         }
 
         // Iterates through the edge array and adds them to the graph
-		for(int i = 0; i < edges.length(); i++) {
+		    for(int i = 0; i < edges.length(); i++) {
             JSONArray jsonEdge = edges.getJSONArray(i);
             String source = String.valueOf(jsonEdge.getInt(0));
             String target = String.valueOf(jsonEdge.getInt(1));
             String etype = jsonEdge.getJSONObject(2).getString("etype");
 
-			String name = source + "-" + target;
+			      String name = source + "-" + target;
             Edge edge = gsgraph.addEdge(name, source, target, true);
-			edge.setAttribute("etype", etype);
+			      edge.setAttribute("etype", etype);
 
-            // This will actually be removed later, but it works this way
-            convertEdge(edge);
-
-            // Assign that nodes are part of the control flow
-            if (etype.equals("ctrl")) {
-                gsgraph.getNode(source).setAttribute("ftype", "ctrlFlow");
-                gsgraph.getNode(target).setAttribute("ftype", "ctrlFlow");
-
-                convertNode(gsgraph.getNode(source));
-                convertNode(gsgraph.getNode(target));
-            }
+            UImod.adduiAtt(edge);
         }
         return gsgraph;
     }
@@ -127,7 +113,6 @@ public class ParseJSONf {
         for(Node n : gsgraph.getNodeSet()){
             directedGraph.addVertex(n.getId());
         }
-
         // Copies the edges over to the directed graph
         for(Edge e : gsgraph.getEdgeSet()){
             directedGraph.addEdge(e.getSourceNode().toString(), e.getTargetNode().toString());
@@ -157,25 +142,20 @@ public class ParseJSONf {
         // Continue building string depending on type
         String ntype = node.getAttribute("ntype");
 
-
         sb.append(ntype);
 
         if (ntype.equals("copy")) {
             label.append("cp");
             size.append("70gu");
-
         }
         else  if (ntype.equals("data")) {
             label.append("d");
             size.append("150gu");
-
         }
         else if (ntype.equals("phi")) {
             label.append("phi");
             size.append("70gu");
-
         }
-
 
         if(node.hasAttribute("block-name")) {
             String blockName = node.getAttribute("block-name");
@@ -185,14 +165,12 @@ public class ParseJSONf {
                 sb.replace(0,sb.length(), "entry");
                 label.replace(0,label.length(), id + ": Entry");
                 size.append("300gu");
-
             }
             else{
                 label.append(blockName);
                 size.append("150gu");
             }
         }
-
 
         if(node.hasAttribute("dtype")) {
             String dtype = node.getAttribute("dtype");
@@ -201,15 +179,8 @@ public class ParseJSONf {
 
         if(node.hasAttribute("op")) {
             String op = node.getAttribute("op");
-            //sb.append("," + op);
             label.append(op);
             size.append("75gu");
-
-        }
-
-        if(node.hasAttribute("origin")) {
-            String origin = node.getAttribute("origin");
-            //sb.append("," + origin);
         }
 
         if(node.hasAttribute("ftype")) {
@@ -243,9 +214,12 @@ public class ParseJSONf {
 
         Graph gsgraph = parse(json);
 
-        int lol = gsgraph.getAttribute("entry-block-node");
-        String lol2 = String.valueOf(lol);
-        System.out.println(lol2);
+        int entry = gsgraph.getAttribute("entry-block-node");
+        ArrayList inputs = gsgraph.getAttribute("inputs");
+        ArrayList cons = gsgraph.getAttribute("constraints");
 
+        System.out.println("entry: "+entry);
+        System.out.println("imputs: "+inputs.get(0));
+        System.out.println("cons: "+cons.get(0));
     }
 }
