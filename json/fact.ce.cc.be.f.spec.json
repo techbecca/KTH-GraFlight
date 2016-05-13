@@ -124,6 +124,7 @@
                             # variablen "n" i funktionen.
 							"dtype" : "i32",
 							"origin" : "%n"
+							"block-name" : "bb0"
 						}
 					}
 				],
