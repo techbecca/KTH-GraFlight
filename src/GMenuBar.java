@@ -3,6 +3,7 @@ import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyEvent;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
@@ -13,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 
 import org.graphstream.graph.Graph;
 import org.graphstream.ui.view.Viewer;
@@ -56,6 +58,7 @@ public class GMenuBar extends JMenuBar {
 		
 		//Close the application
 		JMenuItem close = new JMenuItem("Close");
+		close.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_Q, ActionEvent.CTRL_MASK ));
 		file.add(close);
 		close.addActionListener(new MenuActionListener(){
 			public void actionPerformed(ActionEvent e)
@@ -80,7 +83,6 @@ public class GMenuBar extends JMenuBar {
 		
 		JCheckBoxMenuItem statistics = new JCheckBoxMenuItem("Statistics", true);
 		viewmenu.add(statistics);
-
 		statistics.addActionListener(new MenuActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
@@ -101,6 +103,7 @@ public class GMenuBar extends JMenuBar {
 		add(layout);
 		
 		JMenuItem hir = new JMenuItem("Hierarchical");
+		layout.add(hir);
 		hir.addActionListener(new MenuActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
@@ -108,19 +111,18 @@ public class GMenuBar extends JMenuBar {
 				Application.getGraph().positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(Application.getGraph())));
 			}
 		});
-		layout.add(hir);
 		
 		JMenuItem comTree = new JMenuItem("Compact Tree");
 		layout.add(comTree);
 		
 		JMenuItem gsl = new JMenuItem("GraphStream: Force-based");
+		layout.add(gsl);
 		gsl.addActionListener(new MenuActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
 				Application.getViewer().enableAutoLayout();
 			}
 		});
-		layout.add(gsl);
 		
 		// Help menu starts here!
 		JMenu help = new JMenu("Help");
