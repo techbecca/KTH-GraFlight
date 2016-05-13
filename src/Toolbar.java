@@ -80,7 +80,7 @@ public class Toolbar {
 			public void actionPerformed(ActionEvent e)
 			{
 				InternalFrame internal = new InternalFrame();
-				internal.createFrame();
+				internal.createFrame(jframe, g, v);
 			}
 		});
 
