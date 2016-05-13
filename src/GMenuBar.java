@@ -30,11 +30,12 @@ public class GMenuBar extends JMenuBar {
 		
 		// Open a new graph
 		JMenuItem open = new JMenuItem("Open New File...");
+		open.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_O, ActionEvent.CTRL_MASK ));
 		file.add(open);
 		open.addActionListener(new MenuActionListener(){
 			public void actionPerformed(ActionEvent e)
 		    {
-					Application.loadNewGraph();
+				Application.loadNewGraph();
 		    }
 		});
 		
