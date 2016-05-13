@@ -83,6 +83,7 @@ public class GMenuBar extends JMenuBar {
 		});
 		
 		JCheckBoxMenuItem statistics = new JCheckBoxMenuItem("Statistics", true);
+		statistics.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_I, ActionEvent.CTRL_MASK ));
 		viewmenu.add(statistics);
 		statistics.addActionListener(new MenuActionListener(){
 			public void actionPerformed(ActionEvent e)
