@@ -40,7 +40,7 @@ public class ParseJSONf {
         String functionName = jsonObject.getString("name");
 
         // Creates the graph "functionName"
-		Graphiel gsgraph = new Graphiel(functionName);
+		    Graphiel gsgraph = new Graphiel(functionName);
 
         // Get the inputs of the compiled function
         JSONArray inputArray = jsonObject.getJSONArray("inputs");
@@ -64,7 +64,7 @@ public class ParseJSONf {
         int entryBlockNode = jsonObject.getJSONObject("op-struct").getInt("entry-block-node");
         gsgraph.setAttribute("entry-block-node", entryBlockNode);
 
-		// Iterates through the node array and adds them to the graph
+		    // Iterates through the node array and adds them to the graph
         for(int i = 0; i < nodes.length(); i++) {
             JSONArray jsonNode = nodes.getJSONArray(i);
             String id = String.valueOf( jsonNode.getInt(0) );
@@ -80,31 +80,21 @@ public class ParseJSONf {
             node.addAttribute("matches", 0);
 
             // Set graphical properties to the node
-            convertNode(node);
+            UImod.adduiAtt(node);
         }
 
         // Iterates through the edge array and adds them to the graph
-		for(int i = 0; i < edges.length(); i++) {
+		    for(int i = 0; i < edges.length(); i++) {
             JSONArray jsonEdge = edges.getJSONArray(i);
             String source = String.valueOf(jsonEdge.getInt(0));
             String target = String.valueOf(jsonEdge.getInt(1));
             String etype = jsonEdge.getJSONObject(2).getString("etype");
 
-			String name = source + "-" + target;
+			      String name = source + "-" + target;
             Edge edge = gsgraph.addEdge(name, source, target, true);
-			edge.setAttribute("etype", etype);
+			      edge.setAttribute("etype", etype);
 
-            // This will actually be removed later, but it works this way
-            convertEdge(edge);
-
-            // Assign that nodes are part of the control flow
-            if (etype.equals("ctrl")) {
-                gsgraph.getNode(source).setAttribute("ftype", "ctrlFlow");
-                gsgraph.getNode(target).setAttribute("ftype", "ctrlFlow");
-
-                convertNode(gsgraph.getNode(source));
-                convertNode(gsgraph.getNode(target));
-            }
+            UImod.adduiAtt(edge);
         }
         return gsgraph;
     }
@@ -124,7 +114,6 @@ public class ParseJSONf {
         for(Node n : gsgraph.getNodeSet()){
             directedGraph.addVertex(n.getId());
         }
-
         // Copies the edges over to the directed graph
         for(Edge e : gsgraph.getEdgeSet()){
             directedGraph.addEdge(e.getSourceNode().toString(), e.getTargetNode().toString());
@@ -191,14 +180,8 @@ public class ParseJSONf {
 
         if(node.hasAttribute("op")) {
             String op = node.getAttribute("op");
-            //sb.append("," + op);
             label.append(op);
             size.append("75gu");
-        }
-
-        if(node.hasAttribute("origin")) {
-            String origin = node.getAttribute("origin");
-            //sb.append("," + origin);
         }
 
         if(node.hasAttribute("ftype")) {
