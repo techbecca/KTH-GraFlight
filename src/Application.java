@@ -30,27 +30,27 @@ public class Application {
 
     public static void main(String args[]) throws FileNotFoundException {
 
-        // gets the json files: from argument or file dialog
-        File[] jsons = Filer.run(args);
+		// gets the json files: from argument or file dialog
+		File[] jsons = Filer.run(args);
 
-        // create the main graph object class
-        Graphiel g = ParseJSONf.parse(jsons[0]);
+		// create the main graph object class
+		Graphiel g = ParseJSONf.parse(jsons[0]);
 
-        // adds the patterns
-        g.addMatches(ParseJSONp.parsep(jsons[1]));
-        g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
-        //g.paintPatterns(matches);
-        //g.setAttribute("ui.antialiasing", true);
+		// adds the patterns
+		g.addMatches(ParseJSONp.parsep(jsons[1]));
+		g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
+		//g.paintPatterns(matches);
+		//g.setAttribute("ui.antialiasing", true);
 
-        //g.patternEdges();
+		//g.patternEdges();
 
-        //adds antialiasing for a smoother look
-        g.addAttribute("ui.quality");
-        g.addAttribute("ui.antialias");
+		//adds antialiasing for a smoother look
+		 g.addAttribute("ui.quality");
+		 g.addAttribute("ui.antialias");
 
-        // Add positioning
-        g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
-        //g.patternEdges();
+		// Add positioning
+		g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
+		g.patternEdges();
 
         // Check for nodes with no matches
         g.flagNoMatches();
@@ -65,28 +65,31 @@ public class Application {
         // configures the JFrame
         JFrame frame = new JFrame("GraFlight");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        screenSize.setSize(screenSize.getWidth(), screenSize.getHeight() * 0.9);
+        screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
         frame.setSize(screenSize);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		Toolbar tb = new Toolbar();
+	    tb.menu(frame, g, view);
 
         // Set JFrame Icon
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new File("teamlogo" + File.separatorChar + "icon_32.png"));
-        } catch (IOException e) {
-            System.out.println("Logo not found!");
-        }
+            img = ImageIO.read(new File("teamlogo" + File.separatorChar+"icon_32.png"));
+		} catch (IOException e) {
+			System.out.println("Logo not found!");
+		}
 
-        // shows the window
+		// shows the window
         frame.setIconImage(img);
         frame.setVisible(true);
         frame.add((Component) view);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
-        // prints some basic statistics
-        System.out.println(g.toString());
-        frame.setFocusable(true);
+		// prints some basic statistics
+		System.out.println(g.toString());
+		frame.setFocusable(true);
 
         view.setForeLayoutRenderer(new ForegroundRenderer(g));
 
@@ -300,6 +303,13 @@ public class Application {
         private double oldX = 0;
         private double oldY = 0;
 
+		/**
+		 * Constructor
+		 * @param view
+		 */
+		public DragListener(View view){
+			this.view = view;
+		}
 
         /**
          * Constructor
