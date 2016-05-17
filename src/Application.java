@@ -142,6 +142,7 @@ public class Application {
 		return gr;
 	}
 	
+	
 	public static Graphiel getGraph()
 	{
 		return graph;

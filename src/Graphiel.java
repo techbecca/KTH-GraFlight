@@ -101,7 +101,6 @@ class Graphiel extends MultiGraph
 						Edge edge = addEdge("i" + match.getInstructionId() + "p" + match.getPatternId() + "-" + match.getMatchId() + "-" + i + "-" + k, 
 								n1, n2, false);
 						edge.addAttribute("Edge-index", edgeindex);
-						System.out.println(edge.getId());
 						edge.setAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 70 + ");");
 					}
 				}
