@@ -57,7 +57,7 @@ public class GMenuBar extends JMenuBar {
 
 		//Reset to original graph
 		JMenuItem reset = new JMenuItem("Reset");
-		reset.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_T, ActionEvent.CTRL_MASK ));
+		reset.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_R, ActionEvent.CTRL_MASK ));
 		file.add(reset);
 		reset.addActionListener(new MenuActionListener(){
 			public void actionPerformed(ActionEvent e)
@@ -87,6 +87,7 @@ public class GMenuBar extends JMenuBar {
 		add(viewmenu);
 
 		JMenuItem toolbar = new JMenuItem("Toolbar");
+		toolbar.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_T, ActionEvent.CTRL_MASK ));
 		viewmenu.add(toolbar);
 		toolbar.addActionListener(new MenuActionListener(){
 			public void actionPerformed(ActionEvent e)
@@ -113,6 +114,7 @@ public class GMenuBar extends JMenuBar {
 		});
 
 		JCheckBoxMenuItem edges = new JCheckBoxMenuItem("Toggle Pattern Edges");
+		edges.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_E, ActionEvent.CTRL_MASK ));
 		viewmenu.add(edges);
 		edges.addActionListener(new MenuActionListener(){
 			
