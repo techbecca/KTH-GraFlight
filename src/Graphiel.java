@@ -1,4 +1,5 @@
 import org.graphstream.graph.Edge;
+import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.graph.Node;
 import org.graphstream.ui.spriteManager.SpriteManager;
@@ -11,8 +12,8 @@ import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Our very own special-purpose MultiGraph subclass.
- * @author Christian Callergård
+ *Our very own special-purpose MultiGraph subclass.
+ *@author Christian Callergård
  */
 class Graphiel extends MultiGraph
 {
@@ -83,6 +84,8 @@ class Graphiel extends MultiGraph
 		for (Match match : matches)
 		{
 			Color col = instructionColor(edgeindex, instructionIDs.size());
+			match.setMatchColor(col);
+
 			int[] nodes = match.getGraphNodes();
 
 			for(int i = 0; i < nodes.length - 1; i++){
@@ -93,8 +96,72 @@ class Graphiel extends MultiGraph
 					Node n2 = getNode(String.valueOf(nodes[k]));
 					if ( n1.hasEdgeBetween(n2) )
 					{
-						Edge edge = addEdge("i" + match.getInstructionId() + "p" + match.getPatternId() + edgeindex++ + "-" + i + "-" + k, n1, n2, false);
-						edge.setAttribute("ui.style", "size: 3px; fill-color: rgb(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() + ");");
+						edgeindex++;
+
+						Edge edge = addEdge("i" + match.getInstructionId() + "p" + match.getPatternId() + "-" + match.getMatchId() + "-" + i + "-" + k, 
+								n1, n2, false);
+						edge.addAttribute("Edge-index", edgeindex);
+						System.out.println(edge.getId());
+						edge.setAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 255 + ");");
+					}
+				}
+			}
+		}
+	}
+
+	/*
+	 * This method selects the colored edges in a match,
+	 * and thereby increases their opacity
+	 */
+	public void oneMatchAtATime(Match match)
+	{
+		int[] nodes = match.getGraphNodes();
+
+		for(int i = 0; i < nodes.length - 1; i++){
+			Node n1 = getNode(String.valueOf(nodes[i]));
+
+			for (int k = i + 1; k < nodes.length; k++)
+			{
+				Node n2 = getNode(String.valueOf(nodes[k]));
+				if ( n1.hasEdgeBetween(n2) )
+				{
+					Edge  edge = getEdge("i" + match.getInstructionId() + "p" + match.getPatternId() +"-" + match.getMatchId() + "-" + i + "-" + k);
+					Color col = match.getColor();
+
+					edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 255 + ");");
+
+				}
+			}
+		}	
+	}
+
+	/*
+	 * This method deselects the colored edges in a match,
+	 * and thereby lowers their opacity
+	 */
+	public void resetMatch(Match match)
+	{
+
+		{
+			int[] nodes = match.getGraphNodes();
+
+			for(int i = 0; i < nodes.length - 1; i++){
+				Node n1 = getNode(String.valueOf(nodes[i]));
+
+				for (int k = i + 1; k < nodes.length; k++)
+				{
+
+
+					Node n2 = getNode(String.valueOf(nodes[k]));
+					if ( n1.hasEdgeBetween(n2) )
+					{
+						Edge  edge = getEdge("i" + match.getInstructionId() + "p" + match.getPatternId() +"-" + match.getMatchId() + "-" + i + "-" + k);
+
+						Color col = match.getColor();
+
+
+						edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 100 + ");");
+
 					}
 				}
 			}
@@ -110,14 +177,6 @@ class Graphiel extends MultiGraph
 			if(match.getInstructionId() == inst) {
 				for(int node : match.getGraphNodes()) {
 					UImod.adduiC(getNode(String.valueOf(node)), "highlighted");
-					Node n1 = getNode(String.valueOf(node));
-					for(int node2 : match.getGraphNodes()){
-						Node n2 = getNode(String.valueOf(node2));
-						if(n1.hasEdgeToward(n2)){
-							Edge e = n1.getEdgeToward(n2);
-							UImod.adduiC(e, "highlighted");
-						}
-					}
 				}
 			}
 		}
@@ -194,8 +253,9 @@ class Graphiel extends MultiGraph
 		return col;
 	}
 	
-		public ArrayList <Match> filterByNode(Node n){
-		ArrayList <Match> filteredMatches = new ArrayList<>();
+	public ArrayList <Match> filterByNode(Node n){
+	
+	ArrayList <Match> filteredMatches = new ArrayList<>();
 		for(Match match : matches){
 			for(int GraphNode : match.getGraphNodes()){
 				if(GraphNode == Integer.parseInt(n.getId())){

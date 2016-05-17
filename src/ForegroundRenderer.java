@@ -11,7 +11,6 @@ import java.awt.Color;
  * Instance should be passed to the "setForeLayoutRenderer" method of the view.
  * @author Christian Callergård
  */
-
 class ForegroundRenderer implements LayerRenderer
 {
 	String infostring;

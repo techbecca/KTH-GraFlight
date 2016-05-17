@@ -21,6 +21,11 @@ edge.highlighted{
 	arrow-size: 12px;
 }
 
+edge.selected{
+	fill-color: green;
+	
+}
+
 node{
 	size-mode: dyn-size;
 	stroke-mode: plain;
@@ -30,7 +35,14 @@ node{
 	text-background-mode: rounded-box;
 	text-background-color: rgba(173, 216, 230, 200);
 }
-
+node.selected{
+	fill-color : green;
+	text-background-color: green;
+	
+}
+node.hovered{
+	stroke-width: 5px;
+}
 node.highlighted{
 	fill-color: red;
 }

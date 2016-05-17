@@ -1,7 +1,7 @@
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.MultiGraph;
-import org.graphstream.ui.graphicGraph.GraphicElement;
+import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.ui.geom.Point3;
 import org.graphstream.ui.graphicGraph.GraphicElement;
 import org.graphstream.ui.swingViewer.*;
@@ -25,7 +25,6 @@ import java.util.ArrayList;
  *
  * @author Aiman Josefsson
  * @since 2016-04-28
- * Modified by Christian Callergård and Rebecca Hellström Karlsson on 2016-05-13
  */
 public class Application {
 
@@ -74,7 +73,7 @@ public class Application {
 		}
 		
 		// Highlights patterns in order.
-		g.matchflash(750);
+		//g.matchflash(750);
     }
 	/**
 	 * Opens file chooser, loads a new graph from the chosen files and replaces the old view in the frame.
@@ -111,7 +110,7 @@ public class Application {
 		view.addKeyListener(new ZoomListener(view));
 		view.addMouseMotionListener(new DragListener(view));
 		view.addMouseWheelListener(new ScrollListener(view));
-		view.addMouseListener(new Clack(v,g));
+		view.addMouseListener(new Clack(view,g));
 		
 		frame.add(view);
 		frame.revalidate();
@@ -140,7 +139,7 @@ public class Application {
 
 		// Add positioning
 		gr.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(gr)));
-		//g.patternEdges();
+		gr.patternEdges();
 	
 		return gr;
 	}
@@ -186,6 +185,8 @@ public class Application {
 					//change back opacity of edges
 					g.resetMatch(lastMatch);
 
+
+
 					matchIndex = 0;
 					return;
 
@@ -222,30 +223,41 @@ public class Application {
 				UImod.adduiC(g.getNode(String.valueOf(graphNodes)), "selected");
 			}
 		}
+		
+		@Override
+		public void mousePressed(MouseEvent e)
+		{
+			
+		}
+		
+		@Override
+		public void mouseReleased(MouseEvent e)
+		{
+			
+		}
+		
+		@Override
+		public void mouseEntered(MouseEvent e)
+		{
+			
+		}
+		
+		@Override
+		public void mouseExited(MouseEvent e)
+		{
+			
+		}
 	}
 	
 	
-	public static Viewer getViewer()
-	{
-		return viewer;
-	}
-	public static Graphiel getGraph()
-	{
-		return g;
-	}
-	
-	public static DefaultView getView()
-	{
-		return v;
-	}
-	
-	/**
-	 * This class provides a key listener for the graph window, with which you can zoom.
-	 * @author Aiman Josefsson & Rebecca Hellström Karlsson
-	 * @since 2016-05-04
-	 */
-	private static class ZoomListener implements KeyListener{
-		private View view = null;
+    /**
+     * This class provides a key listener for the graph window, with which you can zoom.
+     *
+     * @author Aiman Josefsson & Rebecca Hellström Karlsson
+     * @since 2016-05-04
+     */
+    private static class ZoomListener implements KeyListener {
+        private View view = null;
         private Graphiel g;
 
         /**
@@ -279,7 +291,7 @@ public class Application {
                     }
                     break;
                 case 'x':
-                    for (Node n : g.getNodeSet()) {
+                    for (Node n : getGraph().getNodeSet()) {
 
                         n.setAttribute("x", (Object) n.getAttribute("initX"));
                         n.setAttribute("y", (Object) n.getAttribute("initY"));
@@ -389,5 +401,25 @@ public class Application {
             oldY = e.getY();
         }
     }
+	
+	public static Graphiel getGraph()
+	{
+		return g;
+	}
+	
+	public static JFrame getFrame()
+	{
+		return frame;
+	}
+	
+	public static DefaultView getView()
+	{
+		return v;
+	}
+	
+	public static Viewer getViewer()
+	{
+		return viewer;
+	}
+	
 }
-
