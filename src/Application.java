@@ -325,14 +325,6 @@ public class Application {
         private double oldX = 0;
         private double oldY = 0;
 
-		/**
-		 * Constructor
-		 * @param view
-		 */
-		public DragListener(View view){
-			this.view = view;
-		}
-
         /**
          * Constructor
          *
