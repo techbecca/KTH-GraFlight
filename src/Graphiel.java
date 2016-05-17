@@ -85,6 +85,8 @@ class Graphiel extends MultiGraph
 		for (Match match : matches)
 		{
 			Color col = instructionColor(edgeindex, instructionIDs.size());
+			match.setMatchColor(col);
+			
 			int[] nodes = match.getGraphNodes();
 
 			for(int i = 0; i < nodes.length - 1; i++){
@@ -103,6 +105,64 @@ class Graphiel extends MultiGraph
 		}
 	}
 
+		/*
+	 * This method selects the colored edges in a match,
+	 * and thereby increases their opacity
+	 */
+	public void oneMatchAtATime(Match match)
+	{
+		int[] nodes = match.getGraphNodes();
+
+		for(int i = 0; i < nodes.length - 1; i++){
+			Node n1 = getNode(String.valueOf(nodes[i]));
+
+			for (int k = i + 1; k < nodes.length; k++)
+			{
+				Node n2 = getNode(String.valueOf(nodes[k]));
+				if ( n1.hasEdgeBetween(n2) )
+				{
+					Edge  edge = getEdge("i" + match.getInstructionId() + "p" + match.getPatternId() +"-" + match.getMatchId() + "-" + i + "-" + k);
+					Color col = match.getColor();
+
+					edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 255 + ");");
+
+				}
+			}
+		}	
+	}
+	
+		/*
+	 * This method deselects the colored edges in a match,
+	 * and thereby lowers their opacity
+	 */
+	public void resetMatch(Match match)
+	{
+
+		{
+			int[] nodes = match.getGraphNodes();
+
+			for(int i = 0; i < nodes.length - 1; i++){
+				Node n1 = getNode(String.valueOf(nodes[i]));
+
+				for (int k = i + 1; k < nodes.length; k++)
+				{
+
+
+					Node n2 = getNode(String.valueOf(nodes[k]));
+					if ( n1.hasEdgeBetween(n2) )
+					{
+						Edge  edge = getEdge("i" + match.getInstructionId() + "p" + match.getPatternId() +"-" + match.getMatchId() + "-" + i + "-" + k);
+
+						Color col = match.getColor();
+
+						edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 100 + ");");
+
+					}
+				}
+			}
+		}
+	}
+	
 	/**
 	 * This method loops through the matches and colors the nodes that match an input instruction ID
 	 * @oaram inst the int representation of instruction ID
