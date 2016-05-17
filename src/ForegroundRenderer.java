@@ -2,6 +2,7 @@ import org.graphstream.ui.graphicGraph.GraphicGraph;
 import org.graphstream.ui.swingViewer.LayerRenderer;
 
 
+
 import java.awt.GraphicsEnvironment;
 import java.awt.Graphics2D;
 import java.awt.Font;
@@ -11,15 +12,18 @@ import java.awt.Color;
  * Renders stuff in the foreground of the graph.
  * Instance should be passed to the "setForeLayoutRenderer" method of the view.
  * @since 2016-05-10
- * @author Christian Callergård
+ * @author Christian CallergÃ¥rd
  */
 class ForegroundRenderer implements LayerRenderer
 {
 	String infostring;
 	
-	public ForegroundRenderer(Graphiel g)
+	public ForegroundRenderer(Graphiel g, boolean b)
 	{
-		infostring = g.toString();
+		if (b)
+			infostring = g.toString();
+		else
+			infostring = "";
 	}
 	
 	public ForegroundRenderer(Graphiel g, boolean b)

@@ -40,9 +40,6 @@ public class Application {
 		g.addMatches(ParseJSONp.parsep(jsons[1]));
 		g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
 		//g.paintPatterns(matches);
-		//g.setAttribute("ui.antialiasing", true);
-
-		//g.patternEdges();
 
 		//adds antialiasing for a smoother look
 		 g.addAttribute("ui.quality");
@@ -51,6 +48,9 @@ public class Application {
 		// Add positioning
 		g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
 		g.patternEdges();
+
+		// Use the advanced renderer
+		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
         // Check for nodes with no matches
         g.flagNoMatches();
@@ -67,7 +67,6 @@ public class Application {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
         frame.setSize(screenSize);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		Toolbar tb = new Toolbar();
 	    tb.menu(frame, g, view);
@@ -91,11 +90,9 @@ public class Application {
 		System.out.println(g.toString());
 		frame.setFocusable(true);
 
-        view.setForeLayoutRenderer(new ForegroundRenderer(g));
-
-        view.addKeyListener(new ZoomListener(view, g));
-        view.addMouseMotionListener(new DragListener(view));
-        view.addMouseWheelListener(new ScrollListener(view));
+		view.addKeyListener(new ZoomListener(view));
+		view.addMouseMotionListener(new DragListener(view));
+		view.addMouseWheelListener(new ScrollListener(view));
 		view.addMouseListener(new Clack(view, g));
 
         //g.matchlight(0);
@@ -104,7 +101,6 @@ public class Application {
         //g.matchflash(750);
     }
 
-	    
 	private static class Clack implements MouseListener{
 
 		private View view = null;
@@ -181,7 +177,6 @@ public class Application {
 
 			}
 
-
 			g.oneMatchAtATime(match);
 
 
@@ -190,10 +185,37 @@ public class Application {
 				UImod.adduiC(g.getNode(String.valueOf(graphNodes)), "selected");
 			}
 
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
 
 
 		}
-	
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+
+
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+
+		}
+
+	}	
 	
     /**
      * This class provides a key listener for the graph window, with which you can zoom.

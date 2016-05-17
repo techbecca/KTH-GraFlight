@@ -60,32 +60,6 @@ class Graphiel extends MultiGraph
 		return instructionIDs;
 	} 
 
-	/*
-	 * Adds match-id:s to nodes as attributes to
-	 * make it easier to highlight patterns 
-	 * when clicking a node
-	 */
-	//	public void addMatchIds(Graphiel g){
-	//		
-	//		for (Match match : matches){
-	//			for(int gn : match.getGraphNodes()){
-	//				g.getNode(gn).addAttribute("match-id", match.getMatchId());
-	//				
-	//			}
-	//			
-	//		}
-	//
-	//		
-	//		
-	////		Iterator<Node> nite = getNodeIterator();
-	////
-	////		while(nite.hasNext()) {
-	////			nite.next().addAttribute(arg0, arg1);
-	////		}
-	//		
-	//	}
-
-
 	/**
 	 * Adds colored edges according to the list of matches, one color per instruction.
 	 */
@@ -119,8 +93,6 @@ class Graphiel extends MultiGraph
 			}
 		}
 	}
-
-
 
 	/*
 	 * This method selects the colored edges in a match,
@@ -172,17 +144,14 @@ class Graphiel extends MultiGraph
 
 						Color col = match.getColor();
 
-						edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 200 + ");");
+
+						edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 100 + ");");
 
 					}
 				}
 			}
 		}
 	}
-
-
-
-
 
 	/**
 	 * This method loops through the matches and colors the nodes that match an input instruction ID
