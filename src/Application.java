@@ -163,6 +163,11 @@ public class Application {
 		public void mouseClicked(MouseEvent e) {
 
 			GraphicElement curElement = view.findNodeOrSpriteAt(e.getX(), e.getY());
+			
+				if(curElement == null){
+				return;
+			}
+			
 			Node n = g.getNode(curElement.toString());
 			ArrayList <Match> filteredMatches = g.filterByNode(n);
 			int max = filteredMatches.size()-1;
