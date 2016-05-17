@@ -8,6 +8,7 @@ import org.jgrapht.graph.DefaultEdge;
 
 import org.jgraph.JGraph;
 import com.jgraph.layout.JGraphFacade;
+import com.jgraph.layout.JGraphLayout;
 import com.jgraph.layout.tree.JGraphCompactTreeLayout;
 import com.jgraph.layout.tree.JGraphRadialTreeLayout;
 import com.jgraph.layout.hierarchical.JGraphHierarchicalLayout;
@@ -25,37 +26,41 @@ public class LayGraph {
      * @param g - Directed graph from the JGraph API
      * @return double[][] - 2D array containing vertex coordinates sorted by ID. X coordinate is [_][0], Y coordinate is [_][1].
      */
-    public static double[][] onMe(DirectedGraph<String, DefaultEdge> g) {
-
+    public static double[][] onMe(DirectedGraph<String, DefaultEdge> g, boolean compacttree) {
+		
+		JGraphLayout layout;
         // Create and configure the layout
-
-        /*final JGraphCompactTreeLayout hir = new JGraphCompactTreeLayout();
-		hir.setLevelDistance(10.0);
-		hir.setNodeDistance(10);
-		hir.setTreeDistance(40);
-		hir.setRouteTreeEdges(false);
-		hir.setPositionMultipleTrees(true);
-		hir.setOrientation(1);
-		*/
-
-
-
-		JGraphHierarchicalLayout hir = new JGraphHierarchicalLayout();
-		hir.setLayoutFromSinks(true);
-		hir.setDeterministic(true);
-		hir.setFineTuning(true);
-		hir.setInterRankCellSpacing(80.0);
-		hir.setIntraCellSpacing(110.0);
-
+		if (compacttree)
+		{
+			JGraphCompactTreeLayout l = new JGraphCompactTreeLayout();
+			l.setLevelDistance(10.0);
+			l.setNodeDistance(10);
+			l.setTreeDistance(40);
+			l.setRouteTreeEdges(false);
+			l.setPositionMultipleTrees(true);
+			l.setOrientation(1);
+			layout = l;
+		}
+		else
+		{
+			JGraphHierarchicalLayout l = new JGraphHierarchicalLayout();
+			l.setLayoutFromSinks(true);
+			l.setDeterministic(true);
+			l.setFineTuning(true);
+			l.setInterRankCellSpacing(80.0);
+			l.setIntraCellSpacing(110.0);	
+			layout = l;
+		}
+		
 
 		/*
-		JGraphRadialTreeLayout hir = new JGraphRadialTreeLayout();
-		hir.setAutoRadius(true);
-		hir.setMaxradiusx(40.0);
-		hir.setMaxradiusy(40.0);
-		hir.setMinradiusy(20.0);
-		hir.setMinradiusy(20.0);
-		hir.setAngleOffset(0.5);
+		JGraphRadialTreeLayout l = new JGraphRadialTreeLayout();
+		l.setAutoRadius(true);
+		l.setMaxradiusx(40.0);
+		l.setMaxradiusy(40.0);
+		l.setMinradiusy(20.0);
+		l.setMinradiusy(20.0);
+		l.setAngleOffset(0.5);
 		*/
 
         // create a visualization using JGraph, via the adapter
@@ -66,7 +71,7 @@ public class LayGraph {
 
         // Create a facade that forms the graph after the layout
         final JGraphFacade graphFacade = new JGraphFacade(jgraph);
-        hir.run(graphFacade);
+        layout.run(graphFacade);
 
         // Convert to array the vertices plucked out of the graphFacade
         return graphFacade.getLocations(graphFacade.getVertices().toArray());
@@ -84,7 +89,7 @@ public class LayGraph {
         // Get the JSON file parsed and inserted into the JUNG graph
         g = ParseJSONf.fromGStoJG(ParseJSONf.parse(json));
 
-        double[][] coor = onMe(g);
+        double[][] coor = onMe(g, false);
 
         for (int c = 0; c < coor.length; c++) {
             System.out.print(coor[c][0] + " ");

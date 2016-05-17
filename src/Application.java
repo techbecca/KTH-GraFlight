@@ -136,7 +136,7 @@ public class Application {
 		gr.addAttribute("ui.antialias");
 
 		// Add positioning
-		gr.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(gr)));
+		gr.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(gr), false));
 		//gr.patternEdges();
 	
 		return gr;

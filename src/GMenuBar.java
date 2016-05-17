@@ -182,12 +182,20 @@ public class GMenuBar extends JMenuBar {
 			public void actionPerformed(ActionEvent e)
 			{
 				Application.getViewer().disableAutoLayout();
-				Application.getGraph().positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(Application.getGraph())));
+				Application.getGraph().positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(Application.getGraph()), false));
 			}
 		});
 		
-		JMenuItem comTree = new JMenuItem("Compact Tree");
-		layout.add(comTree);
+		JMenuItem comtree = new JMenuItem("Compact Tree");
+		layout.add(comtree);
+		comtree.addActionListener(new MenuActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				Application.getViewer().disableAutoLayout();
+				Application.getGraph().positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(Application.getGraph()), true));
+			}
+		});
+		layout.add(comtree);
 		
 		JMenuItem gsl = new JMenuItem("GraphStream: Force-based");
 		layout.add(gsl);
