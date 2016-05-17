@@ -90,7 +90,8 @@ public class Application {
 		System.out.println(g.toString());
 		frame.setFocusable(true);
 
-		view.addKeyListener(new ZoomListener(view));
+		view.addKeyListener(new ZoomListener(view, g));
+
 		view.addMouseMotionListener(new DragListener(view));
 		view.addMouseWheelListener(new ScrollListener(view));
 		view.addMouseListener(new Clack(view, g));
