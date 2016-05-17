@@ -177,11 +177,17 @@ public class Application {
 					matchIndex++;
 				}
 
-				//				now we have iterated through all the matches of the current node
+//				now we have iterated through all the matches of the current node
 				else{
-					UImod.rmuiC(curElement, "selected");
-
 					Match lastMatch = filteredMatches.get(max);
+					
+//					dehighlights all the nodes in the last match
+					for(int number : lastMatch.getGraphNodes()){	
+						Node node = g.getNode(String.valueOf(number));
+						UImod.rmuiC(node, "selected");
+						
+					}
+					
 					//change back opacity of edges
 					g.resetMatch(lastMatch);
 
@@ -194,7 +200,6 @@ public class Application {
 			}
 
 //			reset all nodes
-
 			for(Node resetNode : g.getNodeSet()){
 				UImod.rmuiC(resetNode, "selected");
 
