@@ -36,33 +36,6 @@ public class UImod {
 			e.setAttribute("ui.class", priors);
 		}
 	}
-	
-	
-	/**
-	 * This method removes a key and all saved related values
-	 * @param e an element that contains attributes
-	 * @param attr the key represented as a String
-	 */
-	public static void eced(Element e, String attr) {
-//		String priors = e.getAttribute("ui.style");
-//		if(priors.contains(attr)) {
-//			Color col = instructionColor(edgeindex, g.instructionIDs.size());
-
-			
-//			priors = priors.replace(","+attr ,  "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 100 + ");" );
-			
-			
-//			edge.setAttribute("ui.style", );
-
-			
-			
-//			e.setAttribute("ui.class", priors);
-			
-			
-//		}
-	}
-	
-	
 
 	public static boolean checkuiC(Element e, String attr){
 		String classes = e.getAttribute("ui.class");
