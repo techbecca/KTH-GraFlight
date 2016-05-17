@@ -192,34 +192,25 @@ public class Application {
 
 				}
 			}
-			//
-			//			for(Edge resetEdge : g.getEdgeSet()){
-			//				UImod.rmuiC(resetEdge, "ui.style");
-			//			}
-			//
 
-
+//			reset all nodes
 
 			for(Node resetNode : g.getNodeSet()){
 				UImod.rmuiC(resetNode, "selected");
 
 			}
 
-
-			//			System.out.println(matchIndex);
-			Match match = filteredMatches.get(matchIndex);
-			if(matchIndex > 0){
-				Match oldMatch = filteredMatches.get(matchIndex - 1);
-				g.resetMatch(oldMatch);
-
+			//			reset all matches
+			for(Match match : g.matches){
+				g.resetMatch(match);
 			}
 
 
+			Match match = filteredMatches.get(matchIndex);
 			g.oneMatchAtATime(match);
 
 
 			for(int graphNodes : match.getGraphNodes()){
-				//				System.out.println(gnodes);
 				UImod.adduiC(g.getNode(String.valueOf(graphNodes)), "selected");
 			}
 		}
