@@ -76,7 +76,7 @@ public class Application {
     }
 	/**
 	 * Opens file chooser, loads a new graph from the chosen files and replaces the old view in the frame.
-	 * Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-13
+	 * Written by Christian CallergÃ¥rd and Rebecca HellstrÃ¶m Karlsson 2016-05-13
 	 */
 	public static void loadNewGraph()
 	{
@@ -97,7 +97,7 @@ public class Application {
 	 * Creates a Viewer on the graph adds a View with the appropriate listeners to our frame.
 	 * @param frame The frame to contain the new view.
 	 * @return The new view.
-	 * Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-13
+	 * Written by Christian CallergÃ¥rd and Rebecca HellstrÃ¶m Karlsson 2016-05-13
 	 */
 	public static DefaultView createView(JFrame frame)
 	{
@@ -121,7 +121,7 @@ public class Application {
 	 * @throws FileNotFoundException
 	 * @param jsons Array of f and p json files.
 	 * @return The new graph.
-	 * Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-13
+	 * Written by Christian CallergÃ¥rd and Rebecca HellstrÃ¶m Karlsson 2016-05-13
 	 */
 	public static Graphiel createGraph(File[] jsons) throws FileNotFoundException
 	{
@@ -137,7 +137,7 @@ public class Application {
 
 		// Add positioning
 		gr.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(gr)));
-		gr.patternEdges();
+		//gr.patternEdges();
 	
 		return gr;
 	}
