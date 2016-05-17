@@ -163,6 +163,7 @@ public class GMenuBar extends JMenuBar {
 		});
 
 		JMenuItem zoomin = new JMenuItem("Zoom In");
+		zoomin.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_ADD, ActionEvent.CTRL_MASK ));
 		viewmenu.add(zoomin);
 		zoomin.addActionListener(new MenuActionListener(){
 			public void actionPerformed(ActionEvent e)
@@ -172,6 +173,7 @@ public class GMenuBar extends JMenuBar {
 		});
 
 		JMenuItem zoomout = new JMenuItem("Zoom Out");
+		zoomout.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_SUBTRACT, ActionEvent.CTRL_MASK ));
 		viewmenu.add(zoomout);
 		zoomout.addActionListener(new MenuActionListener(){
 			public void actionPerformed(ActionEvent e)
