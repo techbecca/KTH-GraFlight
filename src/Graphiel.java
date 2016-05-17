@@ -216,6 +216,15 @@ class Graphiel extends MultiGraph
 			System.out.println("pattern: "+match.getInstructionId()+"."+match.getPatternId());
 		}
 	}
+	
+	public void noPositions()
+	{
+		for ( Node n : getEachNode() )
+		{
+			n.setAttribute("x", 0);
+			n.setAttribute("y", 0);
+		}
+	}
 
 	/**
 	 * Loads position information into the graph from a double[][]

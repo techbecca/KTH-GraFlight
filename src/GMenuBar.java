@@ -17,6 +17,7 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import org.graphstream.graph.Graph;
+import org.graphstream.graph.Node;
 import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.swingViewer.DefaultView;
 
@@ -55,7 +56,18 @@ public class GMenuBar extends JMenuBar {
 		
 		//Reset to original graph
 		JMenuItem reset = new JMenuItem("Reset");
+		reset.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_T, ActionEvent.CTRL_MASK ));
 		file.add(reset);
+		reset.addActionListener(new MenuActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				for (Node n : Application.getGraph().getNodeSet()) {
+
+					n.setAttribute("x", (Object) n.getAttribute("initX"));
+					n.setAttribute("y", (Object) n.getAttribute("initY"));
+				}
+			}
+		});
 		
 		//Close the application
 		JMenuItem close = new JMenuItem("Close");
@@ -96,6 +108,24 @@ public class GMenuBar extends JMenuBar {
 					statistics.setSelected(true);
 					Application.getView().setForeLayoutRenderer( new ForegroundRenderer(true) );
 				}
+			}
+		});
+		
+		JMenuItem zoomin = new JMenuItem("Zoom In");
+		viewmenu.add(zoomin);
+		zoomin.addActionListener(new MenuActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				Navigation.zoomIn();
+			}
+		});
+		
+		JMenuItem zoomout = new JMenuItem("Zoom Out");
+		viewmenu.add(zoomout);
+		zoomout.addActionListener(new MenuActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				Navigation.zoomOut();
 			}
 		});
 		
