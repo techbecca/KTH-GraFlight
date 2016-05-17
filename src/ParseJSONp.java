@@ -38,6 +38,7 @@ public class ParseJSONp {
 
 			int InstrId = Pattern.getJSONObject(i).getInt("instr-id");
 			int PatternId = Pattern.getJSONObject(i).getInt("pattern-id");
+			int MatchId = Pattern.getJSONObject(i).getInt("match-id");
 
 
 			for(int k = 0; k < NodeToNodeMatches.length(); k++){
@@ -47,7 +48,7 @@ public class ParseJSONp {
 
 			}
 
-			matchList.add(new Match(GraphNodes, PatternId, InstrId));
+			matchList.add(new Match(GraphNodes, PatternId, InstrId, MatchId));
 		}
 
 		return matchList;

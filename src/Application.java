@@ -3,6 +3,7 @@ import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.ui.graphicGraph.GraphicElement;
 import org.graphstream.ui.geom.Point3;
+import org.graphstream.ui.graphicGraph.GraphicElement;
 import org.graphstream.ui.swingViewer.*;
 import org.graphstream.ui.view.*;
 
@@ -27,7 +28,7 @@ import java.util.ArrayList;
  * Modified by Christian Callergård and Rebecca Hellström Karlsson on 2016-05-13
  */
 public class Application {
-	
+
 	private static Graphiel g;
 	private static DefaultView v;
 	private static Viewer viewer;
@@ -74,8 +75,7 @@ public class Application {
 		
 		// Highlights patterns in order.
 		g.matchflash(750);
-	}
-	
+    }
 	/**
 	 * Opens file chooser, loads a new graph from the chosen files and replaces the old view in the frame.
 	 * Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-13
@@ -111,13 +111,14 @@ public class Application {
 		view.addKeyListener(new ZoomListener(view));
 		view.addMouseMotionListener(new DragListener(view));
 		view.addMouseWheelListener(new ScrollListener(view));
+		view.addMouseListener(new Clack(v,g));
 		
 		frame.add(view);
 		frame.revalidate();
 		
 		return view;
 	}
-
+	
 	/**
 	 * Creates the graph from the file paths returned from Filer, with stylesheet and layout.
 	 * @throws FileNotFoundException
@@ -143,6 +144,86 @@ public class Application {
 	
 		return gr;
 	}
+	private static class Clack implements MouseListener{
+
+		private View view = null;
+		private Graphiel g = null;
+		private int matchIndex = 0;
+
+		/**
+		 * Constructor for ZoomListener
+		 * @param view the view in which to zoom
+		 */
+		public Clack(View view, Graphiel g){
+			this.view = view; 
+			this.g = g;
+		}
+
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+
+			GraphicElement curElement = view.findNodeOrSpriteAt(e.getX(), e.getY());
+			Node n = g.getNode(curElement.toString());
+			ArrayList <Match> filteredMatches = g.filterByNode(n);
+			int max = filteredMatches.size()-1;
+
+
+
+			if(!UImod.checkuiC(n, "selected")){
+				matchIndex = 0;
+				UImod.adduiC(g.getNode(String.valueOf(n)), "selected");
+			}else{
+				if(matchIndex < max){
+					matchIndex++;
+				}
+
+				//				now we have iterated through all the matches of the current node
+				else{
+					UImod.rmuiC(curElement, "selected");
+
+					Match lastMatch = filteredMatches.get(max);
+					//change back opacity of edges
+					g.resetMatch(lastMatch);
+
+					matchIndex = 0;
+					return;
+
+				}
+			}
+			//
+			//			for(Edge resetEdge : g.getEdgeSet()){
+			//				UImod.rmuiC(resetEdge, "ui.style");
+			//			}
+			//
+
+
+
+			for(Node resetNode : g.getNodeSet()){
+				UImod.rmuiC(resetNode, "selected");
+
+			}
+
+
+			//			System.out.println(matchIndex);
+			Match match = filteredMatches.get(matchIndex);
+			if(matchIndex > 0){
+				Match oldMatch = filteredMatches.get(matchIndex - 1);
+				g.resetMatch(oldMatch);
+
+			}
+
+
+			g.oneMatchAtATime(match);
+
+
+			for(int graphNodes : match.getGraphNodes()){
+				//				System.out.println(gnodes);
+				UImod.adduiC(g.getNode(String.valueOf(graphNodes)), "selected");
+			}
+		}
+	}
+	
 	
 	public static Viewer getViewer()
 	{
@@ -205,54 +286,57 @@ public class Application {
                     }
             }
         }
-		
-		@Override
-		public void keyPressed(KeyEvent e){
-		}
 
-		@Override
-		public void keyReleased(KeyEvent e) {
-		}
-	}
+        @Override
+        public void keyPressed(KeyEvent e) {
+        }
 
-	/**
-	 * Listens to the scrollwheel for zooming
-	 * @author Aiman
-	 */
-	private static class ScrollListener implements MouseWheelListener{
-		private View view = null;
+        @Override
+        public void keyReleased(KeyEvent e) {
+        }
+    }
 
-		/**
-		 * Constructor for ZoomListener
-		 * @param view the view in which to zoom
-		 */
-		public ScrollListener(View view){
-			this.view = view;
-		}
+    /**
+     * Listens to the scrollwheel for zooming
+     *
+     * @author Aiman
+     */
+    private static class ScrollListener implements MouseWheelListener {
+        private View view = null;
 
-		/**
-		 * The same code as in ZoomListener but with the mouse instead of + and -
-		 * @param e
-		 */
-		@Override
-		public void mouseWheelMoved(MouseWheelEvent e) {
+        /**
+         * Constructor for ZoomListener
+         *
+         * @param view the view in which to zoom
+         */
+        public ScrollListener(View view) {
+            this.view = view;
+        }
 
-			if(e.getWheelRotation() < 0){
-				double viewPercent = view.getCamera().getViewPercent();
-				if (viewPercent > 0.3) {
-					view.getCamera().setViewPercent(viewPercent * 0.9); // Zooms in, viewPercent: 0-1 (min-max)
-				}
-			}else if(e.getWheelRotation() > 0){
-				double viewPercent = view.getCamera().getViewPercent();
-				if (viewPercent < 1.5) {
-					view.getCamera().setViewPercent(viewPercent / 0.9); // Zooms out
-				}
-			}
+        /**
+         * The same code as in ZoomListener but with the mouse instead of + and -
+         *
+         * @param e
+         */
+        @Override
+        public void mouseWheelMoved(MouseWheelEvent e) {
 
-		}
-	}
+            if (e.getWheelRotation() < 0) {
+                double viewPercent = view.getCamera().getViewPercent();
+                if (viewPercent > 0.3) {
+                    view.getCamera().setViewPercent(viewPercent * 0.9); // Zooms in, viewPercent: 0-1 (min-max)
+                }
+            } else if (e.getWheelRotation() > 0) {
+                double viewPercent = view.getCamera().getViewPercent();
+                if (viewPercent < 1.5) {
+                    view.getCamera().setViewPercent(viewPercent / 0.9); // Zooms out
+                }
+            }
 
-	/**
+        }
+    }
+
+    /**
      * Listens to Drag-events
      *
      * @author Aiman
@@ -304,5 +388,6 @@ public class Application {
             oldX = e.getX();
             oldY = e.getY();
         }
-	}
+    }
 }
+
