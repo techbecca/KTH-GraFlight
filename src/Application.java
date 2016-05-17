@@ -28,48 +28,21 @@ import java.util.ArrayList;
  */
 public class Application {
 
-    public static void main(String args[]) throws FileNotFoundException {
+	private static Graphiel g;
+	private static DefaultView v;
+	private static Viewer viewer;
+	private static JFrame frame;
 
-		// gets the json files: from argument or file dialog
-		File[] jsons = Filer.run(args);
-
-		// create the main graph object class
-		Graphiel g = ParseJSONf.parse(jsons[0]);
-
-		// adds the patterns
-		g.addMatches(ParseJSONp.parsep(jsons[1]));
-		g.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
-		//g.paintPatterns(matches);
-
-		//adds antialiasing for a smoother look
-		 g.addAttribute("ui.quality");
-		 g.addAttribute("ui.antialias");
-
-		// Add positioning
-		g.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(g)));
-		g.patternEdges();
-
-		// Use the advanced renderer
+    public static void main(String args[]) throws FileNotFoundException{
+		
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
-
-        // Check for nodes with no matches
-        g.flagNoMatches();
-
-        // Use the advanced renderer
-        System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
-
-        // Display without default layout (false)
-        Viewer viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-        DefaultView view = (DefaultView) viewer.addDefaultView(false);
-
-        // configures the JFrame
-        JFrame frame = new JFrame("GraFlight");
+		
+		// configures the JFrame
+        frame = new JFrame("GraFlight");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         screenSize.setSize(screenSize.getWidth(), screenSize.getHeight()*0.9);
         frame.setSize(screenSize);
-		
-		Toolbar tb = new Toolbar();
-	    tb.menu(frame, g, view);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Set JFrame Icon
         BufferedImage img = null;
@@ -81,27 +54,95 @@ public class Application {
 
 		// shows the window
         frame.setIconImage(img);
-        frame.setVisible(true);
-        frame.add((Component) view);
+        frame.setVisible(true);        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		
+		File[] jsons = Filer.run(args);
+		// Adds our menubar to the frame.
+		frame.setJMenuBar(new GMenuBar());
+		
+		try {
+			// Create graph and view in the frame.
+			g = createGraph(jsons);
+			v = createView(frame);
+		} catch (FileNotFoundException ex)
+		{
+			System.err.println( ex );
+			System.exit(-1);
+		}
+		
+		// Highlights patterns in order.
+		//g.matchflash(750);
+    }
+	/**
+	 * Opens file chooser, loads a new graph from the chosen files and replaces the old view in the frame.
+	 * Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-13
+	 */
+	public static void loadNewGraph()
+	{
+		try {
+			File[] jsons = Filer.choose();
+			g = createGraph(jsons);
+			frame.remove(v);
+			v = createView(frame);
+		} catch (FileNotFoundException ex)
+		{
+			System.err.println( ex );
+			System.exit(-1);
+			//loadNewGraph();
+		}
+	}
+	
+	/**
+	 * Creates a Viewer on the graph adds a View with the appropriate listeners to our frame.
+	 * @param frame The frame to contain the new view.
+	 * @return The new view.
+	 * Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-13
+	 */
+	public static DefaultView createView(JFrame frame)
+	{
+        viewer = new Viewer(g, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+        DefaultView view = (DefaultView) viewer.addDefaultView(false); // false = not using default GraphStream layout
+		
+		view.setForeLayoutRenderer( new ForegroundRenderer(true) );
 
-		// prints some basic statistics
-		System.out.println(g.toString());
-		frame.setFocusable(true);
-
-		view.addKeyListener(new ZoomListener(view, g));
-
+		view.addKeyListener(new ZoomListener(view));
 		view.addMouseMotionListener(new DragListener(view));
 		view.addMouseWheelListener(new ScrollListener(view));
-		view.addMouseListener(new Clack(view, g));
+		view.addMouseListener(new Clack(view,g));
+		
+		frame.add(view);
+		frame.revalidate();
+		
+		return view;
+	}
+	
+	/**
+	 * Creates the graph from the file paths returned from Filer, with stylesheet and layout.
+	 * @throws FileNotFoundException
+	 * @param jsons Array of f and p json files.
+	 * @return The new graph.
+	 * Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-13
+	 */
+	public static Graphiel createGraph(File[] jsons) throws FileNotFoundException
+	{
+		// create the main graph object class
+		Graphiel gr = ParseJSONf.parse(jsons[0]);
 
-        //g.matchlight(0);
-        //g.matchlight(2);
-        //g.matchdark();
-        //g.matchflash(750);
-    }
+		// adds the patterns
+		gr.addMatches(ParseJSONp.parsep(jsons[1]));
+		gr.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
+		//adds antialiasing for a smoother look
+		gr.addAttribute("ui.quality");
+		gr.addAttribute("ui.antialias");
 
+		// Add positioning
+		gr.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(gr)));
+		gr.patternEdges();
+	
+		return gr;
+	}
 	private static class Clack implements MouseListener{
 
 		private View view = null;
@@ -120,11 +161,6 @@ public class Application {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-
-
-
 
 			GraphicElement curElement = view.findNodeOrSpriteAt(e.getX(), e.getY());
 			Node n = g.getNode(curElement.toString());
@@ -178,6 +214,7 @@ public class Application {
 
 			}
 
+
 			g.oneMatchAtATime(match);
 
 
@@ -185,38 +222,33 @@ public class Application {
 				//				System.out.println(gnodes);
 				UImod.adduiC(g.getNode(String.valueOf(graphNodes)), "selected");
 			}
-
 		}
-
+		
 		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-
+		public void mousePressed(MouseEvent e)
+		{
+			
 		}
-
+		
 		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-
+		public void mouseReleased(MouseEvent e)
+		{
+			
 		}
-
+		
 		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-
-
+		public void mouseEntered(MouseEvent e)
+		{
+			
 		}
-
+		
 		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-
+		public void mouseExited(MouseEvent e)
+		{
+			
 		}
-
-	}	
+	}
+	
 	
     /**
      * This class provides a key listener for the graph window, with which you can zoom.
@@ -233,9 +265,9 @@ public class Application {
          *
          * @param view the view in which to zoom
          */
-        public ZoomListener(View view, Graphiel g) {
+        public ZoomListener(View view) {
             this.view = view;
-            this.g = g;
+            this.g = getGraph();
         }
 
         /**
@@ -259,7 +291,7 @@ public class Application {
                     }
                     break;
                 case 'x':
-                    for (Node n : g.getNodeSet()) {
+                    for (Node n : getGraph().getNodeSet()) {
 
                         n.setAttribute("x", (Object) n.getAttribute("initX"));
                         n.setAttribute("y", (Object) n.getAttribute("initY"));
@@ -326,6 +358,7 @@ public class Application {
         private double oldX = 0;
         private double oldY = 0;
 
+
         /**
          * Constructor
          *
@@ -368,4 +401,25 @@ public class Application {
             oldY = e.getY();
         }
     }
+	
+	public static Graphiel getGraph()
+	{
+		return g;
+	}
+	
+	public static JFrame getFrame()
+	{
+		return frame;
+	}
+	
+	public static DefaultView getView()
+	{
+		return v;
+	}
+	
+	public static Viewer getViewer()
+	{
+		return viewer;
+	}
+	
 }

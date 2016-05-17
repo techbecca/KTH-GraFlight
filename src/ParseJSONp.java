@@ -40,6 +40,7 @@ public class ParseJSONp {
 			int PatternId = Pattern.getJSONObject(i).getInt("pattern-id");
 			int MatchId = Pattern.getJSONObject(i).getInt("match-id");
 
+
 			for(int k = 0; k < NodeToNodeMatches.length(); k++){
 
 				JSONArray NodeToNodeMatch = NodeToNodeMatches.getJSONArray(k);

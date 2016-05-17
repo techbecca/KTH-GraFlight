@@ -3,6 +3,7 @@ import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.graph.Node;
 import org.graphstream.ui.spriteManager.SpriteManager;
+import org.graphstream.ui.spriteManager.Sprite;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -12,9 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  *Our very own special-purpose MultiGraph subclass.
- *@author Christian Callerg�rd
- *@version 1.0
- *@since 2016-05-04
+ *@author Christian Callergård
  */
 class Graphiel extends MultiGraph
 {
@@ -31,7 +30,6 @@ class Graphiel extends MultiGraph
 
 	public void addMatches(List<Match> matches)
 	{
-
 		this.matches = matches;
 		ArrayList<Integer> ids = new ArrayList<>();
 		for (Match match : matches)
@@ -58,11 +56,28 @@ class Graphiel extends MultiGraph
 	public List<Integer> getInstructionIds()
 	{
 		return instructionIDs;
-	} 
+	}
 
 	/**
-	 * Adds colored edges according to the list of matches, one color per instruction.
+	 * Finds nodes in the graph that has no matches and marks them.
+	 *
+	 * Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-12
 	 */
+	public void flagNoMatches () {
+		for (Node n: getEachNode()){
+			if ((int) n.getAttribute("matches")==0){
+				//UImod.adduiC(n,"noMatch");
+				Sprite s = sman.addSprite("nomatch" + n.getId());
+				UImod.adduiC(s, "noMatch");
+				s.attachToNode( n.getId() );
+				s.setPosition(50, 0, 90);
+			}
+		}
+	}
+
+	/**
+	* Adds colored edges according to the list of matches, one color per instruction.
+	*/
 	public void patternEdges()
 	{
 		int edgeindex = 0;
@@ -167,7 +182,6 @@ class Graphiel extends MultiGraph
 		}
 	}
 
-
 	/**
 	 * This method loops through and removes the highlights from nodes
 	 */
@@ -181,7 +195,7 @@ class Graphiel extends MultiGraph
 	}
 
 	/**
-	 * This method loops through the nodes and highlights them, then de-highlihgts them
+	 * This method loops through the nodes and highlights them, then de-highlights them
 	 */
 	public void matchflash(int delay) {
 
@@ -203,19 +217,6 @@ class Graphiel extends MultiGraph
 		}
 	}
 
-
-	/* public void paintPatterns(ArrayList<Match> matches){
-		for(Match match : matches){
-			int[] nodes = match.getGraphNodes();
-			for(int i = 0; i < nodes.length; i++){
-				Node n = getNode(String.valueOf(nodes[i]));
-				n.setAttribute("ui.class", n.getAttribute("ui.class") + ", " + "instruction" + match.getInstructionId());
-				Color col = instructionColor(match.getInstructionId());
-				n.setAttribute("ui.style", "stroke-color: rgb(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() + ");");
-			}
-		}
-	}*/
-
 	/**
 	 * Loads position information into the graph from a double[][]
 	 * where [i][0] and [i][1] are the x and y coordinates of the i:th node.
@@ -233,7 +234,6 @@ class Graphiel extends MultiGraph
 		}
 	}
 
-
 	@Override
 	public String toString()
 	{
@@ -245,100 +245,6 @@ class Graphiel extends MultiGraph
 		sb.append("# Matches: ").append(matches.size()).append('\n');
 
 		return sb.toString();
-	}
-
-	/**
-	 * Converts type information in a node from attributes to style classes
-	 * @param node
-	 */
-	public static void convertNode(Node node){
-		StringBuilder sb = new StringBuilder();
-		StringBuilder label = new StringBuilder();
-		StringBuilder size = new StringBuilder();
-
-		// Shows node ID as text on the graph
-		String id = node.getAttribute("id");
-		label.append(id + ": ");
-
-		// Continue building string depending on type
-		String ntype = node.getAttribute("ntype");
-
-
-		sb.append(ntype);
-
-		if (ntype.equals("copy")){
-			label.append("cp");
-			size.append("70gu");
-
-		}
-		else  if (ntype.equals("data")){
-			label.append("d");
-			size.append("150gu");
-
-		}
-		else if (ntype.equals("phi")){
-			label.append("phi");
-			size.append("70gu");
-
-		}
-
-
-		if(node.hasAttribute("block-name")){
-			String blockName = node.getAttribute("block-name");
-			sb.append("," + blockName);
-			// Mark the entry node
-			if(node.getAttribute("block-name").equals("entry")){
-				sb.replace(0,sb.length(), "entry");
-				label.replace(0,label.length(), id + ": Entry");
-				size.append("300gu");
-
-			}
-			else{
-				label.append(blockName);
-				size.append("150gu");
-			}
-		}
-
-
-		if(node.hasAttribute("dtype")){
-			String dtype = node.getAttribute("dtype");
-			sb.append("," + dtype);
-		}
-
-		if(node.hasAttribute("op")){
-			String op = node.getAttribute("op");
-			//sb.append("," + op);
-			label.append(op);
-			size.append("75gu");
-
-		}
-
-		//		if(node.hasAttribute("origin")){
-		//			String origin = node.getAttribute("origin");
-		//sb.append("," + origin);
-		//		}
-
-		if(node.hasAttribute("ftype")){
-			String ftype = node.getAttribute("ftype");
-			sb.append("," + ftype);
-		}
-
-		// Set graphical properties to the node
-		node.addAttribute("ui.class", sb.toString());
-		// Set text to be shown on the node
-		node.setAttribute("ui.label", label.toString());
-		node.addAttribute("ui.size", size);
-
-
-	}
-
-	/**
-	 * Assigns style class to an edge based on its edge type attribute
-	 * @param edge
-	 */
-	public static void convertEdge(Edge edge){
-		String etype = edge.getAttribute("etype");
-		edge.addAttribute("ui.class", etype);
 	}
 
 	private static Color instructionColor(int id, int length){
