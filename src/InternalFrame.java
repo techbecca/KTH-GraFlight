@@ -64,15 +64,12 @@ public class InternalFrame {
 
 		//An ArrayList containing all matches in the graph
 		List<Match> matches = graph.matches;
-		
-		//An ArrayList containing all nodes for a single match
-		ArrayList<Node> matchnodes = new ArrayList();
 
 		//Loop through every match in the graph
 		for (Match currentMatch : matches) {
-
-			//For each loop, clear the matchnodes array so that it only contains nodes for one match each loop
-			matchnodes.clear();
+		
+			//An ArrayList containing all nodes for a single match
+			ArrayList<Node> matchnodes = new ArrayList();
 
 			//Loop through every node in the current match
 			for(int node : currentMatch.getGraphNodes()){
