@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * This is the main application class for GraFlight
@@ -32,6 +33,7 @@ public class Application {
 	private static DefaultView v;
 	private static Viewer viewer;
 	private static JFrame frame;
+	private static Stack<LastMoved> nodeChanges;
 
     public static void main(String args[]) throws FileNotFoundException{
 		
@@ -66,6 +68,8 @@ public class Application {
 			// Create graph and view in the frame.
 			g = createGraph(jsons);
 			v = createView(frame);
+			// Create a stack to backtrack node changes
+			nodeChanges = new Stack<LastMoved>();
 		} catch (FileNotFoundException ex)
 		{
 			System.err.println( ex );
@@ -86,6 +90,8 @@ public class Application {
 			g = createGraph(jsons);
 			frame.remove(v);
 			v = createView(frame);
+			// Create a stack to backtrack node changes
+			nodeChanges = new Stack<LastMoved>();
 		} catch (FileNotFoundException ex)
 		{
 			System.err.println( ex );
@@ -163,10 +169,10 @@ public class Application {
 		public void mouseClicked(MouseEvent e) {
 
 			GraphicElement curElement = view.findNodeOrSpriteAt(e.getX(), e.getY());
+			if (curElement==null) return;
 			Node n = g.getNode(curElement.toString());
 			ArrayList <Match> filteredMatches = g.filterByNode(n);
 			int max = filteredMatches.size()-1;
-
 
 
 			if(!UImod.checkuiC(n, "selected")){
@@ -223,12 +229,28 @@ public class Application {
 		@Override
 		public void mousePressed(MouseEvent e)
 		{
-			
+			GraphicElement curElement = view.findNodeOrSpriteAt(e.getX(), e.getY());
+			if (curElement==null) return;
+			Node n = g.getNode(curElement.toString());
+
+			// Save info for last element moved
+			LastMoved lastMoved = new LastMoved(n);
+			nodeChanges.push(lastMoved);
+
 		}
 		
 		@Override
 		public void mouseReleased(MouseEvent e)
 		{
+			GraphicElement curElement = view.findNodeOrSpriteAt(e.getX(), e.getY());
+			if (curElement==null) return;
+			Node n = g.getNode(curElement.toString());
+
+			// Save info for last element moved
+			LastMoved lastMoved = new LastMoved(n);
+			if (nodeChanges.peek().equals(lastMoved)){
+				nodeChanges.pop();
+			}
 			
 		}
 		
@@ -292,6 +314,17 @@ public class Application {
                         n.setAttribute("x", (Object) n.getAttribute("initX"));
                         n.setAttribute("y", (Object) n.getAttribute("initY"));
                     }
+					break;
+				case 'z':
+					if (!nodeChanges.empty()){
+						LastMoved lastMoved = nodeChanges.pop();
+
+						Node n = lastMoved.getNode();
+						n.setAttribute("x", lastMoved.getX());
+						n.setAttribute("y", lastMoved.getY());
+						//frame.revalidate();
+
+					}
             }
         }
 
@@ -397,6 +430,31 @@ public class Application {
             oldY = e.getY();
         }
     }
+
+	private static class LastMoved {
+		private Node node;
+		private double x;
+		private double y;
+
+		public LastMoved( Node node) {
+			this.node = node;
+			this.x = node.getAttribute("x");
+			this.y = node.getAttribute("y");
+		}
+
+
+		public Node getNode() {
+			return node;
+		}
+
+		public double getX() {
+			return x;
+		}
+
+		public double getY() {
+			return y;
+		}
+	}
 	
 	public static Graphiel getGraph()
 	{
@@ -417,5 +475,6 @@ public class Application {
 	{
 		return viewer;
 	}
-	
+
+
 }
