@@ -28,7 +28,7 @@ public class ParseJSONf {
     public static Graphiel parse(File file) throws FileNotFoundException {
     	// Read an entire json file
 		String json = new Scanner(file).useDelimiter("\\A").next();
-		
+
 		// Creates a handy object from the String
         JSONObject jsonObject = new JSONObject(json);
         JSONObject graph = jsonObject.getJSONObject("op-struct").getJSONObject("graph");
@@ -79,7 +79,7 @@ public class ParseJSONf {
             node.addAttribute("matches", 0);
 
             // Set graphical properties to the node
-            convertNode(node);
+			UImod.adduiAtt(node);
         }
 
         // Iterates through the edge array and adds them to the graph
@@ -94,16 +94,9 @@ public class ParseJSONf {
 			edge.setAttribute("etype", etype);
 
             // This will actually be removed later, but it works this way
-            convertEdge(edge);
-
             // Assign that nodes are part of the control flow
-            if (etype.equals("ctrl")) {
-                gsgraph.getNode(source).setAttribute("ftype", "ctrlFlow");
-                gsgraph.getNode(target).setAttribute("ftype", "ctrlFlow");
+            UImod.adduiAtt(edge);
 
-                convertNode(gsgraph.getNode(source));
-                convertNode(gsgraph.getNode(target));
-            }
         }
         return gsgraph;
     }
