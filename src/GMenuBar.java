@@ -4,9 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyEvent;
-
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.util.List;
 import java.io.File;
 
 import javax.swing.JCheckBoxMenuItem;
@@ -16,6 +16,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
+import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.ui.view.Viewer;
@@ -107,6 +108,45 @@ public class GMenuBar extends JMenuBar {
 				else if (statistics.isSelected()){
 					statistics.setSelected(true);
 					Application.getView().setForeLayoutRenderer( new ForegroundRenderer(true) );
+				}
+			}
+		});
+		
+		JCheckBoxMenuItem edges = new JCheckBoxMenuItem("Pattern Edges");
+		viewmenu.add(edges);
+		edges.addActionListener(new MenuActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				Graphiel graph = Application.getGraph();
+				if (!edges.isSelected()) {
+					edges.setSelected(false);
+
+					List<Match> matches = graph.matches;
+
+					for (Match match:matches){
+
+						int[] nodes = match.getGraphNodes();
+
+						for(int i = 0; i < nodes.length - 1; i++){
+							Node n1 = graph.getNode(String.valueOf(nodes[i]));
+
+							for (int k = i + 1; k < nodes.length; k++)
+							{
+								Node n2 = graph.getNode(String.valueOf(nodes[k]));
+								if ( n1.hasEdgeBetween(n2) )
+								{
+									Edge  edge = graph.getEdge("i" + match.getInstructionId() + "p" + match.getPatternId() +"-" + match.getMatchId() + "-" + i + "-" + k);
+
+									graph.removeEdge(edge);
+								}
+							}
+						}
+					}
+				} 
+				
+				else if (edges.isSelected()){
+					edges.setSelected(true);
+					Application.getGraph().patternEdges();
 				}
 			}
 		});
