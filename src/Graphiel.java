@@ -87,7 +87,7 @@ class Graphiel extends MultiGraph
 								n1, n2, false);
 						edge.addAttribute("Edge-index", edgeindex);
 						System.out.println(edge.getId());
-						edge.setAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 255 + ");");
+						edge.setAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 70 + ");");
 					}
 				}
 			}
@@ -145,7 +145,7 @@ class Graphiel extends MultiGraph
 						Color col = match.getColor();
 
 
-						edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 100 + ");");
+						edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 70 + ");");
 
 					}
 				}
