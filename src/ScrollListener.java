@@ -17,9 +17,9 @@ public class ScrollListener implements MouseWheelListener {
 	public void mouseWheelMoved(MouseWheelEvent e) {
 
 		if (e.getWheelRotation() < 0) {
-			Navigation.zoomIn();
+			Navigation.zoomIn(1);
 		} else if (e.getWheelRotation() > 0) {
-			Navigation.zoomOut();
+			Navigation.zoomOut(1);
 		}
 	}
 }
