@@ -186,7 +186,10 @@ public class GMenuBar extends JMenuBar {
 					for(MouseListener currentComp : list){
 						Application.getView().removeMouseListener(currentComp);
 					}
-					Application.getGraph().matchdark();
+					
+					//dehighlights each node 
+					for(Node n : Application.getGraph().getEachNode())
+					UImod.rmuiC(n, "selected");
 		
 				} 
 				else if (mouseClick.isSelected()){
@@ -202,7 +205,7 @@ public class GMenuBar extends JMenuBar {
 		zoomin.addActionListener(new MenuActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
-				Navigation.zoomIn();
+			//	Navigation.zoomIn();
 			}
 		});
 		
@@ -212,7 +215,7 @@ public class GMenuBar extends JMenuBar {
 		zoomout.addActionListener(new MenuActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
-				Navigation.zoomOut();
+			//	Navigation.zoomOut();
 			}
 		});
 		
