@@ -31,9 +31,10 @@ class ForegroundRenderer implements LayerRenderer
     int widthPx, int heightPx, double minXGu, double minYGu,
     double maxXGu, double maxYGu)
 	{
-		graphics.setFont(new Font("Verdana", Font.BOLD, 18));
+		graphics.setFont(new Font("Verdana", Font.BOLD, 17));
 		graphics.setColor(Color.black);	
 		drawString(graphics, infostring, 30, heightPx - 145);
+		
 	}
 	
 	/**
