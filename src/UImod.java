@@ -61,16 +61,17 @@ public class UImod {
 
 			// the label begins with the node id
 			label.append(e.getId() + ":");
+			
 
 			switch(ntype) {
 				// data is the only node type with "dtype"
 				case "data":
-					size = 150;
+					size = 80;
 					adduiC(e, e.getAttribute("dtype"));
 				case "copy":
 				case "phi":
 					// data, copy and phi are all labelled with their type
-					label.append(ntype);
+					label.append( ntype);
 				break;
 				// ctrl and comp have their operation added to their labels
 				case "ctrl":
@@ -78,20 +79,20 @@ public class UImod {
 					adduiC(e, "ctrlFlow");
 				// comp is not part of the control flow
 				case "comp":
-					size = 75;
+					size = 110;
 					label.append((String) e.getAttribute("op"));
 				break;
 				// lab nodes have their block-names added to their labels
 				case "lab":
 					String bn = e.getAttribute("block-name");
 					label.append(bn);
-					size = 150;
+					size = 100;
 					// lab is part of the control flow
 					e.setAttribute("ftype", "ctrlFlow");
 					adduiC(e, "ctrlFlow");
 					adduiC(e,bn);
 					// double the size of the entry node
-					if(bn.equals("entry")) size = 300;
+					if(bn.equals("entry")) size = 250;
 				break;
 				// if the ntype is unknown (anything else than above): label it "?"
 				default:
