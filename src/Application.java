@@ -134,12 +134,28 @@ public class Application {
 		//adds antialiasing for a smoother look
 		gr.addAttribute("ui.quality");
 		gr.addAttribute("ui.antialias");
+		gr.addAttribute("jsons", (Object[]) jsons);
 
 		// Add positioning
 		gr.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(gr), false));
 		//gr.patternEdges();
 	
 		return gr;
+	}
+	
+	public static void reloadGraph()
+	{
+		try {
+			File[] jsons = Application.getGraph().getAttribute("jsons");
+			graph = createGraph(jsons);
+			frame.remove(view);
+			view = createView(frame);
+		} catch (FileNotFoundException ex)
+		{
+			System.err.println( ex );
+			System.exit(-1);
+			//loadNewGraph();
+		}
 	}
 	
 	

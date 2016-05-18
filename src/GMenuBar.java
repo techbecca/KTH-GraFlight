@@ -48,16 +48,19 @@ public class GMenuBar extends JMenuBar {
 		
 		//Update graph
 		JMenuItem refresh = new JMenuItem("Reload");
+
+		refresh.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_R, ActionEvent.CTRL_MASK | ActionEvent.SHIFT_MASK));
+
 		file.add(refresh);
 		refresh.addActionListener(new MenuActionListener(){
 			public void actionPerformed(ActionEvent e)
 		    {
-				getParent().revalidate();
+				Application.reloadGraph();
 		    }
 		});
 		
 		//Reset to original graph
-		JMenuItem reset = new JMenuItem("Reset Position");
+		JMenuItem reset = new JMenuItem("Reset positions");
 		reset.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_R, ActionEvent.CTRL_MASK ));
 		file.add(reset);
 		reset.addActionListener(new MenuActionListener(){
