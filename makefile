@@ -14,7 +14,6 @@ j : all
 clean :
 	rm -f src/*.class
 	rm -f $(NAME).jar
-	rm -rf doc/
 	
 jar : $(NAME).jar
 
