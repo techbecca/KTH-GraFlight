@@ -76,7 +76,7 @@ public class Application {
     }
 	/**
 	 * Opens file chooser, loads a new graph from the chosen files and replaces the old view in the frame.
-	 * Written by Christian CallergÃ¥rd and Rebecca HellstrÃ¶m Karlsson 2016-05-13
+	 * Written by Christian CallergÃƒÂ¥rd and Rebecca HellstrÃƒÂ¶m Karlsson 2016-05-13
 	 */
 	public static void loadNewGraph()
 	{
@@ -97,7 +97,7 @@ public class Application {
 	 * Creates a Viewer on the graph adds a View with the appropriate listeners to our frame.
 	 * @param frame The frame to contain the new view.
 	 * @return The new view.
-	 * Written by Christian CallergÃ¥rd and Rebecca HellstrÃ¶m Karlsson 2016-05-13
+	 * Written by Christian CallergÃƒÂ¥rd and Rebecca HellstrÃƒÂ¶m Karlsson 2016-05-13
 	 */
 	public static DefaultView createView(JFrame frame)
 	{
@@ -108,7 +108,7 @@ public class Application {
 
 		view.addMouseMotionListener(new DragListener(view));
 		view.addMouseWheelListener(new ScrollListener());
-		view.addMouseListener(new Clack(view,graph));
+		//view.addMouseListener(new Clack(view,graph));
 		
 		frame.add(view);
 		frame.revalidate();
@@ -121,7 +121,7 @@ public class Application {
 	 * @throws FileNotFoundException
 	 * @param jsons Array of f and p json files.
 	 * @return The new graph.
-	 * Written by Christian CallergÃ¥rd and Rebecca HellstrÃ¶m Karlsson 2016-05-13
+	 * Written by Christian CallergÃƒÂ¥rd and Rebecca HellstrÃƒÂ¶m Karlsson 2016-05-13
 	 */
 	public static Graphiel createGraph(File[] jsons) throws FileNotFoundException
 	{

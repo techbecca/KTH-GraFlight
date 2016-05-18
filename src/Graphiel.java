@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  *Our very own special-purpose MultiGraph subclass.
- *@author Christian Callergård
+ *@author Christian CallergÃ¥rd
  */
 class Graphiel extends MultiGraph
 {
@@ -61,7 +61,7 @@ class Graphiel extends MultiGraph
 	/**
 	 * Finds nodes in the graph that has no matches and marks them.
 	 *
-	 * Written by Christian Callergård and Rebecca Hellström Karlsson 2016-05-12
+	 * Written by Christian CallergÃ¥rd and Rebecca HellstrÃ¶m Karlsson 2016-05-12
 	 */
 	public void flagNoMatches () {
 		for (Node n: getEachNode()){
@@ -77,6 +77,7 @@ class Graphiel extends MultiGraph
 
 	/**
 	* Adds colored edges according to the list of matches, one color per instruction.
+	* @deprecated
 	*/
 	public void patternEdges()
 	{
@@ -101,16 +102,17 @@ class Graphiel extends MultiGraph
 						Edge edge = addEdge("i" + match.getInstructionId() + "p" + match.getPatternId() + "-" + match.getMatchId() + "-" + i + "-" + k, 
 								n1, n2, false);
 						edge.addAttribute("Edge-index", edgeindex);
-						edge.setAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 70 + ");");
+						edge.setAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 0 + ");");
 					}
 				}
 			}
 		}
 	}
 
-	/*
+	/**
 	 * This method selects the colored edges in a match,
 	 * and thereby increases their opacity
+	 * @deprecated
 	 */
 	public void oneMatchAtATime(Match match)
 	{
@@ -134,9 +136,10 @@ class Graphiel extends MultiGraph
 		}	
 	}
 
-	/*
+	/**
 	 * This method deselects the colored edges in a match,
 	 * and thereby lowers their opacity
+	 * @deprecated
 	 */
 	public void resetMatch(Match match)
 	{
@@ -159,7 +162,7 @@ class Graphiel extends MultiGraph
 						Color col = match.getColor();
 
 
-						edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 70 + ");");
+						edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 0 + ");");
 
 					}
 				}
