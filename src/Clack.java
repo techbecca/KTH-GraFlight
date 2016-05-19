@@ -23,7 +23,7 @@ public class Clack implements MouseListener{
 
 		//Get the element (in this case a node) at the position of the mouse click
 		GraphicElement curElement = view.findNodeOrSpriteAt(e.getX(), e.getY());
-
+		if (curElement==null)return;
 		//Save the element as a node n, as the element we want clickable is a node
 		Node n = g.getNode(curElement.toString());
 
@@ -86,28 +86,12 @@ public class Clack implements MouseListener{
 	@Override
 	public void mousePressed(MouseEvent e)
 	{
-		GraphicElement curElement = view.findNodeOrSpriteAt(e.getX(), e.getY());
-		if (curElement==null) return;
-		Node n = g.getNode(curElement.toString());
-
-		// Save info for last element moved
-		LastMoved lastMoved = new LastMoved(n);
-		Application.getNodeChanges().push(lastMoved);
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
-		GraphicElement curElement = view.findNodeOrSpriteAt(e.getX(), e.getY());
-		if (curElement==null) return;
-		Node n = g.getNode(curElement.toString());
-
-		// Save info for last element moved
-		LastMoved lastMoved = new LastMoved(n);
-		if (Application.getNodeChanges().peek().equals(lastMoved)){
-			Application.getNodeChanges().pop();
-		}
 
 	}
 

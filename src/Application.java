@@ -104,7 +104,7 @@ public class Application {
 
 		view.addMouseMotionListener(new DragListener(view));
 		view.addMouseWheelListener(new ScrollListener());
-		view.addMouseListener(new Clack(view,graph));
+		view.addMouseListener(new MoveListener(view,graph));
 		
 		frame.add(view);
 		frame.revalidate();
