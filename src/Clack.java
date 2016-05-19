@@ -1,6 +1,8 @@
 import org.graphstream.graph.Node;
 import org.graphstream.ui.graphicGraph.GraphicElement;
 import org.graphstream.ui.view.View;
+
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -45,11 +47,13 @@ public class Clack implements MouseListener{
 		int max = filteredMatches.size()-1;
 
 		//Check if there is already an attribute "selected"
-		if(!UImod.checkuiC(n, "selected")){
+		if(!UImod.checkuiC(n, "selected") /*g.getNode(String.valueOf(n)).hasAttribute("ui.style")*/){
 			matchIndex = 0;
 
 			//If there is not, add one
 			UImod.adduiC(g.getNode(String.valueOf(n)), "selected");
+
+
 		}
 		else{
 			
@@ -75,13 +79,22 @@ public class Clack implements MouseListener{
 		//reset all nodes
 		for(Node resetNode : g.getNodeSet()){
 			UImod.rmuiC(resetNode, "selected");
+			if (resetNode.hasAttribute("ui.style")){
+				resetNode.setAttribute("ui.style", "fill-color: rgb(10, 137, 255);");
+				//resetNode.removeAttribute("ui.style");
+
+			}
+
+
 		}
 
 		Match match = filteredMatches.get(matchIndex);
 
 		//Highlight all nodes in the current match
 		for(int graphNodes : match.getGraphNodes()){
+			Color col = match.getMatchColor();
 			UImod.adduiC(g.getNode(String.valueOf(graphNodes)), "selected");
+			g.getNode(String.valueOf(graphNodes)).setAttribute("ui.style", "fill-color: rgb(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() + ");");
 		}
 	}
 

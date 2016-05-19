@@ -37,8 +37,8 @@ class Graphiel extends MultiGraph
 		for (Match match : matches){
 			int insId = match.getInstructionId();
 
-			Color col = instructionColor(insId, instructionIDs.size());
-			match.setMatchColor(col);
+
+			Color col = match.getMatchColor();
 			System.out.println(col.toString());
 			for(int nodeIndex : match.getGraphNodes()){
 				getNode("" + nodeIndex).setAttribute("ui.style", "fill-color: rgb(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() + ");");
@@ -118,8 +118,10 @@ class Graphiel extends MultiGraph
 		int edgeindex = 0;
 		for (Match match : matches)
 		{
-			Color col = instructionColor(edgeindex, instructionIDs.size());
-			match.setMatchColor(col);
+
+
+			Color col = match.getMatchColor();
+
 
 			int[] nodes = match.getGraphNodes();
 
@@ -161,7 +163,7 @@ class Graphiel extends MultiGraph
 				if ( n1.hasEdgeBetween(n2) )
 				{
 					Edge  edge = getEdge("i" + match.getInstructionId() + "p" + match.getPatternId() +"-" + match.getMatchId() + "-" + i + "-" + k);
-					Color col = match.getColor();
+					Color col = match.getMatchColor();
 
 					edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 255 + ");");
 
@@ -193,7 +195,7 @@ class Graphiel extends MultiGraph
 					{
 						Edge  edge = getEdge("i" + match.getInstructionId() + "p" + match.getPatternId() +"-" + match.getMatchId() + "-" + i + "-" + k);
 
-						Color col = match.getColor();
+						Color col = match.getMatchColor();
 
 
 						edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 0 + ");");
@@ -292,10 +294,16 @@ class Graphiel extends MultiGraph
 		return sb.toString();
 	}
 
-	private static Color instructionColor(int id, int length){
-		Color col = new Color(Color.HSBtoRGB((float) id/length,(float) 0.75,(float) 0.75));
-		//System.out.println(col.toString());
-		return col;
+	public void setInstructionColor(){
+
+		int id;
+
+		for (Match match: matches) {
+			id = match.getInstructionId();
+			Color col = new Color(Color.HSBtoRGB((float) id / instructionIDs.size(), (float) 0.75, (float) 0.75));
+			//System.out.println(col.toString());
+			match.setMatchColor(col);
+		}
 	}
 	
 	public ArrayList <Match> filterByNode(Node n){

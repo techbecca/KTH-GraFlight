@@ -124,6 +124,7 @@ public class Application {
 
 		//Adds the patterns
 		gr.addMatches(ParseJSONp.parsep(jsons[1]));
+		gr.setInstructionColor();
 		gr.loadStyle("style.css");
 		
 		//Adds antialiasing for a smoother look
@@ -136,7 +137,7 @@ public class Application {
 
 		gr.flagLonelyMatches();
 		gr.flagNoMatches();
-		gr.paintNodes();
+
 
 		return gr;
 	}
