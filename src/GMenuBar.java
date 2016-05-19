@@ -92,6 +92,7 @@ public class GMenuBar extends JMenuBar {
 		add(viewmenu);
 
 		JMenuItem toolbar = new JMenuItem("Toolbar");
+		toolbar.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_T, ActionEvent.CTRL_MASK ));
 		viewmenu.add(toolbar);
 		toolbar.addActionListener(new MenuActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -167,16 +168,17 @@ public class GMenuBar extends JMenuBar {
 //			}
 //		});
 //
-		JCheckBoxMenuItem mouseClick = new JCheckBoxMenuItem("Activate Mouse Click");
-		viewmenu.add(mouseClick);
+		JCheckBoxMenuItem nodeClick = new JCheckBoxMenuItem("Node Click");
+		nodeClick.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_N, ActionEvent.CTRL_MASK ));
+		viewmenu.add(nodeClick);
 
-		mouseClick.addActionListener(new MenuActionListener(){
+		nodeClick.addActionListener(new MenuActionListener(){
 
 			public void actionPerformed(ActionEvent e)
 			{
 				Clack clack = new Clack(Application.getView(),Application.getGraph());
-				if (!mouseClick.isSelected()) {
-					mouseClick.setSelected(false);
+				if (!nodeClick.isSelected()) {
+					nodeClick.setSelected(false);
 
 					//Application.getView().removeMouseListener(clack);
 					MouseListener[] list = Application.getView().getMouseListeners();
@@ -189,8 +191,8 @@ public class GMenuBar extends JMenuBar {
 						UImod.rmuiC(n, "selected");
 					}
 				}
-				else if (mouseClick.isSelected()){
-					mouseClick.setSelected(true);
+				else if (nodeClick.isSelected()){
+					nodeClick.setSelected(true);
 					Application.getView().addMouseListener(clack);
 				}
 			}
@@ -254,18 +256,11 @@ public class GMenuBar extends JMenuBar {
 		add(help);
 
 		JMenuItem manual = new JMenuItem("User Manual");
+		manual.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_U, ActionEvent.CTRL_MASK ));
 		help.add(manual);
 		manual.addActionListener(new MenuActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				openWebpage("https://i.imgur.com/SZPjHwz.jpg");
-		    }
-		});
-
-		JMenuItem about = new JMenuItem("About GraFlight");
-		help.add(about);
-		about.addActionListener(new MenuActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				openWebpage("https://people.kth.se/~aiman/ID1003/");
 		    }
 		});
 	}
