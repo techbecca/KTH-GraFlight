@@ -213,7 +213,9 @@ public class GMenuBar extends JMenuBar {
 		hir.addActionListener(new MenuActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Application.getViewer().disableAutoLayout();
+				Application.getGraph().loadStyle("style.css");
 				Application.getGraph().positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(Application.getGraph()), false));
+				Application.getView().getCamera().resetView();
 			}
 		});
 
@@ -223,7 +225,9 @@ public class GMenuBar extends JMenuBar {
 		comtree.addActionListener(new MenuActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Application.getViewer().disableAutoLayout();
+				Application.getGraph().loadStyle("style_nodyn.css");
 				Application.getGraph().positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(Application.getGraph()), true));
+				Application.getView().getCamera().resetView();
 			}
 		});
 
@@ -232,7 +236,9 @@ public class GMenuBar extends JMenuBar {
 		layout.add(gsl);
 		gsl.addActionListener(new MenuActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Application.getGraph().loadStyle("style_nodyn.css");
 				Application.getViewer().enableAutoLayout();
+				Application.getView().getCamera().resetView();
 			}
 		});
 

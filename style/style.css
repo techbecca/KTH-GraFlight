@@ -25,7 +25,6 @@ edge.highlighted{
 
 edge.selected{
 	fill-color: green;
-	
 }
 
 node{
@@ -66,8 +65,10 @@ node.data{
 node.lab{
 	shape: box;
 	size-mode: fit;
-	fill-color: rgba(15, 195, 255, 200);
-	text-background-color: rgba(15, 195, 255, 200);
+	text-background-mode: none;
+	padding: 4px;
+	fill-color: rgba(15, 195, 255, 255);
+	
 }
 
 node.ctrl{

@@ -5,6 +5,7 @@ import org.graphstream.graph.Node;
 import org.graphstream.ui.spriteManager.SpriteManager;
 import org.graphstream.ui.spriteManager.Sprite;
 
+import java.io.File;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -277,6 +278,13 @@ class Graphiel extends MultiGraph
 		}
 
 		return filteredMatches;
-
+	}
+	
+	public void loadStyle(String filename)
+	{
+		removeAttribute("ui.stylesheet");
+		String url = "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + filename + "')";
+		System.out.println(url);
+		addAttribute("ui.stylesheet", url);
 	}
 }
