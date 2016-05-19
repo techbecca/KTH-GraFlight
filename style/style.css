@@ -8,6 +8,8 @@ edge.data{
 edge.def{
 	size: 1px;
 	fill-color: gray;
+	visibility-mode: under-zoom;
+	visibility: 0.5;
 }
 edge.ctrl{
 	size: 3px;
@@ -32,9 +34,16 @@ node{
 	stroke-width: 2px;
 	fill-color: rgba(173, 216, 230, 200);
 	text-style: bold;
+	text-size: 12px;
 	text-background-mode: rounded-box;
 	text-background-color: rgba(173, 216, 230, 200);
 }
+
+node.hidezoomedout{
+	visibility-mode: under-zoom;
+	visibility: 0.5;
+}
+
 node.selected{
 	fill-color : green;
 	text-background-color: green;
@@ -49,11 +58,12 @@ node.highlighted{
 
 node.data{
 	shape: rounded-box;
+	
 }
-
 
 node.lab{
 	shape: box;
+	size-mode: fit;
 }
 
 node.ctrl{

@@ -72,6 +72,7 @@ public class UImod {
 				case "phi":
 					// data, copy and phi are all labelled with their type
 					label.append( ntype);
+					adduiC(e, "hidezoomedout");
 				break;
 				// ctrl and comp have their operation added to their labels
 				case "ctrl":
@@ -79,14 +80,14 @@ public class UImod {
 					adduiC(e, "ctrlFlow");
 				// comp is not part of the control flow
 				case "comp":
-					size = 110;
+					size = 150;
 					label.append((String) e.getAttribute("op"));
 				break;
 				// lab nodes have their block-names added to their labels
 				case "lab":
 					String bn = e.getAttribute("block-name");
 					label.append(bn);
-					size = 100;
+					size = 175;
 					// lab is part of the control flow
 					e.setAttribute("ftype", "ctrlFlow");
 					adduiC(e, "ctrlFlow");
