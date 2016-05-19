@@ -1,7 +1,9 @@
 import org.graphstream.graph.Node;
 
 /**
- * Created by Rebecca on 2016-05-19.
+ *
+ * Created by Rebecca & Aiman on 2016-05-19.
+ *
  */
 public class LastMoved {
 
