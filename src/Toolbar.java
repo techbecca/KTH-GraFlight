@@ -45,9 +45,6 @@ public class Toolbar implements TreeSelectionListener {
 		Graphiel graph = Application.getGraph();
 //		An ArrayList containing all matches in the graph
 		List<Match> matches = graph.matches;
-//		int height = graph.instructionIDs.size()*24;
-//		int height = matches.size();
-//		System.out.println(height);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = (int) screenSize.getWidth();
 		int height = (int) screenSize.getHeight();
@@ -66,19 +63,15 @@ public class Toolbar implements TreeSelectionListener {
 		// shows the window
 		tb.setIconImage(img);
 		tb.setVisible(true);        
-		tb.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		tb.setSize(width/5, (height/2)+100);
 		tb.setLocation(0, 60);
 		tb.setAlwaysOnTop(true);
 		tb.setVisible(true);
 
-
 //		Create a JPanel for the frame in which the checkboxes are displayed
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1,2000));
-
-
 		
 //		create a tree which will be displayed in the toolbar
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Instructions");
@@ -90,8 +83,6 @@ public class Toolbar implements TreeSelectionListener {
 			//and children to the instruction nodes
 			addMatchNodes(instructionNode, matches);
 		}
-
-
 		tree = new CheckBoxTree(root);
 		tree.setRootVisible(true);
 
@@ -110,7 +101,6 @@ public class Toolbar implements TreeSelectionListener {
 		tb.add(panel);
 
 	}
-
 
 	//	add children to the instruction nodes
 	public void addMatchNodes(DefaultMutableTreeNode parent, List<Match> matches){
@@ -134,6 +124,5 @@ public class Toolbar implements TreeSelectionListener {
 		// TODO Auto-generated method stub
 		
 	}
-
 
 }
