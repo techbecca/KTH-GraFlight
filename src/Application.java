@@ -124,7 +124,7 @@ public class Application {
 
 		//Adds the patterns
 		gr.addMatches(ParseJSONp.parsep(jsons[1]));
-		gr.addAttribute("ui.stylesheet", "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + "style.css')");
+		gr.loadStyle("style.css");
 		
 		//Adds antialiasing for a smoother look
 		gr.addAttribute("ui.quality");
