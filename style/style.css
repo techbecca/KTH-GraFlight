@@ -81,7 +81,12 @@ node.ctrlFlow{
 }
 
 node.noMatch{
-	fill-color: magenta;
+	stroke-color: rgb(159,0,18);
+}
+
+node.lonely{
+	stroke-color: rgb(218,108,0);
+
 }
 
 sprite {
@@ -89,7 +94,4 @@ sprite {
 	size-mode: dyn-size;
 }
 
-sprite.noMatch{
-	fill-mode: image-scaled;
-	fill-image: url('./style/nomatches.png');
-}
+

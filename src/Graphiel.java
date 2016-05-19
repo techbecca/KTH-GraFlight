@@ -65,12 +65,28 @@ class Graphiel extends MultiGraph
 	 */
 	public void flagNoMatches () {
 		for (Node n: getEachNode()){
-			if ((int) n.getAttribute("matches")==0){
+			if (filterByNode(n).size() == 0){
 				//UImod.adduiC(n,"noMatch");
-				Sprite s = sman.addSprite("nomatch" + n.getId());
-				UImod.adduiC(s, "noMatch");
-				s.attachToNode( n.getId() );
-				s.setPosition(50, 0, 90);
+                /*Sprite s = sman.addSprite("nomatch" + n.getId());
+                UImod.adduiC(s, "noMatch");
+                s.attachToNode( n.getId() );
+                s.setPosition(50, 0, 90);*/
+				UImod.adduiC(n, "noMatch");
+			}
+		}
+	}
+	
+	/**
+	 * Finds nodes in the graph that has one single match and marks them.
+	 * Written by Aiman Josefsson
+	 */
+	public void flagLonelyMatches(){
+		for(Node n : getEachNode()) {
+			if (filterByNode(n).size() == 1) {
+				UImod.adduiC(n, "lonely");
+				for(int i : filterByNode(n).get(0).getGraphNodes()){
+					UImod.adduiC(getNode("" + i), "lonely");
+				}
 			}
 		}
 	}

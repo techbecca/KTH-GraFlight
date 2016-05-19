@@ -133,7 +133,10 @@ public class Application {
 
 		//Add positioning
 		gr.positioning(LayGraph.onMe(ParseJSONf.fromGStoJG(gr), false));
-	
+
+		gr.flagLonelyMatches();
+		gr.flagNoMatches();
+
 		return gr;
 	}
 	
