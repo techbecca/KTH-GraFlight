@@ -21,7 +21,7 @@ public class UImod {
 			priors = "";
 
 		}
-		if (!priors.contains(attr)) element.setAttribute("ui.class", priors + "," + attr);
+		if (!priors.contains(attr)) element.setAttribute("ui.class", attr + "," + priors);
 	}
 
 	/**
@@ -31,8 +31,11 @@ public class UImod {
 	 */
 	public static void rmuiC(Element e, String attr) {
 		String priors = e.getAttribute("ui.class");
+		
 		if(priors.contains(attr)) {
-			priors = priors.replace("," + attr ,"");
+			if(priors.contains(", " + attr))
+				attr = ", " + attr;
+			priors = priors.replace(attr ,"");
 			e.setAttribute("ui.class", priors);
 		}
 	}
@@ -47,6 +50,7 @@ public class UImod {
 	* @param e a graphiel element
 	*/
 	public static void adduiAtt(Element e) {
+		
 		// determines if the element is a node or edge
 		if(e.hasAttribute("etype")) {
 			e.addAttribute("ui.class",(String) e.getAttribute("etype"));
@@ -68,6 +72,7 @@ public class UImod {
 				case "data":
 					size = 80;
 					label.append((String) e.getAttribute("dtype")).append(" ");
+					label.append( ntype);
 					adduiC(e, "hidezoomedout");
 				break;
 				case "copy":
