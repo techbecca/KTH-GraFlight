@@ -2,74 +2,93 @@ import java.awt.Color;
 
 /**
  * Saves matches between nodes. 
- * @author Mathilda Strandberg von Schantz
- * @since 2016-04-27
+ * @since 2016-05-19
  */
 public class Match {
 
-	final private int PatternId;
-	final private int InstructionId;
-	final private int[] GraphNodes;
-	final private int MatchId;
+	final private int patternId;
+	final private int instructionId;
+	final private int[] graphNodes;
+	final private int matchId;
 	public Color matchColor;
 
-	public Match(int[] GraphNodes, 	int PatternId, int InstructionId, int MatchId) {
+	/**
+	 * This is a constructor
+	 * @param graphNodes An array of the nodes in the graph
+	 * @param patternId The ID of the pattern
+	 * @param instructionId The ID of the instruction
+	 * @param matchId The ID of the match
+	 */
+	public Match(int[] graphNodes, 	int patternId, int instructionId, int matchId) {
 
-		this.PatternId = PatternId;
-		this.InstructionId = InstructionId;
-		this.MatchId = MatchId;
-		this.GraphNodes = GraphNodes;
-
+		this.patternId = patternId;
+		this.instructionId = instructionId;
+		this.matchId = matchId;
+		this.graphNodes = graphNodes;
 	}
 	
-	
-
+	/**
+	 * Sets the match color
+	 * @param matchColor The color of the match
+	 */
 	public void setMatchColor(Color matchColor) {
 		
 		this.matchColor = matchColor;
 	}
 
-
-
+	/**
+	 * This method returns the match ID
+	 * @return matchid
+	 */
 	public int getMatchId() {
-		return MatchId;
+		return matchId;
 	}
 
+	/**
+	 * This method returns the pattern ID
+	 * @return patternId
+	 */
 	public int getPatternId() {
-		return PatternId;
+		return patternId;
 	}
 
+	/**
+	 * This method returns the instruction Id
+	 * @return InstructionId
+	 */
 	public int getInstructionId() {
-		return InstructionId;
+		return instructionId;
 	}
 
+	/**
+	 * This method return all the nodes in the graph
+	 * @return graphNodes
+	 */
 	public int[] getGraphNodes() {
-		return GraphNodes;
+		return graphNodes;
 	}
 	
+	/**
+	 * This method returns the match color
+	 * @return matchColor
+	 */
 	public Color getColor(){
-		
-		return matchColor;
-		
+		return matchColor;	
 	}
 
+	/**
+	 * This method creates a String representation of match
+	 */
 	public String toString(){
 
 		StringBuilder sb = new StringBuilder("[ Nodes: [");
 
-		for (int i = 0; i < GraphNodes.length; i++) {
-			String currentGraphNode = String.valueOf(GraphNodes[i]) + ", ";
+		for (int i = 0; i < graphNodes.length; i++) {
+			String currentGraphNode = String.valueOf(graphNodes[i]) + ", ";
 			sb.append(currentGraphNode);
 		}
-
-		sb.append("]" + "InstructionId: " + InstructionId + ", " + "PatternId: " + PatternId + ", " + MatchId + "]");
+		sb.append("]" + "InstructionId: " + instructionId + ", " + "PatternId: " + patternId + ", " + matchId + "]");
 
 		return sb.toString(); 
 	}
-
-
-
-
-
 }
-

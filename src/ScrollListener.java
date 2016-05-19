@@ -1,14 +1,12 @@
-import org.graphstream.ui.view.View;
-
 import java.awt.event.MouseWheelListener;
 import java.awt.event.MouseWheelEvent;
 
 /**
  * Listens to the scrollwheel for zooming
- *
- * @author Aiman
+ * @since 2016-05-19
  */
 public class ScrollListener implements MouseWheelListener {
+	
 	/**
 	 * Zooms in if mousewheel was scrolled forwards, and out if backwards.
 	 * @param e MouseWheelEvent
@@ -18,7 +16,8 @@ public class ScrollListener implements MouseWheelListener {
 
 		if (e.getWheelRotation() < 0) {
 			Navigation.zoomIn(1);
-		} else if (e.getWheelRotation() > 0) {
+		} 
+		else if (e.getWheelRotation() > 0) {
 			Navigation.zoomOut(1);
 		}
 	}

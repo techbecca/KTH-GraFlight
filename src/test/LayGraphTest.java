@@ -1,11 +1,9 @@
-import java.io.File;
-
-import org.junit.Test;
-import static org.junit.Assert.*;
-
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * 
@@ -35,7 +33,7 @@ public class LayGraphTest {
 
         //Call method "onMe" with the graph as parameter and store the result in the 2D array "coor".
         //coor will contain the coordinates for the vertices in the graph
-        double[][] coor = layGraph.onMe(jGraph);
+        double[][] coor = layGraph.onMe(jGraph, false);
 
         //assertEquals compares the expected output of the function with the actual output.
       	//If these do not match, an error has occurred. 

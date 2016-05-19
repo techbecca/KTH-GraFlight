@@ -1,29 +1,42 @@
 /**
- * This class contains all the methods required for navigation of the graph viewer, maybe.
+ * This class handles zooming
+ * @since 2016-05-19
  */
 
 class Navigation
 {
 	/**
 	 * Zooms in within a reasonable limit.
+	 * @param zoomIncrement Decides incrementation level when zooming
 	 */
-	public static void zoomIn(int lvl) {
-		for(int i = 0; i < lvl; i++) {
+	public static void zoomIn(int zoomIncrement) {
+		
+		for(int i = 0; i < zoomIncrement; i++) {
+			
 			double viewPercent = Application.getView().getCamera().getViewPercent();
+			
 			if (viewPercent > 0.3) {
-				Application.getView().getCamera().setViewPercent(viewPercent * 0.9); // Zooms in, viewPercent: 0-1 (min-max)
+				
+				// Zooms in, viewPercent: 0-1 (min-max)
+				Application.getView().getCamera().setViewPercent(viewPercent * 0.9);
 			}
 		}
 	}
 
 	/**
 	 * Zooms out within a reasonable limit.
+	 * @param zoomIncrement Decides incrementation level when zooming
 	 */
-	public static void zoomOut(int lvl) {
-		for(int i = 0; i < lvl; i++) {
+	public static void zoomOut(int zoomIncrement) {
+		
+		for(int i = 0; i < zoomIncrement; i++) {
+			
 			double viewPercent = Application.getView().getCamera().getViewPercent();
+			
 			if (viewPercent < 1.5) {
-				Application.getView().getCamera().setViewPercent(viewPercent / 0.9); // Zooms out
+				
+				// Zooms out
+				Application.getView().getCamera().setViewPercent(viewPercent / 0.9);
 			}
 		}
 	}
