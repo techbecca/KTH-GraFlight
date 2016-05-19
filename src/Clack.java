@@ -1,11 +1,10 @@
-import org.graphstream.ui.view.View;
 import org.graphstream.graph.Node;
 import org.graphstream.ui.graphicGraph.GraphicElement;
+import org.graphstream.ui.view.View;
 
-import java.util.ArrayList;
-
-import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 public class Clack implements MouseListener{
 
@@ -87,12 +86,28 @@ public class Clack implements MouseListener{
 	@Override
 	public void mousePressed(MouseEvent e)
 	{
+		GraphicElement curElement = view.findNodeOrSpriteAt(e.getX(), e.getY());
+		if (curElement==null) return;
+		Node n = g.getNode(curElement.toString());
+
+		// Save info for last element moved
+		LastMoved lastMoved = new LastMoved(n);
+		Application.getNodeChanges().push(lastMoved);
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
+		GraphicElement curElement = view.findNodeOrSpriteAt(e.getX(), e.getY());
+		if (curElement==null) return;
+		Node n = g.getNode(curElement.toString());
+
+		// Save info for last element moved
+		LastMoved lastMoved = new LastMoved(n);
+		if (Application.getNodeChanges().peek().equals(lastMoved)){
+			Application.getNodeChanges().pop();
+		}
 
 	}
 

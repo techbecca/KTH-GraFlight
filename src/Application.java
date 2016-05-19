@@ -1,23 +1,14 @@
-import org.graphstream.graph.Graph;
-import org.graphstream.graph.Node;
-import org.graphstream.graph.implementations.MultiGraph;
-import org.graphstream.graph.implementations.SingleGraph;
-
-import org.graphstream.ui.swingViewer.*;
-import org.graphstream.ui.view.*;
-
+import org.graphstream.ui.swingViewer.DefaultView;
 import org.graphstream.ui.view.Viewer;
-import org.graphstream.ui.view.View;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * This is the main application class for GraFlight
@@ -31,8 +22,9 @@ public class Application {
 	private static DefaultView view;
 	private static Viewer viewer;
 	private static JFrame frame;
+	private static Stack<LastMoved> nodeChanges;
 
-    public static void main(String args[]) throws FileNotFoundException{
+	public static void main(String args[]) throws FileNotFoundException{
 		
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 		
@@ -65,6 +57,8 @@ public class Application {
 			// Create graph and view in the frame.
 			graph = createGraph(jsons);
 			view = createView(frame);
+			// Create a stack to backtrack node changes
+			nodeChanges = new Stack<LastMoved>();
 		} catch (FileNotFoundException ex)
 		{
 			System.err.println( ex );
@@ -85,6 +79,8 @@ public class Application {
 			graph = createGraph(jsons);
 			frame.remove(view);
 			view = createView(frame);
+			// Create a stack to backtrack node changes
+			nodeChanges = new Stack<LastMoved>();
 		} catch (FileNotFoundException ex)
 		{
 			System.err.println( ex );
@@ -108,7 +104,7 @@ public class Application {
 
 		view.addMouseMotionListener(new DragListener(view));
 		view.addMouseWheelListener(new ScrollListener());
-		//view.addMouseListener(new Clack(view,graph));
+		view.addMouseListener(new Clack(view,graph));
 		
 		frame.add(view);
 		frame.revalidate();
@@ -150,6 +146,8 @@ public class Application {
 			graph = createGraph(jsons);
 			frame.remove(view);
 			view = createView(frame);
+			// Create a stack to backtrack node changes
+			nodeChanges = new Stack<LastMoved>();
 		} catch (FileNotFoundException ex)
 		{
 			System.err.println( ex );
@@ -177,6 +175,10 @@ public class Application {
 	public static Viewer getViewer()
 	{
 		return viewer;
+	}
+
+	public static Stack<LastMoved> getNodeChanges() {
+		return nodeChanges;
 	}
 	
 }

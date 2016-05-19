@@ -1,34 +1,11 @@
-import java.awt.Component;
-import java.awt.Desktop;
+import org.graphstream.graph.Node;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyEvent;
-import java.io.FileNotFoundException;
 import java.awt.event.MouseListener;
 import java.net.URL;
-import java.util.List;
-import java.io.File;
-
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.KeyStroke;
-
-import org.graphstream.graph.Edge;
-import org.graphstream.graph.Graph;
-import org.graphstream.graph.Node;
-import org.graphstream.ui.view.Viewer;
-import org.graphstream.ui.swingViewer.DefaultView;
-
-import java.awt.Image;
-import java.io.IOException;
-import java.net.URL;
-import java.net.URI;
-import java.awt.Desktop;
-import java.io.File;
 
 public class GMenuBar extends JMenuBar {
 	public GMenuBar () {
@@ -213,6 +190,15 @@ public class GMenuBar extends JMenuBar {
 		zoomout.addActionListener(new MenuActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Navigation.zoomOut(3);
+			}
+		});
+
+		JMenuItem undo = new JMenuItem("Undo Last Node Movement");
+		undo.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_Z, ActionEvent.CTRL_MASK, true ));
+		viewmenu.add(undo);
+		undo.addActionListener(new MenuActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UndoMove.undoLastMoved();
 			}
 		});
 
