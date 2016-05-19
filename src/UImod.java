@@ -60,14 +60,16 @@ public class UImod {
 			int size = 70;
 
 			// the label begins with the node id
-			label.append(e.getId() + ":");
+			label.append(e.getId() + ": ");
 			
 
 			switch(ntype) {
 				// data is the only node type with "dtype"
 				case "data":
 					size = 80;
-					adduiC(e, e.getAttribute("dtype"));
+					label.append((String) e.getAttribute("dtype")).append(" ");
+					adduiC(e, "hidezoomedout");
+				break;
 				case "copy":
 				case "phi":
 					// data, copy and phi are all labelled with their type

@@ -12,7 +12,7 @@ edge.def{
 	visibility: 0.5;
 }
 edge.ctrl{
-	size: 3px;
+	size: 4px;
 }
 edge.pattern{
 	size: 3px;
@@ -32,22 +32,25 @@ node{
 	size-mode: dyn-size;
 	stroke-mode: plain;
 	stroke-width: 2px;
-	fill-color: rgba(173, 216, 230, 200);
+	fill-color: rgba(10, 137, 255, 200);
 	text-style: bold;
-	text-size: 12px;
+	text-size: 14px;
 	text-background-mode: rounded-box;
-	text-background-color: rgba(173, 216, 230, 200);
+	text-background-color: rgba(10, 137, 255, 200);
 }
 
 node.hidezoomedout{
+	text-background-color: rgba(173, 216, 230, 200);
+	fill-color: rgba(173, 216, 230, 200);
 	visibility-mode: under-zoom;
 	visibility: 0.5;
+	text-style: normal;
+	text-size: 12px;
 }
 
 node.selected{
 	fill-color : green;
 	text-background-color: green;
-	
 }
 node.hovered{
 	stroke-width: 5px;
@@ -58,16 +61,19 @@ node.highlighted{
 
 node.data{
 	shape: rounded-box;
-	
 }
 
 node.lab{
 	shape: box;
 	size-mode: fit;
+	fill-color: rgba(15, 195, 255, 200);
+	text-background-color: rgba(15, 195, 255, 200);
 }
 
 node.ctrl{
 	shape: diamond;
+	fill-color: rgba(15, 195, 255, 200);
+	text-background-color: rgba(15, 195, 255, 200);
 }
 
 node.ctrlFlow{
