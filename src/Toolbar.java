@@ -29,8 +29,6 @@ import org.graphstream.ui.swingViewer.DefaultView;
  */
 public class Toolbar implements TreeSelectionListener {
 
-	Node currentNode;
-
 	/**
 	 * This method creates a toolbar and adds a checkbox for each match in the graph. This allows the user 
 	 * to view one pattern at a time
