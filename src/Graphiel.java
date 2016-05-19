@@ -300,7 +300,6 @@ class Graphiel extends MultiGraph
 	{
 		removeAttribute("ui.stylesheet");
 		String url = "url('" + System.getProperty("user.dir") + File.separator + "style" + File.separator + filename + "')";
-		System.out.println(url);
 		addAttribute("ui.stylesheet", url);
 	}
 }
