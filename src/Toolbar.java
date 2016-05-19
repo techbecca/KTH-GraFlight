@@ -2,25 +2,19 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.List;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
-import javax.swing.JCheckBox;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
-
-import javax.swing.JTree;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-
 
 import org.graphstream.graph.Node;
 import org.graphstream.ui.swingViewer.DefaultView;
@@ -44,51 +38,64 @@ public class Toolbar implements TreeSelectionListener {
 	 * @param graph a Grahiel graph
 	 * @param view Graphstream DefaultView from Application
 	 */
-	private JTree tree;
+	private CheckBoxTree tree;
 
-	public void createFrame (JFrame frame, Graphiel graph, DefaultView view){
+	public void createFrame (DefaultView view){
 
-
+		Graphiel graph = Application.getGraph();
+//		An ArrayList containing all matches in the graph
+		List<Match> matches = graph.matches;
+//		int height = graph.instructionIDs.size()*24;
+//		int height = matches.size();
+//		System.out.println(height);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = (int) screenSize.getWidth();
 		int height = (int) screenSize.getHeight();
 
-
-		//Create a JFrame for the toolbar
+		//Adds the logo to the toolbar as well :)
 		JFrame tb = new JFrame ("Toolbar");
-		tb.setSize(width/4, height/2);
+
+		// Set JFrame Icon
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(new File("teamlogo" + File.separatorChar+"icon_32.png"));
+		} catch (IOException e) {
+			System.out.println("Logo not found!");
+		}
+
+		// shows the window
+		tb.setIconImage(img);
+		tb.setVisible(true);        
+		tb.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		tb.setSize(width/5, (height/2)+100);
 		tb.setLocation(0, 60);
 		tb.setAlwaysOnTop(true);
 		tb.setVisible(true);
 
 
-		//Create a JPanel for the frame in which the checkboxes are displayed
+//		Create a JPanel for the frame in which the checkboxes are displayed
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1,2000));
 
-		//An ArrayList containing all matches in the graph
-		List<Match> matches = graph.matches;
 
-		//			create ONE tree for all of the instructions with the following hierarchy:
-		//				-instructions
-		//					-instruction
-		//						-match
-		//the root node, however, will not be visible
-
+		
+//		create a tree which will be displayed in the toolbar
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Instructions");
 
+//		add instruction-id children to the root node		
 		for(int instr : graph.getInstructionIds()){
 			DefaultMutableTreeNode instructionNode = new DefaultMutableTreeNode("Instr-id : " + String.valueOf(instr));
-
 			root.add(instructionNode);
 			//and children to the instruction nodes
 			addMatchNodes(instructionNode, matches);
 		}
 
-		tree = new JTree(root);
+
+		tree = new CheckBoxTree(root);
 		tree.setRootVisible(true);
 
-		//		makes a scrollpane which displays the content of the tree
+//		makes a scrollpane which displays the content of the tree
 		JScrollPane treeView = new JScrollPane(tree, 
 				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,  ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
@@ -100,110 +107,33 @@ public class Toolbar implements TreeSelectionListener {
 		tree.addTreeSelectionListener(this);
 		panel.add(treeView);
 
-
 		tb.add(panel);
 
-
 	}
 
-	
-//	add children to the instruction nodes
-public void addMatchNodes(DefaultMutableTreeNode parent, List<Match> matches){
-	//search for all the matches that have the same instruction id as the parent node
-	//they will be the leaves of the trees
-	for(Match m : matches){
-		int instrId = m.getInstructionId();
-		String name = "Instr-id : " + String.valueOf(instrId);
-		if(name.equals(parent.getUserObject())){
 
-			int matchId = m.getMatchId();
-			DefaultMutableTreeNode matchLeaf = new DefaultMutableTreeNode("Match-id : " + String.valueOf(matchId));
-			parent.add(matchLeaf);
+	//	add children to the instruction nodes
+	public void addMatchNodes(DefaultMutableTreeNode parent, List<Match> matches){
+		//search for all the matches that have the same instruction id as the parent node
+		//they will be the leaves of the trees
+		for(Match m : matches){
+			int instrId = m.getInstructionId();
+			String name = "Instr-id : " + String.valueOf(instrId);
+			if(name.equals(parent.getUserObject())){
+				int matchId = m.getMatchId();
+				DefaultMutableTreeNode matchLeaf = new DefaultMutableTreeNode("Match-id : " + String.valueOf(matchId));
+				parent.add(matchLeaf);
 
-		}
-	}
-}
-
-@Override
-public void valueChanged(TreeSelectionEvent e) {
-
-	//Returns the last path element of the selection.
-	//This method is useful only when the selection model allows a single selection.
-	DefaultMutableTreeNode node = (DefaultMutableTreeNode)
-			tree.getLastSelectedPathComponent();
-
-	if (node == null) return;
-
-}
-
-
-
-
-public void SpikOchLotta(JFrame frame, Graphiel graph, DefaultView view){
-
-	List<Match> matches = graph.matches;
-
-
-	//Loop through every match in the graph
-	for (Match currentMatch : matches) {
-
-		//An ArrayList containing all nodes for a single match
-		ArrayList<Node> matchnodes = new ArrayList<Node>();
-
-		//Loop through every node in the current match
-		for(int node : currentMatch.getGraphNodes()){
-
-			//Convert int to node
-			currentNode = graph.getNode(String.valueOf(node));
-
-			//Add every node in the current match to the matchnodes ArrayList
-			matchnodes.add(currentNode);
-		}
-
-		//Adds a checkbox for each match 
-		JCheckBox cb = new JCheckBox("Pattern " + String.valueOf(currentMatch.getInstructionId()));
-		ActionListener actionListener = new ActionListener() {
-
-			//This method performs an action whenever a checkbox is checked or unchecked
-			public void actionPerformed(ActionEvent actionEvent) {   
-
-				//If the checkbox is unchecked
-				if (!cb.isSelected()) {
-
-					//Set selected to false
-					cb.setSelected(false);
-
-					//Loop through every node in the current match
-					for(Node node : matchnodes)
-						//set the current node in the current match to highlighted
-						UImod.rmuiC(node, "highlighted");
-				} 
-				//If the checkbox is checked
-				else if (cb.isSelected()){
-
-					//Set selected to true
-					cb.setSelected(true);
-
-					//Loop through every node in the current match
-					for(Node node : matchnodes)
-						//"dehighlight" the current node in the current match
-						UImod.adduiC(node, "highlighted");
-				}           	
 			}
-		};
-
-		//Add an actionListener to each checkbox
-		cb.addActionListener(actionListener);
-
-		//Add the checkbox to the panel
-		//			panel.add(cb);
-		//		panel.add(treeView);
-
-
+		}
 	}
 
 
+	@Override
+	public void valueChanged(TreeSelectionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
-
-}}
+}
