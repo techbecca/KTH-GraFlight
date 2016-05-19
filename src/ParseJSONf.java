@@ -11,37 +11,34 @@ import java.util.Scanner;
 
 /**
  * This class parses a JSON file
- * @author Aiman Josefsson
- * @since 2016-04-26
+ * @since 2016-05-19
  */
 public class ParseJSONf {
 
 	/**
 	 * This method takes a JSON file with nodes and edges and parses them into Java objects which in turn are made into a graph.
-	 * @param file This is a JSON file
-	 * @return Returns a graph
+	 * @param file The JSON file to be parsed
+	 * @return The graph representation of the JSON file
 	 * @throws FileNotFoundException
-     *
-     * Written by Aiman Josefsson 2016-04-26
-     * Modified by Mathilda von Schantz and Rebecca Hellström Karlsson 2016-05-09
 	 */
     public static Graphiel parse(File file) throws FileNotFoundException {
-    	// Read an entire json file
+    	
+    	//Read an entire JSON file
 		String json = new Scanner(file).useDelimiter("\\A").next();
 
-		// Creates a handy object from the String
+		//Creates a handy object from the String
         JSONObject jsonObject = new JSONObject(json);
         JSONObject graph = jsonObject.getJSONObject("op-struct").getJSONObject("graph");
         JSONArray edges = graph.getJSONArray("edges");
         JSONArray nodes = graph.getJSONArray("nodes");
 
-        // get the name of the compiled function
+        //Get the name of the compiled function
         String functionName = jsonObject.getString("name");
 
-        // Creates the graph "functionName"
+        //Creates the graph "functionName"
 		Graphiel gsgraph = new Graphiel(functionName);
 
-        // Get the inputs of the compiled function
+        //Get the inputs of the compiled function
         JSONArray inputArray = jsonObject.getJSONArray("inputs");
         int len = inputArray.length();
         int[] inputs = new int[len];
@@ -50,39 +47,37 @@ public class ParseJSONf {
         }
         gsgraph.setAttribute("inputs", inputs);
 
-        // Gets the constraints of the function
+        //Gets the constraints of the function
         JSONArray constraintsArray = jsonObject.getJSONObject("op-struct").getJSONArray("constraints");
         len = constraintsArray.length();
-        ArrayList constraints =  new ArrayList(len);
+        ArrayList<String> constraints =  new ArrayList<String>(len);
         for (int i = 0; i < len; i++) {
             constraints.add(constraintsArray.getString(i));
         }
         gsgraph.setAttribute("constraints", constraints);
 
-        // Get entry-block-node of the function
+        //Get entry-block-node of the function
         int entryBlockNode = jsonObject.getJSONObject("op-struct").getInt("entry-block-node");
         gsgraph.setAttribute("entry-block-node", entryBlockNode);
 
-		// Iterates through the node array and adds them to the graph
+		//Iterates through the node array and adds them to the graph
         for(int i = 0; i < nodes.length(); i++) {
             JSONArray jsonNode = nodes.getJSONArray(i);
             String id = String.valueOf( jsonNode.getInt(0) );
             JSONObject type = jsonNode.getJSONObject(1).getJSONObject("type");
             Node node = gsgraph.addNode(id);
 
-            // Parses JSON-keys to Java-attributes in the Node object
+            //Parses JSON-keys to Java-attributes in the Node object
             for(String s : type.keySet()) {
             	if (type.get(s).equals(null)) continue;
                 node.setAttribute(s, type.getString(s));
             }
-
             node.addAttribute("matches", 0);
 
-            // Set graphical properties to the node
+            //Set graphical properties to the node
 			UImod.adduiAtt(node);
         }
-
-        // Iterates through the edge array and adds them to the graph
+        //Iterates through the edge array and adds them to the graph
 		for(int i = 0; i < edges.length(); i++) {
             JSONArray jsonEdge = edges.getJSONArray(i);
             String source = String.valueOf(jsonEdge.getInt(0));
@@ -93,10 +88,8 @@ public class ParseJSONf {
             Edge edge = gsgraph.addEdge(name, source, target, true);
 			edge.setAttribute("etype", etype);
 
-            // This will actually be removed later, but it works this way
-            // Assign that nodes are part of the control flow
+            //Assign that nodes are part of the control flow
             UImod.adduiAtt(edge);
-
         }
         return gsgraph;
     }
@@ -104,132 +97,22 @@ public class ParseJSONf {
     /**
      * This method takes a Graphstream graph and copies the nodes and edges from
      * that graph into a directed JGraph,  which will be used for positioning.
-     * @param gsgraph is the Graphstream graph with nodes and edges
-     * @return a directed graph in the JGraph format: DirectedGraph<String, DefaultEdge>
+     * @param gsgraph The Graphstream graph with nodes and edges
+     * @return directedGraph A directed graph in the JGraph format: DirectedGraph<String, DefaultEdge>
      * @throws FileNotFoundException
-     *
-     * Written by Aiman Josefsson and Rebecca Hellström Karlsson 2016-04-29
      */
     public static DirectedGraph fromGStoJG(Graph gsgraph) {
+    	
         DirectedGraph<String, DefaultEdge> directedGraph = new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
-        // Copies the nodes over to the directed graph
+        
+        //Copies the nodes over to the directed graph
         for(Node n : gsgraph.getNodeSet()){
             directedGraph.addVertex(n.getId());
         }
-
-        // Copies the edges over to the directed graph
+        //Copies the edges over to the directed graph
         for(Edge e : gsgraph.getEdgeSet()){
             directedGraph.addEdge(e.getSourceNode().toString(), e.getTargetNode().toString());
         }
         return directedGraph;
-    }
-
-
-
-    /**
-     * This method iterates through node attributes and parses it into graphical attributes.
-     * @param node
-     *
-     * Written by Aiman Josefsson 2016-04-26
-     * Modified by Rebecca Hellström Karlsson and Mathilda von Schantz 2016-05-09
-     * Modified by Nahida Islam and Mathilda von Schantz 2016-05-10
-     */
-    public static void convertNode(Node node) {
-        StringBuilder sb = new StringBuilder();
-        StringBuilder label = new StringBuilder();
-        StringBuilder size = new StringBuilder();
-
-        // Shows node ID as text on the graph
-        String id = node.getId();
-        label.append(id + ": ");
-
-        // Continue building string depending on type
-        String ntype = node.getAttribute("ntype");
-
-        sb.append(ntype);
-
-        if (ntype.equals("copy")) {
-            label.append("cp");
-            size.append("70gu");
-        }
-        else  if (ntype.equals("data")) {
-            label.append("d");
-            size.append("150gu");
-        }
-        else if (ntype.equals("phi")) {
-            label.append("phi");
-            size.append("70gu");
-        }
-
-        if(node.hasAttribute("block-name")) {
-            String blockName = node.getAttribute("block-name");
-            sb.append("," + blockName);
-            // Mark the entry node
-            if(node.getAttribute("block-name").equals("entry")) {
-                sb.replace(0,sb.length(), "entry");
-                label.replace(0,label.length(), id + ": Entry");
-                size.append("300gu");
-            }
-            else{
-                label.append(blockName);
-                size.append("150gu");
-            }
-        }
-
-        if(node.hasAttribute("dtype")) {
-            String dtype = node.getAttribute("dtype");
-            sb.append("," + dtype);
-        }
-
-        if(node.hasAttribute("op")) {
-            String op = node.getAttribute("op");
-            //sb.append("," + op);
-            label.append(op);
-            size.append("75gu");
-        }
-
-        if(node.hasAttribute("origin")) {
-            String origin = node.getAttribute("origin");
-            //sb.append("," + origin);
-        }
-
-        if(node.hasAttribute("ftype")) {
-            String ftype = node.getAttribute("ftype");
-            sb.append("," + ftype);
-        }
-
-        // Set graphical properties to the node
-        node.addAttribute("ui.class", sb.toString());
-        // Set text to be shown on the node
-        node.setAttribute("ui.label", label.toString());
-        node.addAttribute("ui.size", size);
-    }
-
-    /**
-     * This method assigns graphical attributes to an edge based on its edge type.
-     * @param edge
-     *
-     * Written by Aiman Josefsson 2016-04-30
-     */
-    public static void convertEdge(Edge edge) {
-        String etype = edge.getAttribute("etype");
-        edge.addAttribute("ui.class", etype);
-    }
-
-    public static void main(String[] args) throws FileNotFoundException {
-
-        // Look for a JSON file from the argument
-        File json = null;
-        json = new File(args[0]);
-
-        Graph gsgraph = parse(json);
-
-        int entry = gsgraph.getAttribute("entry-block-node");
-        ArrayList inputs = gsgraph.getAttribute("inputs");
-        ArrayList cons = gsgraph.getAttribute("constraints");
-
-        System.out.println("entry: "+entry);
-        System.out.println("imputs: "+inputs.get(0));
-        System.out.println("cons: "+cons.get(0));
     }
 }

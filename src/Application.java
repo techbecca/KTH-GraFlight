@@ -10,8 +10,7 @@ import java.io.IOException;
 
 /**
  * This is the main application class for GraFlight
- * @author Aiman Josefsson
- * @since 2016-04-28
+ * @since 2016-05-19
  */
 public class Application {
 
@@ -178,5 +177,4 @@ public class Application {
 	{
 		return viewer;
 	}
-	
 }
