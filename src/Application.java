@@ -136,6 +136,7 @@ public class Application {
 
 		gr.flagLonelyMatches();
 		gr.flagNoMatches();
+		gr.paintNodes();
 
 		return gr;
 	}

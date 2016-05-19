@@ -29,6 +29,23 @@ class Graphiel extends MultiGraph
 		sman = new SpriteManager(this);
 	}
 
+	/**
+	 * Adds color settings to matches depending on which instruction they belong to
+	 */
+	public void paintNodes(){
+
+		for (Match match : matches){
+			int insId = match.getInstructionId();
+
+			Color col = instructionColor(insId, instructionIDs.size());
+			match.setMatchColor(col);
+			System.out.println(col.toString());
+			for(int nodeIndex : match.getGraphNodes()){
+				getNode("" + nodeIndex).setAttribute("ui.style", "fill-color: rgb(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() + ");");
+			}
+		}
+	}
+
 	public void addMatches(List<Match> matches)
 	{
 		this.matches = matches;
