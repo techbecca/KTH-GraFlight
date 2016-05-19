@@ -1,0 +1,96 @@
+edge{
+	arrow-shape: arrow;
+	arrow-size: 6px;
+}
+edge.data{
+	size: 1px;
+}
+edge.def{
+	size: 1px;
+	fill-color: gray;
+	visibility-mode: under-zoom;
+	visibility: 0.5;
+}
+edge.ctrl{
+	size: 4px;
+}
+edge.pattern{
+	size: 3px;
+}
+edge.highlighted{
+	fill-color: red;
+	shape: blob;
+	arrow-size: 12px;
+}
+
+edge.selected{
+	fill-color: green;
+}
+
+node{
+	size: 30px;
+	stroke-mode: plain;
+	stroke-width: 2px;
+	fill-color: rgba(10, 137, 255, 200);
+	text-style: bold;
+	text-size: 14px;
+	text-background-mode: rounded-box;
+	text-background-color: rgba(10, 137, 255, 200);
+}
+
+node.hidezoomedout{
+	size: 20px;
+	text-background-color: rgba(173, 216, 230, 200);
+	fill-color: rgba(173, 216, 230, 200);
+	visibility-mode: under-zoom;
+	visibility: 0.5;
+	text-style: normal;
+	text-size: 12px;
+}
+
+node.selected{
+	fill-color : green;
+	text-background-color: green;
+}
+node.hovered{
+	stroke-width: 5px;
+}
+node.highlighted{
+	fill-color: red;
+}
+
+node.data{
+	shape: rounded-box;
+}
+
+node.lab{
+	shape: box;
+	size-mode: fit;
+	text-background-mode: none;
+	padding: 4px;
+	fill-color: rgba(15, 195, 255, 255);
+	
+}
+
+node.ctrl{
+	shape: diamond;
+	fill-color: rgba(15, 195, 255, 200);
+	text-background-color: rgba(15, 195, 255, 200);
+}
+
+node.ctrlFlow{
+	stroke-width: 3px;
+}
+
+node.noMatch{
+	fill-color: magenta;
+}
+
+sprite {
+	size: 32px;
+}
+
+sprite.noMatch{
+	fill-mode: image-scaled;
+	fill-image: url('./style/nomatches.png');
+}
