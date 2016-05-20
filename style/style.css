@@ -14,18 +14,6 @@ edge.def{
 edge.ctrl{
 	size: 4px;
 }
-edge.pattern{
-	size: 3px;
-}
-edge.highlighted{
-	fill-color: red;
-	shape: blob;
-	arrow-size: 12px;
-}
-
-edge.selected{
-	fill-color: green;
-}
 
 node{
 	size-mode: dyn-size;
@@ -45,17 +33,6 @@ node.hidezoomedout{
 	visibility: 0.8;
 	text-style: normal;
 	text-size: 12px;
-}
-
-node.selected{
-	/*fill-color : green;*/
-	/*text-background-color: green;*/
-}
-node.hovered{
-	stroke-width: 5px;
-}
-node.highlighted{
-	/*fill-color: red;*/
 }
 
 node.data{
