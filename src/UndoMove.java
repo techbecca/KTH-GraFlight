@@ -1,20 +1,23 @@
 import org.graphstream.graph.Node;
 
 /**
- * Created by Rebecca & Aiman on 2016-05-19.
+ * This class undoes the latest node position change 
+ * @since 2016-05-20
  */
 public class UndoMove {
 
-    public static void undoLastMoved(){
-        if (!Application.getNodeChanges().empty()){
-            LastMoved lastMoved = Application.getNodeChanges().pop();
+	/**
+	 * This method undoes the latest node position change 
+	 */
+	public static void undoLastMoved(){
+		
+		if (!Application.getNodeChanges().empty()){
+			
+			LastMoved lastMoved = Application.getNodeChanges().pop();
 
-            Node n = lastMoved.getNode();
-            n.setAttribute("x", lastMoved.getX());
-            n.setAttribute("y", lastMoved.getY());
-            //Application.getFrame().revalidate();
-
-        }
-    }
-
+			Node n = lastMoved.getNode();
+			n.setAttribute("x", lastMoved.getX());
+			n.setAttribute("y", lastMoved.getY());
+		}
+	}
 }
