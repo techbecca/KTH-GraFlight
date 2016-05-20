@@ -314,7 +314,7 @@ public class CheckBoxTree extends JTree {
 		for(int node : currentMatch.getGraphNodes()){
 			Graphiel g = Application.getGraph();
 			Node currentNode = g.getNode(String.valueOf(node));
-			UImod.adduiC(currentNode, "highlighted");
+			//UImod.adduiC(currentNode, "highlighted");
 			Color col = currentMatch.getMatchColor();
 			currentNode.setAttribute("ui.style", "fill-color: rgb(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() + ");");
 		}		
@@ -327,7 +327,7 @@ public class CheckBoxTree extends JTree {
 		for(int node : currentMatch.getGraphNodes()){
 			Graphiel g = Application.getGraph();
 			Node currentNode = g.getNode(String.valueOf(node));
-			UImod.rmuiC(currentNode, "highlighted");
+			//UImod.rmuiC(currentNode, "highlighted");
 			currentNode.setAttribute("ui.style", "fill-color: rgb(10, 137, 255);");
 		}	
 	}

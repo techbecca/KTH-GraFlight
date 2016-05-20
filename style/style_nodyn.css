@@ -34,8 +34,8 @@ node{
 	fill-color: rgba(10, 137, 255, 200);
 	text-style: bold;
 	text-size: 14px;
-	text-background-mode: rounded-box;
-	text-background-color: rgba(10, 137, 255, 200);
+	/*text-background-mode: rounded-box;*/
+	/*text-background-color: rgba(10, 137, 255, 200);*/
 }
 
 node.hidezoomedout{
@@ -49,14 +49,14 @@ node.hidezoomedout{
 }
 
 node.selected{
-	fill-color : green;
-	text-background-color: green;
+	/*fill-color : green;*/
+	/*text-background-color: green;*/
 }
 node.hovered{
 	stroke-width: 5px;
 }
 node.highlighted{
-	fill-color: red;
+	/*fill-color: red;*/
 }
 
 node.data{
@@ -68,23 +68,20 @@ node.lab{
 	size-mode: fit;
 	text-background-mode: none;
 	padding: 4px;
-	fill-color: rgba(15, 195, 255, 255);
+	/*fill-color: rgba(15, 195, 255, 255);*/
 	
 }
 
 node.ctrl{
 	shape: diamond;
-	fill-color: rgba(15, 195, 255, 200);
-	text-background-color: rgba(15, 195, 255, 200);
-}
+	/*fill-color: rgba(15, 195, 255, 200);*/
+	/*text-background-color: rgba(15, 195, 255, 200);*/
+}	
 
 node.ctrlFlow{
 	stroke-width: 3px;
 }
 
-node.noMatch{
-	fill-color: magenta;
-}
 
 sprite {
 	size: 32px;
