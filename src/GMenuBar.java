@@ -73,7 +73,7 @@ public class GMenuBar extends JMenuBar {
 		viewmenu.add(toolbar);
 		toolbar.addActionListener(new MenuActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new InternalFrame().createFrame(Application.getFrame(), Application.getGraph(), Application.getView() );
+				new Toolbar().createFrame( Application.getView() );
 			}
 		});
 
@@ -160,9 +160,7 @@ public class GMenuBar extends JMenuBar {
 					//Application.getView().removeMouseListener(clack);
 					MouseListener[] list = Application.getView().getMouseListeners();
 
-					Application.getView().removeMouseListener(list[1]);
-
-					Application.getGraph().matchdark();
+					Application.getView().removeMouseListener(list[2]);
 
 					for(Node n : Application.getGraph().getEachNode()){
 						UImod.rmuiC(n, "selected");
