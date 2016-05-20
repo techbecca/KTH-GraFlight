@@ -6,6 +6,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 
 /**
@@ -202,7 +205,13 @@ public class GMenuBar extends JMenuBar {
 		help.add(manual);
 		manual.addActionListener(new MenuActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				openWebpage("https://i.imgur.com/SZPjHwz.jpg");
+				try {
+					File myFile = new File(System.getProperty("user.dir") + File.separatorChar + "doc" + File.separatorChar+"graflight_user_manual.pdf");
+					Desktop.getDesktop().open(myFile);
+				} 
+				catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 	}
