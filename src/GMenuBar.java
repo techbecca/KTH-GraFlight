@@ -68,12 +68,13 @@ public class GMenuBar extends JMenuBar {
 		viewmenu.setMnemonic(KeyEvent.VK_V);
 		add(viewmenu);
 
-		JMenuItem toolbar = new JMenuItem("Toolbar");
+		JMenuItem toolbar = new JMenuItem("Match Selection");
 		toolbar.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_T, ActionEvent.CTRL_MASK ));
 		viewmenu.add(toolbar);
 		toolbar.addActionListener(new MenuActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new Toolbar().createFrame( Application.getView() );
+				Frame tb = new Toolbar().createFrame( Application.getView() );
+				tb.setVisible(true);
 			}
 		});
 
@@ -92,59 +93,6 @@ public class GMenuBar extends JMenuBar {
 			}
 		});
 
-//		JCheckBoxMenuItem edges = new JCheckBoxMenuItem("Toggle Pattern Edges");
-//		edges.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_E, ActionEvent.CTRL_MASK ));
-//		viewmenu.add(edges);
-//		edges.addActionListener(new MenuActionListener(){
-//
-//			//This method allows us to toggle pattern edges
-//			public void actionPerformed(ActionEvent e)
-//			{
-//				Graphiel graph = Application.getGraph();
-//				if (!edges.isSelected()) {
-//					edges.setSelected(false);
-//
-//					//Get all matches from the graph
-//					List<Match> matches = graph.matches;
-//
-//					Application.getView().addMouseListener(new Clack(Application.getView(),Application.getGraph()));
-//
-//					//for each match in our list of matches
-//					for (Match match:matches){
-//
-//						//Get all nodes in the match
-//						int[] nodes = match.getGraphNodes();
-//
-//						//Loop through every node in the list of nodes
-//						for(int i = 0; i < nodes.length - 1; i++){
-//							Node n1 = graph.getNode(String.valueOf(nodes[i]));
-//
-//							//Loop trough the nodes again to get another node
-//							for (int k = i + 1; k < nodes.length; k++)
-//							{
-//								Node n2 = graph.getNode(String.valueOf(nodes[k]));
-//
-//								//If the two nodes has an edge between them
-//								if ( n1.hasEdgeBetween(n2) )
-//								{
-//									//Get the current edge between the two nodes
-//									Edge  edge = graph.getEdge("i" + match.getInstructionId() + "p" + match.getPatternId() +"-" + match.getMatchId() + "-" + i + "-" + k);
-//
-//									//Remove that edge from the graph
-//									graph.removeEdge(edge);
-//								}
-//							}
-//						}
-//					}
-//				}
-//
-//				else if (edges.isSelected()){
-//					edges.setSelected(true);
-//					Application.getGraph().patternEdges();
-//				}
-//			}
-//		});
-//
 		JCheckBoxMenuItem nodeClick = new JCheckBoxMenuItem("Node Click");
 		nodeClick.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_N, ActionEvent.CTRL_MASK ));
 		viewmenu.add(nodeClick);
@@ -156,10 +104,7 @@ public class GMenuBar extends JMenuBar {
 				Clack clack = new Clack(Application.getView(),Application.getGraph());
 				if (!nodeClick.isSelected()) {
 					nodeClick.setSelected(false);
-
-					//Application.getView().removeMouseListener(clack);
 					MouseListener[] list = Application.getView().getMouseListeners();
-
 					Application.getView().removeMouseListener(list[2]);
 
 					for(Node n : Application.getGraph().getEachNode()){

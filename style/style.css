@@ -86,13 +86,8 @@ node.noMatch{
 }
 
 node.lonely{
-	stroke-color: rgb(218,108,0);
-
-}
-
-sprite {
-	size: 32px;
-	size-mode: dyn-size;
+	stroke-color: rgb(165, 22, 248);
+	stroke-width: 3px;
 }
 
 

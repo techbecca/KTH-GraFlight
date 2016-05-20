@@ -21,7 +21,7 @@ import org.graphstream.ui.swingViewer.DefaultView;
 
 
 /**
- * This class adds a toolbar to the graph window 
+ * This class adds a toolbar to the graph window
  * @author Charlotta Spik
  * @author Isabel Ghourchian
  * @version 1.0
@@ -30,7 +30,7 @@ import org.graphstream.ui.swingViewer.DefaultView;
 public class Toolbar implements TreeSelectionListener {
 
 	/**
-	 * This method creates a toolbar and adds a checkbox for each match in the graph. This allows the user 
+	 * This method creates a toolbar and adds a checkbox for each match in the graph. This allows the user
 	 * to view one pattern at a time
 	 * @param frame the JFrame from Application in which the graph is displayed
 	 * @param graph a Grahiel graph
@@ -38,7 +38,7 @@ public class Toolbar implements TreeSelectionListener {
 	 */
 	private CheckBoxTree tree;
 
-	public void createFrame (DefaultView view){
+	public JFrame createFrame (DefaultView view){
 
 		Graphiel graph = Application.getGraph();
 //		An ArrayList containing all matches in the graph
@@ -60,21 +60,18 @@ public class Toolbar implements TreeSelectionListener {
 
 		// shows the window
 		tb.setIconImage(img);
-		tb.setVisible(true);        
 
 		tb.setSize(width/5, (height/2)+100);
 		tb.setLocation(0, 60);
-		tb.setAlwaysOnTop(true);
-		tb.setVisible(true);
 
 //		Create a JPanel for the frame in which the checkboxes are displayed
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1,2000));
-		
+
 //		create a tree which will be displayed in the toolbar
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Instructions");
 
-//		add instruction-id children to the root node		
+//		add instruction-id children to the root node
 		for(int instr : graph.getInstructionIds()){
 			DefaultMutableTreeNode instructionNode = new DefaultMutableTreeNode("Instr-id : " + String.valueOf(instr));
 			root.add(instructionNode);
@@ -85,7 +82,7 @@ public class Toolbar implements TreeSelectionListener {
 		tree.setRootVisible(true);
 
 //		makes a scrollpane which displays the content of the tree
-		JScrollPane treeView = new JScrollPane(tree, 
+		JScrollPane treeView = new JScrollPane(tree,
 				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,  ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
 		//Where the tree is initialized:
@@ -97,6 +94,7 @@ public class Toolbar implements TreeSelectionListener {
 		panel.add(treeView);
 
 		tb.add(panel);
+		return tb;
 
 	}
 
@@ -120,7 +118,7 @@ public class Toolbar implements TreeSelectionListener {
 	@Override
 	public void valueChanged(TreeSelectionEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
