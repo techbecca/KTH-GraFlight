@@ -95,6 +95,7 @@ public class Clack implements MouseListener{
 			//now we have iterated through all the matches of the current node
 			else{
 				Match lastMatch = filteredMatches.get(max);
+				Application.getGraph().currentmatch = -1;
 
 				//dehighlights all the nodes in the last match
 				for(int number : lastMatch.getGraphNodes()){	
