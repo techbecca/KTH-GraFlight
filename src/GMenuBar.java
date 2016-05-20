@@ -162,8 +162,6 @@ public class GMenuBar extends JMenuBar {
 
 					Application.getView().removeMouseListener(list[2]);
 
-					Application.getGraph().matchdark();
-
 					for(Node n : Application.getGraph().getEachNode()){
 						UImod.rmuiC(n, "selected");
 					}

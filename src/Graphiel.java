@@ -1,20 +1,14 @@
-import org.graphstream.graph.Edge;
-import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.graph.Node;
 import org.graphstream.ui.spriteManager.SpriteManager;
-import org.graphstream.ui.spriteManager.Sprite;
-
 import java.io.File;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Iterator;
-import java.util.concurrent.TimeUnit;
 
 /**
  *Our very own special-purpose MultiGraph subclass.
- *@author Christian CallergÃ¥rd
+ *@since 2016-05-19
  */
 class Graphiel extends MultiGraph
 {
@@ -23,12 +17,20 @@ class Graphiel extends MultiGraph
 
 	SpriteManager sman;
 
+	/**
+	 * This is a constructor
+	 * @param id This is the ID of the graph
+	 */
 	public Graphiel(String id)
 	{
 		super(id);
 		sman = new SpriteManager(this);
 	}
 
+	/**
+	 * Adds the list of matches to the graph, saves a list of unique instruction IDs, and adds to each node its number of matches.
+	 * @param matches The list of matches from ParseJSONp
+	 */
 	public void addMatches(List<Match> matches)
 	{
 		this.matches = matches;
@@ -54,32 +56,28 @@ class Graphiel extends MultiGraph
 		instructionIDs = ids;
 	}
 
+	/**
+	 * This method returns the instruction IDs
+	 * @return instructionIDs
+	 */
 	public List<Integer> getInstructionIds()
 	{
 		return instructionIDs;
 	}
 
 	/**
-	 * Finds nodes in the graph that has no matches and marks them.
-	 *
-	 * Written by Christian CallergÃ¥rd and Rebecca HellstrÃ¶m Karlsson 2016-05-12
+	 * This method finds nodes in the graph that has no matches and marks them.
 	 */
 	public void flagNoMatches () {
 		for (Node n: getEachNode()){
 			if (filterByNode(n).size() == 0){
-				//UImod.adduiC(n,"noMatch");
-                /*Sprite s = sman.addSprite("nomatch" + n.getId());
-                UImod.adduiC(s, "noMatch");
-                s.attachToNode( n.getId() );
-                s.setPosition(50, 0, 90);*/
 				UImod.adduiC(n, "noMatch");
 			}
 		}
 	}
-	
+
 	/**
-	 * Finds nodes in the graph that has one single match and marks them.
-	 * Written by Aiman Josefsson
+	 * This method finds the nodes in the graph that has one single match and marks them.
 	 */
 	public void flagLonelyMatches(){
 		for(Node n : getEachNode()) {
@@ -89,159 +87,6 @@ class Graphiel extends MultiGraph
 					UImod.adduiC(getNode("" + i), "lonely");
 				}
 			}
-		}
-	}
-
-	/**
-	* Adds colored edges according to the list of matches, one color per instruction.
-	* @deprecated
-	*/
-	public void patternEdges()
-	{
-		int edgeindex = 0;
-		for (Match match : matches)
-		{
-			Color col = instructionColor(edgeindex, instructionIDs.size());
-			match.setMatchColor(col);
-
-			int[] nodes = match.getGraphNodes();
-
-			for(int i = 0; i < nodes.length - 1; i++){
-				Node n1 = getNode(String.valueOf(nodes[i]));
-
-				for (int k = i + 1; k < nodes.length; k++)
-				{
-					Node n2 = getNode(String.valueOf(nodes[k]));
-					if ( n1.hasEdgeBetween(n2) )
-					{
-						edgeindex++;
-
-						Edge edge = addEdge("i" + match.getInstructionId() + "p" + match.getPatternId() + "-" + match.getMatchId() + "-" + i + "-" + k, 
-								n1, n2, false);
-						edge.addAttribute("Edge-index", edgeindex);
-						edge.setAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 0 + ");");
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * This method selects the colored edges in a match,
-	 * and thereby increases their opacity
-	 * @deprecated
-	 */
-	public void oneMatchAtATime(Match match)
-	{
-		int[] nodes = match.getGraphNodes();
-
-		for(int i = 0; i < nodes.length - 1; i++){
-			Node n1 = getNode(String.valueOf(nodes[i]));
-
-			for (int k = i + 1; k < nodes.length; k++)
-			{
-				Node n2 = getNode(String.valueOf(nodes[k]));
-				if ( n1.hasEdgeBetween(n2) )
-				{
-					Edge  edge = getEdge("i" + match.getInstructionId() + "p" + match.getPatternId() +"-" + match.getMatchId() + "-" + i + "-" + k);
-					Color col = match.getColor();
-
-					edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 255 + ");");
-
-				}
-			}
-		}	
-	}
-
-	/**
-	 * This method deselects the colored edges in a match,
-	 * and thereby lowers their opacity
-	 * @deprecated
-	 */
-	public void resetMatch(Match match)
-	{
-
-		{
-			int[] nodes = match.getGraphNodes();
-
-			for(int i = 0; i < nodes.length - 1; i++){
-				Node n1 = getNode(String.valueOf(nodes[i]));
-
-				for (int k = i + 1; k < nodes.length; k++)
-				{
-
-
-					Node n2 = getNode(String.valueOf(nodes[k]));
-					if ( n1.hasEdgeBetween(n2) )
-					{
-						Edge  edge = getEdge("i" + match.getInstructionId() + "p" + match.getPatternId() +"-" + match.getMatchId() + "-" + i + "-" + k);
-
-						Color col = match.getColor();
-
-
-						edge.addAttribute("ui.style", "size: 3px; fill-color: rgba(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() +"," + 0 + ");");
-
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * This method loops through the matches and colors the nodes that match an input instruction ID
-	 * @oaram inst the int representation of instruction ID
-	 */
-	public void matchlight(int inst) {
-		for(Match match : matches) {
-			if(match.getInstructionId() == inst) {
-				for(int node : match.getGraphNodes()) {
-					UImod.adduiC(getNode(String.valueOf(node)), "highlighted");
-				}
-			}
-		}
-	}
-
-	/**
-	 * This method loops through and removes the highlights from nodes
-	 */
-	public void matchdark() {
-
-		Iterator<Node> nite = getNodeIterator();
-
-		while(nite.hasNext()) {
-			UImod.rmuiC(nite.next(), "highlighted");
-		}
-	}
-
-	/**
-	 * This method loops through the nodes and highlights them, then de-highlights them
-	 */
-	public void matchflash(int delay) {
-
-		Node current;
-		ArrayList<Node> matchnodes = new ArrayList(8);
-
-		for(Match match : matches) {
-			for(int node : match.getGraphNodes()) {
-				current = getNode(String.valueOf(node));
-				matchnodes.add(current);
-				UImod.adduiC(current,"highlighted");
-			}
-			try {TimeUnit.MILLISECONDS.sleep(delay);} catch (InterruptedException x) {}
-
-			for(Node node : matchnodes){
-				UImod.rmuiC(node,"highlighted");
-			}
-			System.out.println("pattern: "+match.getInstructionId()+"."+match.getPatternId());
-		}
-	}
-	
-	public void noPositions()
-	{
-		for ( Node n : getEachNode() )
-		{
-			n.setAttribute("x", 0);
-			n.setAttribute("y", 0);
 		}
 	}
 
@@ -262,6 +107,9 @@ class Graphiel extends MultiGraph
 		}
 	}
 
+	/**
+	 * This method returns a string representation of graph info
+	 */
 	@Override
 	public String toString()
 	{
@@ -275,27 +123,41 @@ class Graphiel extends MultiGraph
 		return sb.toString();
 	}
 
+	/**
+	 * This method makes it possible for different instructions to have different colors
+	 * @param id The ID of the element which color should be changed
+	 * @param length Number of instruction IDs
+	 * @return The new color
+	 */
 	private static Color instructionColor(int id, int length){
 		Color col = new Color(Color.HSBtoRGB((float) id/length,(float) 0.75,(float) 0.75));
 		//System.out.println(col.toString());
 		return col;
 	}
-	
+
+	/**
+	 * This method gets all the matches a node is part of
+	 * @param n The node for which we want all matches
+	 * @return A list of the marches the node is part of
+	 */
 	public ArrayList <Match> filterByNode(Node n){
-	
-	ArrayList <Match> filteredMatches = new ArrayList<>();
+
+		ArrayList <Match> filteredMatches = new ArrayList<>();
 		for(Match match : matches){
 			for(int GraphNode : match.getGraphNodes()){
 				if(GraphNode == Integer.parseInt(n.getId())){
 					filteredMatches.add(match);
 				}
-
 			}
 		}
-
 		return filteredMatches;
 	}
-	
+
+	/**
+	 * Removes the current stylesheet from the graph and applies a new one.
+	 * File should be located in the style directory.
+	 * @param filename The filename of the CSS stylesheet to apply.
+	 */
 	public void loadStyle(String filename)
 	{
 		removeAttribute("ui.stylesheet");
