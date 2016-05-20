@@ -90,7 +90,12 @@ sprite {
 	size: 32px;
 }
 
-sprite.noMatch{
-	fill-mode: image-scaled;
-	fill-image: url('./style/nomatches.png');
+node.noMatch{
+	stroke-color: rgb(159,0,18);
 }
+
+node.lonely{
+	stroke-color: rgb(165, 22, 248);
+	stroke-width: 3px;
+}
+

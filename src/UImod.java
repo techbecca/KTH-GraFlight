@@ -59,6 +59,7 @@ public class UImod {
 			// adds the node type to the ui.class
 			String ntype = e.getAttribute("ntype");
 			adduiC(e,ntype);
+			
 
 			StringBuilder label = new StringBuilder();
 			int size = 70;
@@ -72,7 +73,8 @@ public class UImod {
 				case "data":
 					size = 80;
 					label.append((String) e.getAttribute("dtype")).append(" ");
-					label.append( ntype);
+					label.append( ntype).append(" ");
+					label.append((String) e.getAttribute("origin"));
 					adduiC(e, "hidezoomedout");
 				break;
 				case "copy":
