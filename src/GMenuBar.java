@@ -1,49 +1,49 @@
 import org.graphstream.graph.Node;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseListener;
 import java.net.URL;
 
+/**
+ * This class implements the menu bar
+ * @since 2016-05-19
+ */
+@SuppressWarnings("serial")
 public class GMenuBar extends JMenuBar {
-
-	Boolean istb = false;
 
 	public GMenuBar () {
 
-
-		// File menu starts here!
+		//File menu starts here!
 		JMenu file = new JMenu("File");
 		file.setMnemonic(KeyEvent.VK_F);
 		add(file);
 
-		// Open a new graph
+		//Open a new graph
 		JMenuItem open = new JMenuItem("Open New File...");
 		open.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_O, ActionEvent.CTRL_MASK ));
 		file.add(open);
 		open.addActionListener(new MenuActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Application.loadNewGraph();
-		    }
+			}
 		});
 
-
-		// Take a screenshot as PNG.
+		//Take a screenshot as PNG.
 		JMenuItem save = new JMenuItem(new ScreenshotAction());
 		file.add(save);
 
 		//Update graph
 		JMenuItem refresh = new JMenuItem("Reload");
-
 		refresh.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_R, ActionEvent.CTRL_MASK | ActionEvent.SHIFT_MASK));
-
 		file.add(refresh);
 		refresh.addActionListener(new MenuActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Application.reloadGraph();
-		    }
+			}
 		});
 
 		//Reset to original graph
@@ -66,10 +66,10 @@ public class GMenuBar extends JMenuBar {
 		close.addActionListener(new MenuActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
-		    }
+			}
 		});
 
-		// View menu starts here!
+		//View menu starts here!
 		JMenu viewmenu = new JMenu("View");
 		viewmenu.setMnemonic(KeyEvent.VK_V);
 		add(viewmenu);
@@ -92,7 +92,8 @@ public class GMenuBar extends JMenuBar {
 				if (!statistics.isSelected()) {
 					statistics.setSelected(false);
 					Application.getView().setForeLayoutRenderer( new ForegroundRenderer(false) );
-				} else if (statistics.isSelected()) {
+				} 
+				else if (statistics.isSelected()) {
 					statistics.setSelected(true);
 					Application.getView().setForeLayoutRenderer( new ForegroundRenderer(true) );
 				}
@@ -102,9 +103,7 @@ public class GMenuBar extends JMenuBar {
 		JCheckBoxMenuItem nodeClick = new JCheckBoxMenuItem("Node Click");
 		nodeClick.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_N, ActionEvent.CTRL_MASK ));
 		viewmenu.add(nodeClick);
-
 		nodeClick.addActionListener(new MenuActionListener(){
-
 			public void actionPerformed(ActionEvent e)
 			{
 				Clack clack = new Clack(Application.getView(),Application.getGraph());
@@ -154,7 +153,7 @@ public class GMenuBar extends JMenuBar {
 			}
 		});
 
-		// Layout menu starts here!
+		//Layout menu starts here!
 		JMenu layout = new JMenu("Layout");
 		layout.setMnemonic(KeyEvent.VK_L);
 		add(layout);
@@ -194,27 +193,29 @@ public class GMenuBar extends JMenuBar {
 			}
 		});
 
-		// Help menu starts here!
+		//Help menu starts here!
 		JMenu help = new JMenu("Help");
 		help.setMnemonic(KeyEvent.VK_H);
 		add(help);
-
 		JMenuItem manual = new JMenuItem("User Manual");
 		manual.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_U, ActionEvent.CTRL_MASK ));
 		help.add(manual);
 		manual.addActionListener(new MenuActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				openWebpage("https://i.imgur.com/SZPjHwz.jpg");
-		    }
+			}
 		});
 	}
 
+	/**
+	 * This method allows the user to follow a URL 
+	 * @param urlString The URL
+	 */
 	public static void openWebpage(String urlString) {
-	    try {
-	        Desktop.getDesktop().browse(new URL(urlString).toURI());
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+		try {
+			Desktop.getDesktop().browse(new URL(urlString).toURI());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-
 }
