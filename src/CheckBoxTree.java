@@ -23,8 +23,7 @@ import javax.swing.tree.TreePath;
 import org.graphstream.graph.Node;
 
 /**
- * This class helps create and control a 
- * checkbox tree
+ * This class helps create and control a checkbox tree
  * @author user 'SomethingSomething' at Stackoverflow
  * edited by Cobol
  * @since 2016-05-18
@@ -36,14 +35,15 @@ public class CheckBoxTree extends JTree {
 
 	public CheckBoxTree(DefaultMutableTreeNode arg0) {
 		super(arg0);
-	
-		// Overriding cell renderer by new one defined above
+
+		//Overriding cell renderer by new one defined above
 		CheckBoxCellRenderer cellRenderer = new CheckBoxCellRenderer();
 
 		this.setCellRenderer(cellRenderer);
 
-		// Overriding selection model by an empty one
-		DefaultTreeSelectionModel dtsm = new DefaultTreeSelectionModel() {      
+		//Overriding selection model by an empty one
+		DefaultTreeSelectionModel dtsm = new DefaultTreeSelectionModel() {   
+
 			// Totally disabling the selection mechanism
 			public void setSelectionPath(TreePath path) {
 			}           
@@ -54,7 +54,7 @@ public class CheckBoxTree extends JTree {
 			public void setSelectionPaths(TreePath[] pPaths) {
 			}
 		};
-		// Calling checking mechanism on mouse click
+		//Calling checking mechanism on mouse click
 		this.addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent arg0) {
 
@@ -69,21 +69,20 @@ public class CheckBoxTree extends JTree {
 				CheckedNode cn = nodesCheckingState.get(tp);
 				Object userObj = cn.userObject;
 
-				//                updates the subtree
+				//Updates the subtree
 				checkSubTree(tp, checkMode);
 				String name = userObj.toString();
 
-				//a checkbox was selected
+				//A checkbox was selected
 				if(checkMode){
-					//					if it is the root node, color all  the matches
+
+					//If it is the root node, color all  the matches
 					if(name.equals("Instructions")){
 						for (Match currentMatch : matches) {
 							highlightNodes(currentMatch);
 						}
 					}
-
-					//					else, color according to whichever match or instruction
-					//					you clicked
+					//Else, color according to whichever match or instruction you clicked
 					else{
 
 						if(name.startsWith("Instr")){
@@ -102,18 +101,13 @@ public class CheckBoxTree extends JTree {
 									highlightNodes(currentMatch);
 								}
 							}				
-
 						}
-
 					}
-
 				}
-
-				//a checkbox was deselected
-				//				the same things happens as above, except the
-				//				nodes become dehighlighted
+				//A checkbox was deselected, the same things happens as above, except the nodes become dehighlighted
 				if(!checkMode){
-					//					if it is the root node, color all  the matches
+
+					//If it is the root node, color all  the matches
 					if(name.equals("Instructions")){
 						for (Match currentMatch : matches) {
 							dehighlightNodes(currentMatch);
@@ -128,7 +122,6 @@ public class CheckBoxTree extends JTree {
 								}
 							}
 						}
-
 						else if(name.startsWith("Match")){
 
 							String matchId = name.substring(11);
@@ -137,14 +130,11 @@ public class CheckBoxTree extends JTree {
 									dehighlightNodes(currentMatch);																				
 								}
 							}				
-
 						}
-
 					}
-
 				}
-
 				updatePredecessorsWithCheckMode(tp, checkMode);
+
 				// Repainting tree after the data structures were updated
 				selfPointer.repaint();                          
 			}           
@@ -158,16 +148,21 @@ public class CheckBoxTree extends JTree {
 			}           
 		});
 		this.setSelectionModel(dtsm);
-
 	}
 
-	// Defining data structure that will enable to fast check-indicate the state of each node
-	// It totally replaces the "selection" mechanism of the JTree
+	/**
+	 * Defining data structure that will enable to fast check-indicate the state of each node
+	 * It totally replaces the "selection" mechanism of the JTree
+	 * @author user 'SomethingSomething' at Stackoverflow
+	 * edited by Cobol
+	 * @since 2016-05-18
+	 */
 	private class CheckedNode {
 		boolean isSelected;
 		boolean hasChildren;
 		boolean allChildrenSelected;
 		Object userObject;
+
 		public CheckedNode(boolean isSelected_, boolean hasChildren_, boolean allChildrenSelected_, Object userObj) {
 			isSelected = isSelected_;
 			hasChildren = hasChildren_;
@@ -179,12 +174,17 @@ public class CheckBoxTree extends JTree {
 	HashMap<TreePath, CheckedNode> nodesCheckingState;
 	HashSet<TreePath> checkedPaths = new HashSet<TreePath>();
 
-	// Defining a new event type for the checking mechanism and preparing event-handling mechanism
+	//Defining a new event type for the checking mechanism and preparing event-handling mechanism
 	protected EventListenerList listenerList = new EventListenerList();
 
-	public class CheckChangeEvent extends EventObject {     
-		//        private static final long serialVersionUID = -8100230309044193368L;
+	/**
+	 * @author user 'SomethingSomething' at Stackoverflow
+	 * edited by Cobol
+	 * @since 2016-05-18
+	 */
+	public class CheckChangeEvent extends EventObject {    
 
+		//Private static final long serialVersionUID = -8100230309044193368L;
 		public CheckChangeEvent(Object source) {
 			super(source);          
 		}       
@@ -201,7 +201,7 @@ public class CheckBoxTree extends JTree {
 		listenerList.remove(CheckChangeEventListener.class, listener);
 	}
 
-	// Override
+	//Override
 	public void setModel(TreeModel newModel) {
 		super.setModel(newModel);
 		resetCheckingState();
@@ -217,8 +217,8 @@ public class CheckBoxTree extends JTree {
 		addSubtreeToCheckingStateTracking(node);
 	}
 
-	// Creating data structure of the current model for the checking mechanism
-	//    building the tree
+	//Creating data structure of the current model for the checking mechanism
+	//building the tree
 	private void addSubtreeToCheckingStateTracking(DefaultMutableTreeNode node) {
 		TreeNode[] path = node.getPath();   
 		TreePath tp = new TreePath(path);
@@ -231,10 +231,16 @@ public class CheckBoxTree extends JTree {
 		}
 	}
 
-	// Overriding cell renderer by a class that ignores the original "selection" mechanism
-	// It decides how to show the nodes due to the checking-mechanism
-	private class CheckBoxCellRenderer extends JPanel implements TreeCellRenderer {     
-		//        private static final long serialVersionUID = -7341833835878991719L;     
+	/**
+	 * Overriding cell renderer by a class that ignores the original "selection" mechanism
+	 * It decides how to show the nodes due to the checking-mechanism
+	 * @author user 'SomethingSomething' at Stackoverflow
+	 * edited by Cobol
+	 * @since 2016-05-18
+	 */
+	private class CheckBoxCellRenderer extends JPanel implements TreeCellRenderer {  
+
+		//Private static final long serialVersionUID = -7341833835878991719L;     
 		JCheckBox checkBox;     
 		public CheckBoxCellRenderer() {
 			super();
@@ -264,13 +270,13 @@ public class CheckBoxTree extends JTree {
 	protected void updatePredecessorsWithCheckMode(TreePath tp, boolean check) {
 
 		TreePath parentPath = tp.getParentPath();
-		// If it is the root, stop the recursive calls and return
+
+		//If it is the root, stop the recursive calls and return
 		if (parentPath == null) {
 			return;
 		}       
 		CheckedNode parentCheckedNode = nodesCheckingState.get(parentPath);
 		DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) parentPath.getLastPathComponent();     
-
 
 		parentCheckedNode.isSelected = true;
 
@@ -289,10 +295,9 @@ public class CheckBoxTree extends JTree {
 			checkedPaths.remove(parentPath);
 		}
 		updatePredecessorsWithCheckMode(parentPath, check);
-
 	}
 
-	// Recursively checks/unchecks a subtree
+	//Recursively checks/unchecks a subtree
 	protected void checkSubTree(TreePath tp, boolean check) {
 		CheckedNode cn = nodesCheckingState.get(tp);
 		cn.isSelected = check;
@@ -317,7 +322,6 @@ public class CheckBoxTree extends JTree {
 			Node currentNode = g.getNode(String.valueOf(node));
 			UImod.adduiC(currentNode, "highlighted");
 		}		
-
 	}
 	//dehighlights the nodes in the given match
 	public void dehighlightNodes(Match currentMatch){
@@ -329,5 +333,4 @@ public class CheckBoxTree extends JTree {
 			UImod.rmuiC(currentNode, "highlighted");
 		}	
 	}
-
 }
