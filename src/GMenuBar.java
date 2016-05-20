@@ -73,7 +73,7 @@ public class GMenuBar extends JMenuBar {
 		viewmenu.add(toolbar);
 		toolbar.addActionListener(new MenuActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new InternalFrame().createFrame(Application.getFrame(), Application.getGraph(), Application.getView() );
+				new Toolbar().createFrame( Application.getView() );
 			}
 		});
 
