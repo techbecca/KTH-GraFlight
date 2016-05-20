@@ -4,11 +4,18 @@ The development history of the GraFlight project. It is a graph viewer for outpu
 Gabriel is working on. 
 
 The manual and software documentation are found in /doc
+
 Sample JSON files in /json
+
 All necessary libraries in /lib
+
 Promotional content in /poster and /teamlogo
+
 All source files in /src
+
 CSS stylesheets in /style
+
+
 
 The program is built and executed by running the following commands in the project root directory:
 
