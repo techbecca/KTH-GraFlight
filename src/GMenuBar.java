@@ -111,8 +111,6 @@ public class GMenuBar extends JMenuBar {
 						UImod.rmuiC(n, "selected");
 						if (n.hasAttribute("ui.style")){
 							n.setAttribute("ui.style", "fill-color: rgb(10, 137, 255);");
-							//resetNode.removeAttribute("ui.style");
-
 						}
 					}
 				}

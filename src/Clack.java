@@ -75,8 +75,6 @@ public class Clack implements MouseListener{
 					UImod.rmuiC(node, "selected");
 					if (node.hasAttribute("ui.style")){
 						node.setAttribute("ui.style", "fill-color: rgb(10, 137, 255);");
-						//resetNode.removeAttribute("ui.style");
-
 					}
 				}
 				matchIndex = 0;
@@ -88,8 +86,6 @@ public class Clack implements MouseListener{
 			UImod.rmuiC(resetNode, "selected");
 			if (resetNode.hasAttribute("ui.style")){
 				resetNode.setAttribute("ui.style", "fill-color: rgb(10, 137, 255);");
-				//resetNode.removeAttribute("ui.style");
-
 			}
 
 
