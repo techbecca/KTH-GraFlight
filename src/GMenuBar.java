@@ -8,7 +8,12 @@ import java.awt.event.MouseListener;
 import java.net.URL;
 
 public class GMenuBar extends JMenuBar {
+
+	Boolean istb = false;
+
 	public GMenuBar () {
+
+
 		// File menu starts here!
 		JMenu file = new JMenu("File");
 		file.setMnemonic(KeyEvent.VK_F);
@@ -23,6 +28,7 @@ public class GMenuBar extends JMenuBar {
 				Application.loadNewGraph();
 		    }
 		});
+
 
 		// Take a screenshot as PNG.
 		JMenuItem save = new JMenuItem(new ScreenshotAction());
@@ -75,10 +81,11 @@ public class GMenuBar extends JMenuBar {
 			public void actionPerformed(ActionEvent e) {
 				Frame tb = new Toolbar().createFrame( Application.getView() );
 				tb.setVisible(true);
+				istb = !istb;
 			}
 		});
 
-		JCheckBoxMenuItem statistics = new JCheckBoxMenuItem("Statistics", true);
+		JCheckBoxMenuItem statistics = new JCheckBoxMenuItem("Statistics");
 		statistics.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_I, ActionEvent.CTRL_MASK ));
 		viewmenu.add(statistics);
 		statistics.addActionListener(new MenuActionListener() {
@@ -101,6 +108,11 @@ public class GMenuBar extends JMenuBar {
 
 			public void actionPerformed(ActionEvent e)
 			{
+				if(istb) {
+					nodeClick.setEnabled(!istb);
+					return;
+				}
+
 				Clack clack = new Clack(Application.getView(),Application.getGraph());
 				if (!nodeClick.isSelected()) {
 					nodeClick.setSelected(false);
@@ -109,6 +121,9 @@ public class GMenuBar extends JMenuBar {
 
 					for(Node n : Application.getGraph().getEachNode()){
 						UImod.rmuiC(n, "selected");
+						if (n.hasAttribute("ui.style")){
+							n.setAttribute("ui.style", "fill-color: rgb(10, 137, 255);");
+						}
 					}
 				}
 				else if (nodeClick.isSelected()){

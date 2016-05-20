@@ -10,7 +10,7 @@ public class Match {
 	final private int instructionId;
 	final private int[] graphNodes;
 	final private int matchId;
-	public Color matchColor;
+	private Color matchColor = new Color(255,255,255);
 
 	/**
 	 * This is a constructor
@@ -72,7 +72,7 @@ public class Match {
 	 * This method returns the match color
 	 * @return matchColor
 	 */
-	public Color getColor(){
+	public Color getMatchColor(){
 		return matchColor;	
 	}
 

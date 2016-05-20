@@ -25,9 +25,9 @@ public class Application {
 	private static Stack<LastMoved> nodeChanges;
 
 	public static void main(String args[]) throws FileNotFoundException{
-		
+
 		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
-		
+
 		//Configures the JFrame
         frame = new JFrame("GraFlight");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -45,14 +45,14 @@ public class Application {
 
 		//Shows the window
         frame.setIconImage(img);
-        frame.setVisible(true);        
+        frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		File[] jsons = Filer.run(args);
-		
+
 		//Adds our menubar to the frame.
 		frame.setJMenuBar(new GMenuBar());
-		
+
 		try {
 			//Create graph and view in the frame.
 			graph = createGraph(jsons);
@@ -65,7 +65,7 @@ public class Application {
 			System.exit(-1);
 		}
     }
-    
+
 	/**
 	 * Opens file chooser, loads a new graph from the chosen files and replaces the old view in the frame.
 	 */
@@ -84,7 +84,7 @@ public class Application {
 			System.exit(-1);
 		}
 	}
-	
+
 	/**
 	 * Creates a Viewer on the graph and adds a View with the appropriate listeners to our frame.
 	 * @param frame The frame to contain the new view.
@@ -93,24 +93,24 @@ public class Application {
 	public static DefaultView createView(JFrame frame)
 	{
         viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-        
+
         //false = not using default GraphStream layout
         DefaultView view = (DefaultView) viewer.addDefaultView(false);
-		
-		view.setForeLayoutRenderer( new ForegroundRenderer(true) );
+
+		view.setForeLayoutRenderer( new ForegroundRenderer(false) );
 
 		view.addMouseMotionListener(new DragListener(view));
 		view.addMouseWheelListener(new ScrollListener());
 
 		view.addMouseListener(new MoveListener(view,graph));
 
-		
+
 		frame.add(view);
 		frame.revalidate();
-		
+
 		return view;
 	}
-	
+
 	/**
 	 * Creates the graph from the file paths returned from Filer, with stylesheet and layout.
 	 * @throws FileNotFoundException
@@ -124,8 +124,9 @@ public class Application {
 
 		//Adds the patterns
 		gr.addMatches(ParseJSONp.parsep(jsons[1]));
+		gr.setInstructionColor();
 		gr.loadStyle("style.css");
-		
+
 		//Adds antialiasing for a smoother look
 		gr.addAttribute("ui.quality");
 		gr.addAttribute("ui.antialias");
@@ -137,9 +138,10 @@ public class Application {
 		gr.flagLonelyMatches();
 		gr.flagNoMatches();
 
+
 		return gr;
 	}
-	
+
 	/**
 	 * This method is used to open a new graph in the existing frame
 	 */
@@ -158,7 +160,7 @@ public class Application {
 			System.exit(-1);
 		}
 	}
-	
+
 	/**
 	 * This method returns the graph
 	 * @return graph
@@ -167,7 +169,7 @@ public class Application {
 	{
 		return graph;
 	}
-	
+
 	/**
 	 * This method returns the frame
 	 * @return frame
@@ -176,7 +178,7 @@ public class Application {
 	{
 		return frame;
 	}
-	
+
 	/**
 	 * This method returns the view
 	 * @return view
@@ -185,7 +187,7 @@ public class Application {
 	{
 		return view;
 	}
-	
+
 	/**
 	 * This method returns the viewer
 	 * @return viewer
@@ -199,5 +201,5 @@ public class Application {
 	public static Stack<LastMoved> getNodeChanges() {
 		return nodeChanges;
 	}
-	
+
 }

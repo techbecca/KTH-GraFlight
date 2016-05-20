@@ -1,6 +1,5 @@
-import java.awt.BorderLayout;
+import java.awt.*;
 
-import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.EventListener;
@@ -320,7 +319,9 @@ public class CheckBoxTree extends JTree {
 		for(int node : currentMatch.getGraphNodes()){
 			Graphiel g = Application.getGraph();
 			Node currentNode = g.getNode(String.valueOf(node));
-			UImod.adduiC(currentNode, "highlighted");
+			//UImod.adduiC(currentNode, "highlighted");
+			Color col = currentMatch.getMatchColor();
+			currentNode.setAttribute("ui.style", "fill-color: rgb(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() + ");");
 		}		
 	}
 	//dehighlights the nodes in the given match
@@ -330,7 +331,8 @@ public class CheckBoxTree extends JTree {
 		for(int node : currentMatch.getGraphNodes()){
 			Graphiel g = Application.getGraph();
 			Node currentNode = g.getNode(String.valueOf(node));
-			UImod.rmuiC(currentNode, "highlighted");
+			//UImod.rmuiC(currentNode, "highlighted");
+			currentNode.setAttribute("ui.style", "fill-color: rgb(10, 137, 255);");
 		}	
 	}
 }

@@ -14,6 +14,8 @@ class Graphiel extends MultiGraph
 {
 	List<Integer> instructionIDs;
 	List<Match> matches;
+	
+	public int currentmatch;
 
 	SpriteManager sman;
 
@@ -25,12 +27,14 @@ class Graphiel extends MultiGraph
 	{
 		super(id);
 		sman = new SpriteManager(this);
+		currentmatch = -1;
 	}
 
 	/**
 	 * Adds the list of matches to the graph, saves a list of unique instruction IDs, and adds to each node its number of matches.
 	 * @param matches The list of matches from ParseJSONp
 	 */
+
 	public void addMatches(List<Match> matches)
 	{
 		this.matches = matches;
@@ -123,16 +127,24 @@ class Graphiel extends MultiGraph
 		return sb.toString();
 	}
 
+
 	/**
-	 * This method makes it possible for different instructions to have different colors
-	 * @param id The ID of the element which color should be changed
-	 * @param length Number of instruction IDs
-	 * @return The new color
+	 * This method finds the color associated with an instruction and
+	 * assigns that color to all matches that are part of that instruction
+	 *
 	 */
-	private static Color instructionColor(int id, int length){
-		Color col = new Color(Color.HSBtoRGB((float) id/length,(float) 0.75,(float) 0.75));
-		//System.out.println(col.toString());
-		return col;
+
+	public void setInstructionColor(){
+
+		int id;
+
+		for (Match match: matches) {
+			id = match.getInstructionId();
+			Color col = new Color(Color.HSBtoRGB((float) id / instructionIDs.size(), (float) 0.75, (float) 0.75));
+			//System.out.println(col.toString());
+			match.setMatchColor(col);
+		}
+
 	}
 
 	/**
