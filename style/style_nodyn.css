@@ -28,7 +28,7 @@ edge.selected{
 }
 
 node{
-	size: 30px;
+	size: 50px;
 	stroke-mode: plain;
 	stroke-width: 2px;
 	fill-color: rgba(10, 137, 255, 200);
@@ -39,7 +39,7 @@ node{
 }
 
 node.hidezoomedout{
-	size: 20px;
+	size: 30px;
 	text-background-color: rgba(173, 216, 230, 200);
 	fill-color: rgba(173, 216, 230, 200);
 	visibility-mode: under-zoom;
@@ -90,7 +90,12 @@ sprite {
 	size: 32px;
 }
 
-sprite.noMatch{
-	fill-mode: image-scaled;
-	fill-image: url('./style/nomatches.png');
+node.noMatch{
+	stroke-color: rgb(159,0,18);
 }
+
+node.lonely{
+	stroke-color: rgb(165, 22, 248);
+	stroke-width: 3px;
+}
+
