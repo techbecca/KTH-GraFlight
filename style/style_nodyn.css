@@ -40,8 +40,8 @@ node{
 
 node.hidezoomedout{
 	size: 30px;
-	text-background-color: rgba(173, 216, 230, 200);
-	fill-color: rgba(173, 216, 230, 200);
+	/*text-background-color: rgba(173, 216, 230, 200);*/
+	/*fill-color: rgba(173, 216, 230, 200);*/
 	visibility-mode: under-zoom;
 	visibility: 0.5;
 	text-style: normal;
