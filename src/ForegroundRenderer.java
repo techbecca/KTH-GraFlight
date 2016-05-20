@@ -44,6 +44,14 @@ class ForegroundRenderer implements LayerRenderer{
 		graphics.setFont(new Font("Verdana", Font.BOLD, 17));
 		graphics.setColor(Color.black);	
 		drawString(graphics, infostring, 30, heightPx - 145);
+		
+		
+		String s = "Current match: " + Application.getGraph().currentmatch;
+		if(Application.getGraph().currentmatch == -1)
+			drawString(graphics, "Current match: ", 30, heightPx-180); 
+		else{
+		drawString(graphics, s, 30, heightPx-180);
+		}
 	}
 
 	/**

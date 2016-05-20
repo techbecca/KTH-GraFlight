@@ -14,6 +14,8 @@ class Graphiel extends MultiGraph
 {
 	List<Integer> instructionIDs;
 	List<Match> matches;
+	
+	public int currentmatch;
 
 	SpriteManager sman;
 
@@ -25,6 +27,7 @@ class Graphiel extends MultiGraph
 	{
 		super(id);
 		sman = new SpriteManager(this);
+		currentmatch = -1;
 	}
 
 	/**
