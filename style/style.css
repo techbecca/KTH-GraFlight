@@ -31,7 +31,7 @@ node{
 	size-mode: dyn-size;
 	stroke-mode: plain;
 	stroke-width: 2px;
-	fill-color: rgba(10, 137, 255, 200);
+	fill-color: rgba(10, 137, 255, 255);
 	text-style: bold;
 	text-size: 14px;
 	/*text-background-mode: rounded-box;*/

@@ -53,6 +53,8 @@ public class Clack implements MouseListener{
 			//If there is not, add one
 			UImod.adduiC(g.getNode(String.valueOf(n)), "selected");
 
+			Color col = filteredMatches.get(matchIndex).getMatchColor();
+			g.getNode(String.valueOf(n)).setAttribute("ui.style", "fill-color: rgb(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() + ");");
 
 		}
 		else{
@@ -71,6 +73,11 @@ public class Clack implements MouseListener{
 				for(int number : lastMatch.getGraphNodes()){	
 					Node node = g.getNode(String.valueOf(number));
 					UImod.rmuiC(node, "selected");
+					if (node.hasAttribute("ui.style")){
+						node.setAttribute("ui.style", "fill-color: rgb(10, 137, 255);");
+						//resetNode.removeAttribute("ui.style");
+
+					}
 				}
 				matchIndex = 0;
 				return;
@@ -92,8 +99,10 @@ public class Clack implements MouseListener{
 
 		//Highlight all nodes in the current match
 		for(int graphNodes : match.getGraphNodes()){
-			Color col = match.getMatchColor();
+
 			UImod.adduiC(g.getNode(String.valueOf(graphNodes)), "selected");
+
+			Color col = match.getMatchColor();
 			g.getNode(String.valueOf(graphNodes)).setAttribute("ui.style", "fill-color: rgb(" + col.getRed() + "," + col.getGreen() + "," + col.getBlue() + ");");
 		}
 	}
