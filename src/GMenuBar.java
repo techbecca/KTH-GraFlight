@@ -81,7 +81,6 @@ public class GMenuBar extends JMenuBar {
 			public void actionPerformed(ActionEvent e) {
 				Frame tb = new Toolbar().createFrame( Application.getView() );
 				tb.setVisible(true);
-				istb = !istb;
 			}
 		});
 
@@ -108,11 +107,6 @@ public class GMenuBar extends JMenuBar {
 
 			public void actionPerformed(ActionEvent e)
 			{
-				if(istb) {
-					nodeClick.setEnabled(!istb);
-					return;
-				}
-
 				Clack clack = new Clack(Application.getView(),Application.getGraph());
 				if (!nodeClick.isSelected()) {
 					nodeClick.setSelected(false);
