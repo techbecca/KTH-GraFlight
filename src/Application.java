@@ -1,7 +1,6 @@
 
 import org.graphstream.ui.swingViewer.DefaultView;
 import org.graphstream.ui.view.Viewer;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -197,9 +196,11 @@ public class Application {
 		return viewer;
 	}
 
-
+	/**
+	 * This method returns a stack of the position changes of a node
+	 * @return nodeChanges
+	 */
 	public static Stack<LastMoved> getNodeChanges() {
 		return nodeChanges;
 	}
-
 }
