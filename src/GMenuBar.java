@@ -160,7 +160,7 @@ public class GMenuBar extends JMenuBar {
 					//Application.getView().removeMouseListener(clack);
 					MouseListener[] list = Application.getView().getMouseListeners();
 
-					Application.getView().removeMouseListener(list[1]);
+					Application.getView().removeMouseListener(list[2]);
 
 					Application.getGraph().matchdark();
 
