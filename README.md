@@ -1,7 +1,6 @@
-# projectV
+# GraFlight
 
-The development history of the GraFlight project. It is a graph viewer for output files from a compiler that 
-Gabriel is working on. 
+The development history of the GraFlight project (initially known as ProjectV). It is a graph viewer for output files from a compiler that Gabriel (PhD student in Computer Science at KTH) is working on. 
 
 The manual and software documentation are found in /doc
 
